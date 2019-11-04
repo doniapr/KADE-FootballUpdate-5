@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="txt_league_name" type="id" />
+    <item name="img_league_badge" type="id" />
+    <item name="txt_event_name" type="id" />
+    <item name="txt_match_week" type="id" />
+    <item name="txt_home_team" type="id" />
+    <item name="txt_away_team" type="id" />
+    <item name="txt_away_score" type="id" />
+    <item name="txt_home_score" type="id" />
+    <item name="cv_match_info" type="id" />
+    <item name="txt_versus" type="id" />
+    <item name="txt_match_time" type="id" />
+    <item name="txt_match_date" type="id" />
+    <item name="txt_search_result_name" type="id" />
+</resources>
