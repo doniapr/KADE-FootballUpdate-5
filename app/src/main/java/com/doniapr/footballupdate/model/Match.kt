@@ -40,7 +40,7 @@ data class Match(
     var leagueName: String? = null,
 
     @SerializedName("strThumb")
-    var matchBanner:String? = null,
+    var matchBanner: String? = null,
 
     @SerializedName("strHomeGoalDetails")
     var homeGoalDetail: String? = null,

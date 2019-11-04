@@ -14,29 +14,29 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".DetailMatchActivity"
-            android:parentActivityName=".DetailLeagueActivity">
+        <activity android:name=".view.DetailMatchActivity"
+            android:parentActivityName=".view.DetailLeagueActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.doniapr.footballupdate.DetailLeagueActivity" />
+                android:value="com.doniapr.footballupdate.view.DetailLeagueActivity" />
         </activity>
         <activity
-            android:name=".SearchResultActivity"
-            android:parentActivityName=".MainActivity">
+            android:name=".view.SearchResultActivity"
+            android:parentActivityName=".view.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.doniapr.footballupdate.MainActivity" />
+                android:value="com.doniapr.footballupdate.view.MainActivity" />
         </activity>
         <activity
-            android:name=".DetailLeagueActivity"
-            android:parentActivityName=".MainActivity"
+            android:name=".view.DetailLeagueActivity"
+            android:parentActivityName=".view.MainActivity"
             android:launchMode="singleTop">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.doniapr.footballupdate.MainActivity" />
+                android:value="com.doniapr.footballupdate.view.MainActivity" />
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MainActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

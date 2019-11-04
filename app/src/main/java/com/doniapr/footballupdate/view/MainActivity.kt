@@ -1,17 +1,18 @@
-package com.doniapr.footballupdate
+package com.doniapr.footballupdate.view
 
 import android.app.SearchManager
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.doniapr.footballupdate.R
 import com.doniapr.footballupdate.adapter.ListLeagueAdapter
 import com.doniapr.footballupdate.model.League
 import org.jetbrains.anko.*
@@ -33,7 +34,10 @@ class MainActivity : AppCompatActivity() {
                 orientation = LinearLayout.VERTICAL
 
                 toolbar = toolbar {
-                    backgroundColor = ContextCompat.getColor(context, R.color.colorPrimaryDark)
+                    backgroundColor = ContextCompat.getColor(
+                        context,
+                        R.color.colorPrimaryDark
+                    )
                     title = resources.getString(R.string.app_name)
                 }.lparams {
                     width = matchParent
@@ -42,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
                 listItemLeague = recyclerView {
                     layoutManager = LinearLayoutManager(context)
-                }.lparams{
+                }.lparams {
                     width = matchParent
                     height = wrapContent
                 }
@@ -58,13 +62,13 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun setData(){
+    private fun setData() {
 
         val leagueId = resources.getIntArray(R.array.league_id)
         val leagueName = resources.getStringArray(R.array.league_name)
         val leagueBadge = resources.getStringArray(R.array.league_badge)
 
-        for (i in leagueName.indices){
+        for (i in leagueName.indices) {
             Log.e("liga", leagueName[i])
             val league = League(leagueId[i], leagueName[i], leagueBadge[i])
 
@@ -82,17 +86,11 @@ class MainActivity : AppCompatActivity() {
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
         searchView.queryHint = resources.getString(R.string.search_hint)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            /*
-            Gunakan method ini ketika search selesai atau OK
-             */
             override fun onQueryTextSubmit(query: String): Boolean {
                 this@MainActivity.startActivity<SearchResultActivity>("query" to query)
                 return true
             }
 
-            /*
-            Gunakan method ini untuk merespon tiap perubahan huruf pada searchView
-             */
             override fun onQueryTextChange(newText: String): Boolean {
                 return false
             }

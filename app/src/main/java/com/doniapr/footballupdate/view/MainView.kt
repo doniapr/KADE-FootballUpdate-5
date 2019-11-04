@@ -11,5 +11,5 @@ interface MainView {
     fun showLeagueDetail(data: List<LeagueDetail>?)
     fun showMatchList(data: List<Match>)
     fun showMatchDetail(data: Match)
-    fun showTeam(data: Team, isHome:Boolean)
+    fun showTeam(data: Team, isHome: Boolean)
 }

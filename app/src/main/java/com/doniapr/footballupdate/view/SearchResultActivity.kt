@@ -1,22 +1,21 @@
-package com.doniapr.footballupdate
+package com.doniapr.footballupdate.view
 
 import android.app.SearchManager
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.Menu
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.doniapr.footballupdate.adapter.MatchListAdapter
+import com.doniapr.footballupdate.R
 import com.doniapr.footballupdate.adapter.SearchResultAdapter
 import com.doniapr.footballupdate.model.LeagueDetail
 import com.doniapr.footballupdate.model.Match
@@ -24,9 +23,7 @@ import com.doniapr.footballupdate.model.Team
 import com.doniapr.footballupdate.presenter.MainPresenter
 import com.doniapr.footballupdate.utility.invisible
 import com.doniapr.footballupdate.utility.visible
-import com.doniapr.footballupdate.view.MainView
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_detail_league.*
 import org.jetbrains.anko.*
 import org.jetbrains.anko.appcompat.v7.toolbar
 import org.jetbrains.anko.recyclerview.v7.recyclerView
@@ -38,8 +35,8 @@ class SearchResultActivity : AppCompatActivity(), MainView {
     private lateinit var presenter: MainPresenter
     private lateinit var adapter: SearchResultAdapter
     private lateinit var toolbar: Toolbar
-    private lateinit var txt_failed: TextView
-    private lateinit var txt_query: TextView
+    private lateinit var txtFailed: TextView
+    private lateinit var txtQuery: TextView
     private lateinit var linearLayout: LinearLayout
 
     private var matches: MutableList<Match> = mutableListOf()
@@ -49,17 +46,20 @@ class SearchResultActivity : AppCompatActivity(), MainView {
         linearLayout = verticalLayout {
             lparams(width = matchParent, height = matchParent)
 
-            toolbar = toolbar{
-                backgroundColor = ContextCompat.getColor(context, R.color.colorPrimaryDark)
+            toolbar = toolbar {
+                backgroundColor = ContextCompat.getColor(
+                    context,
+                    R.color.colorPrimaryDark
+                )
                 title = resources.getString(R.string.search_result)
             }.lparams {
                 width = matchParent
                 height = wrapContent
             }
 
-            txt_query = textView {
+            txtQuery = textView {
                 textSize = 16f
-            }.lparams{
+            }.lparams {
                 width = matchParent
                 height = wrapContent
                 margin = dip(16)
@@ -68,11 +68,11 @@ class SearchResultActivity : AppCompatActivity(), MainView {
 
             progressBar = progressBar()
 
-            txt_failed = textView {
+            txtFailed = textView {
                 text = resources.getString(R.string.no_data)
                 textSize = 20f
                 visibility = View.GONE
-            }.lparams{
+            }.lparams {
                 width = matchParent
                 height = wrapContent
                 margin = dip(16)
@@ -81,7 +81,7 @@ class SearchResultActivity : AppCompatActivity(), MainView {
 
             rvSearchResult = recyclerView {
                 layoutManager = LinearLayoutManager(context)
-            }.lparams{
+            }.lparams {
                 width = matchParent
                 height = wrapContent
             }
@@ -99,7 +99,8 @@ class SearchResultActivity : AppCompatActivity(), MainView {
 
         presenter = MainPresenter(this)
         presenter.doSearch(query)
-        txt_query.text = "Hasil pencarian untuk '" + query + "'"
+        val textQuery = "Hasil pencarian untuk '$query'"
+        txtQuery.text = textQuery
 
     }
 
@@ -112,8 +113,8 @@ class SearchResultActivity : AppCompatActivity(), MainView {
     }
 
     override fun onFailed(message: String?) {
-        txt_failed.text = message
-        txt_failed.visible()
+        txtFailed.text = message
+        txtFailed.visible()
 
         Snackbar.make(linearLayout, message.toString(), Snackbar.LENGTH_SHORT)
 

@@ -1,28 +1,35 @@
 package com.doniapr.footballupdate.adapter
 
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.doniapr.footballupdate.DetailMatchActivity
 import com.doniapr.footballupdate.R
 import com.doniapr.footballupdate.model.Match
 import com.doniapr.footballupdate.utility.formatTo
 import com.doniapr.footballupdate.utility.toDate
 import com.doniapr.footballupdate.utility.toDateAndHour
 import com.doniapr.footballupdate.utility.toHour
+import com.doniapr.footballupdate.view.DetailMatchActivity
+import com.doniapr.footballupdate.view.DetailMatchActivity.Companion.EVENT_ID
 import org.jetbrains.anko.*
 import org.jetbrains.anko.cardview.v7.cardView
 import org.jetbrains.anko.constraint.layout.constraintLayout
 
-class SearchResultAdapter(private val match: List<Match>)
-    : RecyclerView.Adapter<ResultViewHolder>() {
+class SearchResultAdapter(private val match: List<Match>) :
+    RecyclerView.Adapter<ResultViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultViewHolder {
-        return ResultViewHolder(SearchUI().createView(AnkoContext.Companion.create(parent.context, parent)))
+        return ResultViewHolder(
+            SearchUI().createView(
+                AnkoContext.Companion.create(
+                    parent.context,
+                    parent
+                )
+            )
+        )
     }
 
     override fun getItemCount(): Int = match.size
@@ -31,13 +38,15 @@ class SearchResultAdapter(private val match: List<Match>)
         holder.bindItem(match[position])
 
         holder.itemView.setOnClickListener {
-            holder.itemView.context.startActivity<DetailMatchActivity>("eventId" to match[position].eventId)
+            holder.itemView.context.startActivity<DetailMatchActivity>(
+               EVENT_ID to match[position].eventId
+            )
         }
     }
 
 }
 
-class ResultViewHolder(view: View): RecyclerView.ViewHolder(view){
+class ResultViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val txtName: TextView = view.find(R.id.txt_search_result_name)
     private val txtHomeTeam: TextView = view.find(R.id.txt_home_team)
     private val txtAwayTeam: TextView = view.find(R.id.txt_away_team)
@@ -46,34 +55,35 @@ class ResultViewHolder(view: View): RecyclerView.ViewHolder(view){
     private val txtMatchDate: TextView = view.find(R.id.txt_match_date)
     private val txtMatchTime: TextView = view.find(R.id.txt_match_time)
 
-    fun bindItem(match: Match){
-        txtName.text = match.leagueName + " Round " + match.round
+    fun bindItem(match: Match) {
+        val leagueName = match.leagueName + " Round " + match.round
+        txtName.text = leagueName
         txtHomeTeam.text = match.homeTeam
         txtAwayTeam.text = match.awayTeam
-        if (match.homeScore == null && match.awayScore == null){
+        if (match.homeScore == null && match.awayScore == null) {
             txtHomeScore.text = "-"
             txtAwayScore.text = "-"
-        } else{
+        } else {
             txtHomeScore.text = match.homeScore.toString()
             txtAwayScore.text = match.awayScore.toString()
         }
 
-        if (match.dateEvent != ""  && match.time != ""){
+        if (match.dateEvent != "" && match.time != "") {
             val utcDate = match.dateEvent.toString() + " " + match.time.toString()
             val wibDate = utcDate.toDateAndHour()
             txtMatchDate.text = wibDate.formatTo("dd MMMM yyyy")
             txtMatchTime.text = wibDate.formatTo("HH:mm:ss")
-        } else if(match.dateEvent != ""  && match.time == ""){
+        } else if (match.dateEvent != "" && match.time == "") {
             val utcDate = match.dateEvent.toString()
             val wibDate = utcDate.toDate()
             txtMatchDate.text = wibDate.formatTo("dd MMMM yyyy")
             txtMatchTime.text = "-"
-        } else if (match.dateEvent == ""  && match.time != ""){
+        } else if (match.dateEvent == "" && match.time != "") {
             val utcDate = match.time.toString()
             val wibDate = utcDate.toHour()
             txtMatchDate.text = "-"
             txtMatchTime.text = wibDate.formatTo("HH:mm:ss")
-        } else{
+        } else {
             txtMatchDate.text = "-"
             txtMatchTime.text = "-"
         }
@@ -83,12 +93,12 @@ class ResultViewHolder(view: View): RecyclerView.ViewHolder(view){
 class SearchUI : AnkoComponent<ViewGroup> {
     override fun createView(ui: AnkoContext<ViewGroup>): View {
         return with(ui) {
-            linearLayout{
-                lparams(width= matchParent, height = wrapContent)
+            linearLayout {
+                lparams(width = matchParent, height = wrapContent)
                 padding = dip(8)
 
                 cardView {
-                    lparams(width= matchParent, height = wrapContent)
+                    lparams(width = matchParent, height = wrapContent)
                     padding = dip(16)
 
                     linearLayout {
@@ -114,7 +124,7 @@ class SearchUI : AnkoComponent<ViewGroup> {
                                 id = R.id.txt_home_team
                                 textSize = 16f
                                 textAlignment = View.TEXT_ALIGNMENT_CENTER
-                            }.lparams{
+                            }.lparams {
                                 topToTop = R.id.cv_match_info
                                 startToStart = R.id.cv_match_info
                                 endToStart = R.id.txt_home_score
@@ -124,7 +134,7 @@ class SearchUI : AnkoComponent<ViewGroup> {
                                 textSize = 20f
                                 id = R.id.txt_home_score
                                 textAlignment = View.TEXT_ALIGNMENT_CENTER
-                            }.lparams{
+                            }.lparams {
                                 topToTop = R.id.cv_match_info
                                 endToStart = R.id.txt_versus
                                 marginEnd = dip(8)
@@ -133,9 +143,9 @@ class SearchUI : AnkoComponent<ViewGroup> {
                             textView {
                                 id = R.id.txt_versus
                                 textSize = 14f
-                                text = "VS"
+                                text = resources.getString(R.string.versus)
                                 textAlignment = View.TEXT_ALIGNMENT_CENTER
-                            }.lparams{
+                            }.lparams {
                                 topToTop = R.id.cv_match_info
                                 startToStart = R.id.cv_match_info
                                 endToEnd = R.id.cv_match_info
@@ -145,7 +155,7 @@ class SearchUI : AnkoComponent<ViewGroup> {
                                 textSize = 20f
                                 id = R.id.txt_away_score
                                 textAlignment = View.TEXT_ALIGNMENT_CENTER
-                            }.lparams{
+                            }.lparams {
                                 topToTop = R.id.cv_match_info
                                 startToEnd = R.id.txt_versus
                                 marginStart = dip(8)
@@ -155,7 +165,7 @@ class SearchUI : AnkoComponent<ViewGroup> {
                                 id = R.id.txt_away_team
                                 textSize = 16f
                                 textAlignment = View.TEXT_ALIGNMENT_CENTER
-                            }.lparams{
+                            }.lparams {
                                 topToTop = R.id.cv_match_info
                                 startToEnd = R.id.txt_away_score
                                 endToEnd = R.id.cv_match_info

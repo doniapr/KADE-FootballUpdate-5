@@ -1,19 +1,18 @@
-package com.doniapr.footballupdate
+package com.doniapr.footballupdate.view
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.doniapr.footballupdate.adapter.MatchListAdapter
+import com.doniapr.footballupdate.R
 import com.doniapr.footballupdate.adapter.NextMatchAdapter
 import com.doniapr.footballupdate.model.LeagueDetail
 import com.doniapr.footballupdate.model.Match
@@ -21,7 +20,6 @@ import com.doniapr.footballupdate.model.Team
 import com.doniapr.footballupdate.presenter.MainPresenter
 import com.doniapr.footballupdate.utility.invisible
 import com.doniapr.footballupdate.utility.visible
-import com.doniapr.footballupdate.view.MainView
 import com.google.android.material.snackbar.Snackbar
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
@@ -36,8 +34,8 @@ class NextMatchFragment(private val leagueId: Int) : Fragment(), MainView {
     private var matches: MutableList<Match> = mutableListOf()
     private lateinit var presenter: MainPresenter
     private lateinit var adapter: NextMatchAdapter
-    private lateinit var progress_bar_next_match: ProgressBar
-    private lateinit var txt_failed: TextView
+    private lateinit var progressBarNextMatch: ProgressBar
+    private lateinit var txtFailed: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,17 +47,18 @@ class NextMatchFragment(private val leagueId: Int) : Fragment(), MainView {
                 orientation = LinearLayout.VERTICAL
                 gravity = Gravity.CENTER
 
-                nextMatchList = recyclerView{
-                    lparams(width= matchParent, height = wrapContent)
+                nextMatchList = recyclerView {
+                    lparams(width = matchParent, height = wrapContent)
                     layoutManager = LinearLayoutManager(context)
                 }
-                progress_bar_next_match = progressBar().lparams(width= wrapContent, height = wrapContent)
+                progressBarNextMatch =
+                    progressBar().lparams(width = wrapContent, height = wrapContent)
 
-                txt_failed = textView {
+                txtFailed = textView {
                     text = resources.getString(R.string.no_data)
                     textSize = 20f
                     visibility = View.GONE
-                }.lparams{
+                }.lparams {
                     width = matchParent
                     height = wrapContent
                     margin = dip(16)
@@ -80,27 +79,25 @@ class NextMatchFragment(private val leagueId: Int) : Fragment(), MainView {
     }
 
     override fun showLoading() {
-        progress_bar_next_match.visible()
+        progressBarNextMatch.visible()
     }
 
     override fun hideLoading() {
-        progress_bar_next_match.invisible()
+        progressBarNextMatch.invisible()
     }
 
     override fun onFailed(message: String?) {
-        txt_failed.visible()
+        txtFailed.visible()
 
-        if (message == "timeout"){
-            Snackbar.make(txt_failed, "Mohon Periksa koneksi internet anda", Snackbar.LENGTH_SHORT)
-        }else{
-            Snackbar.make(txt_failed, message.toString(), Snackbar.LENGTH_SHORT)
+        if (message == "timeout") {
+            Snackbar.make(txtFailed, "Mohon Periksa koneksi internet anda", Snackbar.LENGTH_SHORT)
+        } else {
+            Snackbar.make(txtFailed, message.toString(), Snackbar.LENGTH_SHORT)
         }
 
     }
 
-    override fun showLeagueDetail(data: List<LeagueDetail>?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun showLeagueDetail(data: List<LeagueDetail>?) {}
 
     override fun showMatchList(data: List<Match>) {
         matches.clear()
@@ -108,11 +105,7 @@ class NextMatchFragment(private val leagueId: Int) : Fragment(), MainView {
         adapter.notifyDataSetChanged()
     }
 
-    override fun showMatchDetail(data: Match) {
+    override fun showMatchDetail(data: Match) {}
 
-    }
-
-    override fun showTeam(data: Team, isHome: Boolean) {
-
-    }
+    override fun showTeam(data: Team, isHome: Boolean) {}
 }
