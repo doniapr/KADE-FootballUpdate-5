@@ -26,9 +26,9 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/background"
+                android:background="@drawable/banner"
                 android:fitsSystemWindows="true"
-                android:scaleType="centerCrop"
+                android:scaleType="centerInside"
                 app:layout_collapseMode="parallax"
                 android:contentDescription="@string/image_banner" />
 
@@ -50,7 +50,8 @@
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
                 app:cardCornerRadius="12dp"
-                android:padding="8dp">
+                app:cardElevation="20dp"
+                android:padding="@dimen/padding">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -72,13 +73,24 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/activity_horizontal_margin"
                         android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                        android:textColor="@android:color/white"
                         android:textSize="24sp"
                         android:textStyle="bold"
+                        android:textColor="@android:color/black"
                         app:layout_constraintBottom_toBottomOf="@id/img_league_badge"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/img_league_badge"
                         app:layout_constraintTop_toTopOf="@id/img_league_badge" />
+                    <TextView
+                        android:id="@+id/txt_league_country"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:layout_marginStart="@dimen/activity_horizontal_margin"
+                        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                        android:layout_marginTop="@dimen/padding"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/img_league_badge"
+                        app:layout_constraintTop_toBottomOf="@id/txt_league_name" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -95,41 +107,41 @@
                             android:id="@+id/btn_league_web"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
+                            android:backgroundTint="@android:color/white"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             android:contentDescription="@string/button_link"
                             android:src="@drawable/ic_domain"
-                            android:backgroundTint="@android:color/white"
                             android:scaleType="fitXY"/>
                         <ImageButton
                             android:id="@+id/btn_league_facebook"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
+                            android:backgroundTint="@android:color/white"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             android:contentDescription="@string/button_link"
                             android:src="@drawable/ic_facebook"
-                            android:backgroundTint="@android:color/white"
                             android:scaleType="fitXY"/>
                         <ImageButton
                             android:id="@+id/btn_league_twitter"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
+                            android:backgroundTint="@android:color/white"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             android:contentDescription="@string/button_link"
                             android:src="@drawable/ic_twitter"
-                            android:backgroundTint="@android:color/white"
                             android:scaleType="fitXY"/>
                         <ImageButton
                             android:id="@+id/btn_league_youtube"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
+                            android:backgroundTint="@android:color/white"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             android:contentDescription="@string/button_link"
                             android:src="@drawable/ic_youtube"
-                            android:backgroundTint="@android:color/white"
                             android:scaleType="fitXY"/>
 
                     </LinearLayout>
@@ -150,7 +162,7 @@
                 android:id="@+id/progress_bar_detail_league"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:layout_gravity="center"/>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>

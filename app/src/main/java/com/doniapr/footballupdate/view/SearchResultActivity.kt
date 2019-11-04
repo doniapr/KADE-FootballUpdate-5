@@ -49,9 +49,10 @@ class SearchResultActivity : AppCompatActivity(), MainView {
             toolbar = toolbar {
                 backgroundColor = ContextCompat.getColor(
                     context,
-                    R.color.colorPrimaryDark
+                    R.color.colorPrimary
                 )
                 title = resources.getString(R.string.search_result)
+                setTitleTextColor(resources.getColor(android.R.color.white))
             }.lparams {
                 width = matchParent
                 height = wrapContent

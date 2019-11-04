@@ -52,6 +52,7 @@ class LastMatchFragment(private val leagueId: Int) : Fragment(), MainView {
                     lparams(width = matchParent, height = wrapContent)
                     layoutManager = LinearLayoutManager(context)
                 }
+
                 progressBarLastMatch =
                     progressBar().lparams(width = wrapContent, height = wrapContent)
 
@@ -97,19 +98,11 @@ class LastMatchFragment(private val leagueId: Int) : Fragment(), MainView {
 
     override fun onFailed(message: String?) {
         txtFailed.visible()
-        if (message == "timeout") {
-            Snackbar.make(
-                linearLayout,
-                "Mohon periksa koneksi internet anda",
-                Snackbar.LENGTH_SHORT
-            ).show()
-        } else {
-            Snackbar.make(
-                linearLayout,
-                "Mohon periksa koneksi internet anda",
-                Snackbar.LENGTH_SHORT
-            ).show()
-        }
+        Snackbar.make(
+            linearLayout,
+            "Mohon periksa koneksi internet anda",
+            Snackbar.LENGTH_SHORT
+        ).show()
     }
 
     override fun showMatchDetail(data: Match) {}

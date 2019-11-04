@@ -36,9 +36,10 @@ class MainActivity : AppCompatActivity() {
                 toolbar = toolbar {
                     backgroundColor = ContextCompat.getColor(
                         context,
-                        R.color.colorPrimaryDark
+                        R.color.colorPrimary
                     )
                     title = resources.getString(R.string.app_name)
+                    setTitleTextColor(resources.getColor(android.R.color.white))
                 }.lparams {
                     width = matchParent
                     height = wrapContent

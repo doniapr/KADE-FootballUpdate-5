@@ -6,7 +6,6 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -43,9 +42,8 @@ class NextMatchFragment(private val leagueId: Int) : Fragment(), MainView {
     ): View? {
         // Inflate the layout for this fragment
         return UI {
-            linearLayout {
-                orientation = LinearLayout.VERTICAL
-                gravity = Gravity.CENTER
+            verticalLayout {
+                gravity = Gravity.CENTER_HORIZONTAL
 
                 nextMatchList = recyclerView {
                     lparams(width = matchParent, height = wrapContent)

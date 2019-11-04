@@ -60,25 +60,25 @@ class ResultViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         txtName.text = leagueName
         txtHomeTeam.text = match.homeTeam
         txtAwayTeam.text = match.awayTeam
-        if (match.homeScore == null && match.awayScore == null) {
-            txtHomeScore.text = "-"
-            txtAwayScore.text = "-"
-        } else {
+        if (match.homeScore != null){
             txtHomeScore.text = match.homeScore.toString()
+        }
+        if (match.awayScore != null){
             txtAwayScore.text = match.awayScore.toString()
         }
 
-        if (match.dateEvent != "" && match.time != "") {
+
+        if (!match.dateEvent.isNullOrEmpty() && !match.time.isNullOrEmpty()) {
             val utcDate = match.dateEvent.toString() + " " + match.time.toString()
             val wibDate = utcDate.toDateAndHour()
             txtMatchDate.text = wibDate.formatTo("dd MMMM yyyy")
             txtMatchTime.text = wibDate.formatTo("HH:mm:ss")
-        } else if (match.dateEvent != "" && match.time == "") {
+        } else if (!match.dateEvent.isNullOrEmpty() && match.time.isNullOrEmpty()) {
             val utcDate = match.dateEvent.toString()
             val wibDate = utcDate.toDate()
             txtMatchDate.text = wibDate.formatTo("dd MMMM yyyy")
             txtMatchTime.text = "-"
-        } else if (match.dateEvent == "" && match.time != "") {
+        } else if (match.dateEvent.isNullOrEmpty() && !match.time.isNullOrEmpty()) {
             val utcDate = match.time.toString()
             val wibDate = utcDate.toHour()
             txtMatchDate.text = "-"
@@ -125,6 +125,8 @@ class SearchUI : AnkoComponent<ViewGroup> {
                                 textSize = 16f
                                 textAlignment = View.TEXT_ALIGNMENT_CENTER
                             }.lparams {
+                                width = dip(0)
+                                height = wrapContent
                                 topToTop = R.id.cv_match_info
                                 startToStart = R.id.cv_match_info
                                 endToStart = R.id.txt_home_score
@@ -133,6 +135,7 @@ class SearchUI : AnkoComponent<ViewGroup> {
                             textView {
                                 textSize = 20f
                                 id = R.id.txt_home_score
+                                text = resources.getString(R.string._0)
                                 textAlignment = View.TEXT_ALIGNMENT_CENTER
                             }.lparams {
                                 topToTop = R.id.cv_match_info
@@ -154,6 +157,7 @@ class SearchUI : AnkoComponent<ViewGroup> {
                             textView {
                                 textSize = 20f
                                 id = R.id.txt_away_score
+                                text = resources.getString(R.string._0)
                                 textAlignment = View.TEXT_ALIGNMENT_CENTER
                             }.lparams {
                                 topToTop = R.id.cv_match_info
@@ -166,6 +170,8 @@ class SearchUI : AnkoComponent<ViewGroup> {
                                 textSize = 16f
                                 textAlignment = View.TEXT_ALIGNMENT_CENTER
                             }.lparams {
+                                width = dip(0)
+                                height = wrapContent
                                 topToTop = R.id.cv_match_info
                                 startToEnd = R.id.txt_away_score
                                 endToEnd = R.id.cv_match_info

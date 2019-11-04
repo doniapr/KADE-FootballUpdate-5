@@ -63,6 +63,8 @@ class LeagueUI : AnkoComponent<ViewGroup> {
                 cardView {
                     lparams(width = matchParent, height = wrapContent)
                     padding = dip(16)
+                    elevation = 16f
+                    backgroundColor = android.R.color.darker_gray
 
                     linearLayout {
                         lparams(width = matchParent, height = wrapContent)

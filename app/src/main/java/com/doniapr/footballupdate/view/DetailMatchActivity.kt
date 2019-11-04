@@ -60,7 +60,7 @@ class DetailMatchActivity : AppCompatActivity(), MainView {
         txt_match_home.text = data.homeTeam
         txt_lineup_home.text = data.homeTeam
         // Match Result
-        val round = resources.getString(R.string.round) + " " + data.round
+        val round = data.leagueName + " " + resources.getString(R.string.round) + " " + data.round
         txt_match_round.text = round
         setDate(data)
         if (data.homeScore != null) {
@@ -150,16 +150,16 @@ class DetailMatchActivity : AppCompatActivity(), MainView {
     }
 
     private fun setDate(match: Match) {
-        if (match.dateEvent != "" && match.time != "") {
+        if (!match.dateEvent.isNullOrEmpty() && !match.time.isNullOrEmpty()) {
             val utcDate = match.dateEvent.toString() + " " + match.time.toString()
             val wibDate = utcDate.toDateAndHour()
             val formatedDate = wibDate.formatTo("dd MMMM yyyy") + " " + wibDate.formatTo("HH:mm:ss")
             txt_match_detail_date.text = formatedDate
-        } else if (match.dateEvent != "" && match.time == "") {
+        } else if (!match.dateEvent.isNullOrEmpty() && match.time.isNullOrEmpty()) {
             val utcDate = match.dateEvent.toString()
             val wibDate = utcDate.toDate()
             txt_match_detail_date.text = wibDate.formatTo("dd MMMM yyyy")
-        } else if (match.dateEvent == "" && match.time != "") {
+        } else if (match.dateEvent.isNullOrEmpty() && !match.time.isNullOrEmpty()) {
             val utcDate = match.time.toString()
             val wibDate = utcDate.toHour()
             txt_match_detail_date.text = wibDate.formatTo("HH:mm:ss")

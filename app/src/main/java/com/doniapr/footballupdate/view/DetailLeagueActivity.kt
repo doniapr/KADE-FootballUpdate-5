@@ -36,6 +36,7 @@ class DetailLeagueActivity : AppCompatActivity(), MainView {
         val leagueId = intent.getIntExtra(LEAGUE_ID, 0)
         val leagueName = intent.getStringExtra(LEAGUE_NAME)
         toolbar_detail_league.title = leagueName
+        txt_league_name.text = leagueName
 
         setSupportActionBar(toolbar_detail_league)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -63,6 +64,7 @@ class DetailLeagueActivity : AppCompatActivity(), MainView {
     override fun showLeagueDetail(data: List<LeagueDetail>?) {
         Picasso.get().load(data?.get(0)?.leagueBadge).into(img_league_badge)
         txt_league_name.text = data?.get(0)?.leagueName
+        txt_league_country.text = data?.get(0)?.leagueCountry
 
         if (data?.get(0)?.leagueWebsite != null || data?.get(0)?.leagueWebsite != "") {
             btn_league_web.setOnClickListener {
@@ -120,7 +122,11 @@ class DetailLeagueActivity : AppCompatActivity(), MainView {
     override fun showMatchList(data: List<Match>) {}
 
     override fun onFailed(message: String?) {
-
+        cv_detail_league.visible()
+        btn_league_web.invisible()
+        btn_league_facebook.invisible()
+        btn_league_twitter.invisible()
+        btn_league_youtube.invisible()
     }
 
     override fun showMatchDetail(data: Match) {}

@@ -59,17 +59,18 @@ class NextMatchViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         txtHomeTeam.text = match.homeTeam
         txtAwayTeam.text = match.awayTeam
 
-        if ((match.dateEvent != null || match.dateEvent != "") && (match.time != null || match.time != "")) {
+
+        if (!match.dateEvent.isNullOrEmpty() && !match.time.isNullOrEmpty()) {
             val utcDate = match.dateEvent.toString() + " " + match.time.toString()
             val wibDate = utcDate.toDateAndHour()
             txtMatchDate.text = wibDate.formatTo("dd MMMM yyyy")
             txtMatchTime.text = wibDate.formatTo("HH:mm:ss")
-        } else if ((match.dateEvent != null || match.dateEvent != "") && (match.time == null || match.time == "")) {
+        } else if (!match.dateEvent.isNullOrEmpty() && match.time.isNullOrEmpty()) {
             val utcDate = match.dateEvent.toString()
             val wibDate = utcDate.toDate()
             txtMatchDate.text = wibDate.formatTo("dd MMMM yyyy")
             txtMatchTime.text = "-"
-        } else if ((match.dateEvent == null || match.dateEvent == "") && (match.time != null || match.time != "")) {
+        } else if (match.dateEvent.isNullOrEmpty() && !match.time.isNullOrEmpty()) {
             val utcDate = match.time.toString()
             val wibDate = utcDate.toHour()
             txtMatchDate.text = "-"
@@ -116,6 +117,8 @@ class NextMatchUI : AnkoComponent<ViewGroup> {
                                 textSize = 16f
                                 textAlignment = View.TEXT_ALIGNMENT_CENTER
                             }.lparams {
+                                width = dip(0)
+                                height = wrapContent
                                 topToTop = R.id.cv_match_info
                                 startToStart = R.id.cv_match_info
                                 endToStart = R.id.txt_versus
@@ -137,6 +140,8 @@ class NextMatchUI : AnkoComponent<ViewGroup> {
                                 textSize = 16f
                                 textAlignment = View.TEXT_ALIGNMENT_CENTER
                             }.lparams {
+                                width = dip(0)
+                                height = wrapContent
                                 topToTop = R.id.cv_match_info
                                 startToEnd = R.id.txt_versus
                                 endToEnd = R.id.cv_match_info
@@ -159,8 +164,6 @@ class NextMatchUI : AnkoComponent<ViewGroup> {
                             width = matchParent
                             height = wrapContent
                         }
-
-
                     }
                 }
             }
