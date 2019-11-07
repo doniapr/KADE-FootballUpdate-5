@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import com.doniapr.footballupdate.R
@@ -154,6 +155,16 @@ class DetailLeagueActivity : AppCompatActivity(), MainView {
             }
         })
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            R.id.favorite -> {
+                this@DetailLeagueActivity.startActivity<FavoriteActivity>()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
 }

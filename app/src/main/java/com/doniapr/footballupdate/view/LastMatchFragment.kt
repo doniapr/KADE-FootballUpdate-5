@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.doniapr.footballupdate.R
 import com.doniapr.footballupdate.adapter.MatchListAdapter
 import com.doniapr.footballupdate.model.LeagueDetail
@@ -24,6 +25,8 @@ import com.google.android.material.snackbar.Snackbar
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.UI
+import org.jetbrains.anko.support.v4.onRefresh
+import org.jetbrains.anko.support.v4.swipeRefreshLayout
 
 /**
  * A simple [Fragment] subclass.
@@ -37,6 +40,7 @@ class LastMatchFragment(private val leagueId: Int) : Fragment(), MainView {
     private lateinit var progressBarLastMatch: ProgressBar
     private lateinit var txtFailed: TextView
     private lateinit var linearLayout: LinearLayout
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,29 +48,32 @@ class LastMatchFragment(private val leagueId: Int) : Fragment(), MainView {
     ): View? {
         // Inflate the layout for this fragment
         return UI {
-            linearLayout = verticalLayout {
-                gravity = Gravity.CENTER_HORIZONTAL
-                padding = dip(8)
-
-                lastMatchList = recyclerView {
-                    lparams(width = matchParent, height = wrapContent)
-                    layoutManager = LinearLayoutManager(context)
-                }
-
-                progressBarLastMatch =
-                    progressBar().lparams(width = wrapContent, height = wrapContent)
-
-                txtFailed = textView {
-                    text = resources.getString(R.string.no_data)
-                    textSize = 20f
-                    visibility = View.GONE
-                }.lparams {
-                    width = matchParent
-                    height = wrapContent
-                    margin = dip(16)
+            swipeRefreshLayout = swipeRefreshLayout {
+                linearLayout = verticalLayout {
                     gravity = Gravity.CENTER_HORIZONTAL
+                    padding = dip(8)
+
+                    lastMatchList = recyclerView {
+                        lparams(width = matchParent, height = wrapContent)
+                        layoutManager = LinearLayoutManager(context)
+                    }
+
+                    progressBarLastMatch =
+                        progressBar().lparams(width = wrapContent, height = wrapContent)
+
+                    txtFailed = textView {
+                        text = resources.getString(R.string.no_data)
+                        textSize = 20f
+                        visibility = View.GONE
+                    }.lparams {
+                        width = matchParent
+                        height = wrapContent
+                        margin = dip(16)
+                        gravity = Gravity.CENTER_HORIZONTAL
+                    }
                 }
             }
+
         }.view
     }
 
@@ -78,6 +85,10 @@ class LastMatchFragment(private val leagueId: Int) : Fragment(), MainView {
 
         presenter = MainPresenter(this)
         presenter.getLastMatch(leagueId)
+
+        swipeRefreshLayout.onRefresh {
+            presenter.getLastMatch(leagueId)
+        }
     }
 
     override fun showLoading() {
@@ -91,12 +102,14 @@ class LastMatchFragment(private val leagueId: Int) : Fragment(), MainView {
     override fun showLeagueDetail(data: List<LeagueDetail>?) {}
 
     override fun showMatchList(data: List<Match>) {
+        swipeRefreshLayout.isRefreshing = false
         matches.clear()
         matches.addAll(data)
         adapter.notifyDataSetChanged()
     }
 
     override fun onFailed(message: String?) {
+        swipeRefreshLayout.isRefreshing = false
         txtFailed.visible()
         Snackbar.make(
             linearLayout,

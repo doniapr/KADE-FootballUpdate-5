@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.Gravity
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.ProgressBar
@@ -25,7 +26,7 @@ import com.doniapr.footballupdate.utility.invisible
 import com.doniapr.footballupdate.utility.visible
 import com.google.android.material.snackbar.Snackbar
 import org.jetbrains.anko.*
-import org.jetbrains.anko.appcompat.v7.toolbar
+import org.jetbrains.anko.appcompat.v7.themedToolbar
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 
 class SearchResultActivity : AppCompatActivity(), MainView {
@@ -46,17 +47,13 @@ class SearchResultActivity : AppCompatActivity(), MainView {
         linearLayout = verticalLayout {
             lparams(width = matchParent, height = matchParent)
 
-            toolbar = toolbar {
+            toolbar = themedToolbar(R.style.ThemeOverlay_AppCompat_Dark_ActionBar) {
                 backgroundColor = ContextCompat.getColor(
                     context,
                     R.color.colorPrimary
                 )
-                title = resources.getString(R.string.search_result)
-                setTitleTextColor(resources.getColor(android.R.color.white))
-            }.lparams {
-                width = matchParent
-                height = wrapContent
-            }
+                title = resources.getString(R.string.app_name)
+            }.lparams(width = matchParent, height = dimenAttr(R.attr.actionBarSize))
 
             txtQuery = textView {
                 textSize = 16f
@@ -164,5 +161,15 @@ class SearchResultActivity : AppCompatActivity(), MainView {
             }
         })
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            R.id.favorite -> {
+                this@SearchResultActivity.startActivity<FavoriteActivity>()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

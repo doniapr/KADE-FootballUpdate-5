@@ -42,637 +42,646 @@
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_detail_match"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:behavior_overlapTop="100dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <ProgressBar
-                android:id="@+id/progress_bar_detail_match"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"/>
-
-            <!-- Match result -->
-            <androidx.cardview.widget.CardView
+            <LinearLayout
+                android:id="@+id/layout_detail_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                app:cardCornerRadius="10dp"
-                android:padding="8dp">
+                android:orientation="vertical">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <ProgressBar
+                    android:id="@+id/progress_bar_detail_match"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"/>
+
+                <!-- Match result -->
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/txt_match_round"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/round"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    app:cardCornerRadius="10dp"
+                    android:padding="8dp">
 
-                    <TextView
-                        android:id="@+id/txt_match_detail_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/date"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txt_match_round"/>
-
-                    <ImageView
-                        android:id="@+id/img_match_home_team_badge"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:padding="8dp"
-                        android:src="@drawable/team_badge"
-                        android:scaleType="fitXY"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/txt_match_home_score"
-                        app:layout_constraintTop_toBottomOf="@id/txt_match_detail_date"
-                        android:contentDescription="@string/home_team" />
-
-                    <TextView
-                        android:id="@+id/txt_match_home"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="@string/home_team"
-                        android:gravity="center"
-                        android:textStyle="bold"
-                        android:textSize="16sp"
-                        app:layout_constraintTop_toBottomOf="@id/img_match_home_team_badge"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/txt_match_home_score"/>
-
-                    <TextView
-                        android:id="@+id/txt_match_home_score"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:text="@string/_0"
-                        android:textStyle="bold"
-                        android:textSize="24sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/txt_match_versus"
-                        app:layout_constraintEnd_toStartOf="@+id/txt_match_versus"
-                        app:layout_constraintTop_toTopOf="@id/txt_match_versus" />
-
-                    <TextView
-                        android:id="@+id/txt_match_versus"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/versus"
-                        app:layout_constraintBottom_toBottomOf="@+id/img_match_home_team_badge"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/img_match_home_team_badge" />
-
-                    <ImageView
-                        android:id="@+id/img_match_away_team_badge"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:padding="8dp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/team_badge"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/txt_match_away_score"
-                        app:layout_constraintTop_toBottomOf="@id/txt_match_detail_date"
-                        android:contentDescription="@string/away_team" />
-
-                    <TextView
-                        android:id="@+id/txt_match_away"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:text="@string/away_team"
-                        android:gravity="center"
-                        android:textStyle="bold"
-                        android:textSize="16sp"
-                        app:layout_constraintTop_toBottomOf="@id/img_match_away_team_badge"
-                        app:layout_constraintStart_toEndOf="@id/txt_match_away_score"
-                        app:layout_constraintEnd_toEndOf="parent"/>
-
-                    <TextView
-                        android:id="@+id/txt_match_away_score"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="@string/_0"
-                        android:textStyle="bold"
-                        android:textSize="24sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/txt_match_versus"
-                        app:layout_constraintStart_toEndOf="@+id/txt_match_versus"
-                        app:layout_constraintTop_toTopOf="@+id/txt_match_versus" />
-
-                    <TextView
-                        android:id="@+id/txt_home_goal_scorer"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/goal_scorer"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        app:layout_constraintEnd_toEndOf="@id/txt_match_home"
-                        app:layout_constraintStart_toStartOf="@id/txt_match_home"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/txt_match_home" />
-
-                    <TextView
-                        android:id="@+id/txt_away_goal_scorer"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/goal_scorer"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        app:layout_constraintEnd_toEndOf="@+id/txt_match_away"
-                        app:layout_constraintStart_toStartOf="@+id/txt_match_away"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/txt_match_away" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Stats -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                app:cardCornerRadius="10dp"
-                android:padding="8dp">
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <!-- Stats Title -->
-                    <TextView
-                        android:id="@+id/txt_stats"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/stats"
-                        android:textSize="24sp"
-                        android:textStyle="bold"
-                        android:layout_marginTop="8dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
-
-                    <TextView
-                        android:id="@+id/txt_stats_goal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/goal"
-                        android:textStyle="bold"
-                        android:textSize="16sp"
-                        android:layout_marginTop="@dimen/activity_vertical_margin"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txt_stats"/>
-                    <TextView
-                        android:id="@+id/txt_stats_shots"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/shots"
-                        android:textStyle="bold"
-                        android:textSize="16sp"
-                        android:layout_marginTop="8dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txt_stats_goal"/>
-                    <TextView
-                        android:id="@+id/txt_stats_yellow_card"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/yellow_card"
-                        android:textStyle="bold"
-                        android:textSize="16sp"
-                        android:layout_marginTop="8dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txt_stats_home_red_card"/>
-                    <TextView
-                        android:id="@+id/txt_stats_red_card"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/red_card"
-                        android:textStyle="bold"
-                        android:textSize="16sp"
-                        android:layout_marginTop="8dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txt_stats_shots"/>
-
-                    <!--Home Stats-->
-                    <TextView
-                        android:id="@+id/txt_stats_home_goal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/_0"
-                        android:layout_marginStart="@dimen/activity_horizontal_margin"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/txt_stats_goal"/>
-                    <TextView
-                        android:id="@+id/txt_stats_home_shots"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/_0"
-                        android:layout_marginStart="@dimen/activity_horizontal_margin"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/txt_stats_shots"/>
-                    <TextView
-                        android:id="@+id/txt_stats_home_red_card"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/_0"
-                        android:layout_marginStart="@dimen/activity_horizontal_margin"
-                        android:layout_marginEnd="8dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/txt_stats_red_card"
-                        app:layout_constraintTop_toTopOf="@id/txt_stats_red_card"/>
-                    <TextView
-                        android:id="@+id/txt_stats_home_yellow_card"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/_0"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:layout_marginStart="@dimen/activity_horizontal_margin"
-                        android:layout_marginEnd="8dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/txt_stats_yellow_card"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/txt_stats_yellow_card"/>
-
-                    <!--Away Stats-->
-                    <TextView
-                        android:id="@+id/txt_stats_away_goal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/_0"
-                        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/txt_stats_goal"/>
-                    <TextView
-                        android:id="@+id/txt_stats_away_shots"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/_0"
-                        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/txt_stats_shots"/>
-                    <TextView
-                        android:id="@+id/txt_stats_away_red_card"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/_0"
-                        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                        android:layout_marginStart="8dp"
-                        app:layout_constraintStart_toEndOf="@id/txt_stats_red_card"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/txt_stats_red_card"/>
-                    <TextView
-                        android:id="@+id/txt_stats_away_yellow_card"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/_0"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                        android:layout_marginStart="8dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/txt_stats_yellow_card"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/txt_stats_yellow_card"/>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Lineup -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
-                app:cardCornerRadius="10dp"
-                android:padding="8dp">
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/txt_lineup"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/lineup"
-                        android:textSize="24sp"
-                        android:textStyle="bold"
-                        android:layout_marginTop="8dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
-
-                    <!-- Home Lineup -->
-                    <TextView
-                        android:id="@+id/txt_lineup_home"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/home_team"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="@dimen/activity_horizontal_margin"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txt_lineup"/>
-
-                    <!-- Home GK -->
-                    <TextView
-                        android:id="@+id/txt_position_gk_home"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/goalkeepers"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="8dp"
-                        app:layout_constraintStart_toStartOf="@id/txt_lineup_home"
-                        app:layout_constraintTop_toBottomOf="@id/txt_lineup_home"/>
-                    <TextView
-                        android:id="@+id/txt_lineup_gk_home"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:text="@string/_0"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@id/txt_position_gk_home"
-                        app:layout_constraintTop_toBottomOf="@id/txt_position_gk_home"/>
-
-                    <!-- Home DF -->
-                    <TextView
-                        android:id="@+id/txt_position_df_home"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/defenders"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="8dp"
-                        app:layout_constraintStart_toStartOf="@id/txt_lineup_home"
-                        app:layout_constraintTop_toBottomOf="@id/txt_lineup_gk_home"/>
-                    <TextView
-                        android:id="@+id/txt_lineup_df_home"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:text="@string/_0"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@id/txt_position_df_home"
-                        app:layout_constraintTop_toBottomOf="@id/txt_position_df_home"/>
-
-                    <!-- Home MF -->
-                    <TextView
-                        android:id="@+id/txt_position_mf_home"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/midfielders"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="8dp"
-                        app:layout_constraintStart_toStartOf="@id/txt_lineup_home"
-                        app:layout_constraintTop_toBottomOf="@id/txt_lineup_df_home"/>
-                    <TextView
-                        android:id="@+id/txt_lineup_mf_home"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:text="@string/_0"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@id/txt_position_mf_home"
-                        app:layout_constraintTop_toBottomOf="@id/txt_position_mf_home"/>
-
-                    <!-- Home CF -->
-                    <TextView
-                        android:id="@+id/txt_position_cf_home"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/forwards"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="8dp"
-                        app:layout_constraintStart_toStartOf="@id/txt_lineup_home"
-                        app:layout_constraintTop_toBottomOf="@id/txt_lineup_mf_home"/>
-                    <TextView
-                        android:id="@+id/txt_lineup_cf_home"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:text="@string/_0"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@id/txt_position_cf_home"
-                        app:layout_constraintTop_toBottomOf="@id/txt_position_cf_home"/>
-
-                    <!-- Home Subs -->
-                    <TextView
-                        android:id="@+id/txt_position_subs_home"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/subtitutes"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="8dp"
-                        app:layout_constraintStart_toStartOf="@id/txt_lineup_home"
-                        app:layout_constraintTop_toBottomOf="@id/txt_lineup_cf_home"/>
-                    <TextView
-                        android:id="@+id/txt_lineup_subs_home"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:text="@string/_0"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@id/txt_position_subs_home"
-                        app:layout_constraintTop_toBottomOf="@id/txt_position_subs_home"/>
-
-                    <View
-                        android:id="@+id/separator"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@android:color/darker_gray"
-                        android:layout_marginTop="8dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/txt_lineup_subs_home"/>
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/txt_match_round"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/round"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
 
-                    <!-- Away Lineup -->
-                    <TextView
-                        android:id="@+id/txt_lineup_away"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/home_team"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="@dimen/activity_horizontal_margin"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/separator"/>
+                        <TextView
+                            android:id="@+id/txt_match_detail_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/date"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txt_match_round"/>
 
-                    <!-- Away GK -->
-                    <TextView
-                        android:id="@+id/txt_position_gk_away"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/goalkeepers"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="8dp"
-                        app:layout_constraintStart_toStartOf="@id/txt_lineup_away"
-                        app:layout_constraintTop_toBottomOf="@id/txt_lineup_away"/>
-                    <TextView
-                        android:id="@+id/txt_lineup_gk_away"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:text="@string/_0"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@id/txt_position_gk_away"
-                        app:layout_constraintTop_toBottomOf="@id/txt_position_gk_away"/>
+                        <ImageView
+                            android:id="@+id/img_match_home_team_badge"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:padding="8dp"
+                            android:src="@drawable/team_badge"
+                            android:scaleType="fitXY"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/txt_match_home_score"
+                            app:layout_constraintTop_toBottomOf="@id/txt_match_detail_date"
+                            android:contentDescription="@string/home_team" />
 
-                    <!-- Away DF -->
-                    <TextView
-                        android:id="@+id/txt_position_df_away"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/defenders"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="8dp"
-                        app:layout_constraintStart_toStartOf="@id/txt_lineup_away"
-                        app:layout_constraintTop_toBottomOf="@id/txt_lineup_gk_away"/>
-                    <TextView
-                        android:id="@+id/txt_lineup_df_away"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:text="@string/_0"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@id/txt_position_df_away"
-                        app:layout_constraintTop_toBottomOf="@id/txt_position_df_away"/>
+                        <TextView
+                            android:id="@+id/txt_match_home"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:text="@string/home_team"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            app:layout_constraintTop_toBottomOf="@id/img_match_home_team_badge"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/txt_match_home_score"/>
 
-                    <!-- Away MF -->
-                    <TextView
-                        android:id="@+id/txt_position_mf_away"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/midfielders"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="8dp"
-                        app:layout_constraintStart_toStartOf="@id/txt_lineup_away"
-                        app:layout_constraintTop_toBottomOf="@id/txt_lineup_df_away"/>
-                    <TextView
-                        android:id="@+id/txt_lineup_mf_away"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:text="@string/_0"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@id/txt_position_mf_away"
-                        app:layout_constraintTop_toBottomOf="@id/txt_position_mf_away"/>
+                        <TextView
+                            android:id="@+id/txt_match_home_score"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:text="@string/_0"
+                            android:textStyle="bold"
+                            android:textSize="24sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/txt_match_versus"
+                            app:layout_constraintEnd_toStartOf="@+id/txt_match_versus"
+                            app:layout_constraintTop_toTopOf="@id/txt_match_versus" />
 
-                    <!-- Away CF -->
-                    <TextView
-                        android:id="@+id/txt_position_cf_away"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/forwards"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="8dp"
-                        app:layout_constraintStart_toStartOf="@id/txt_lineup_away"
-                        app:layout_constraintTop_toBottomOf="@id/txt_lineup_mf_away"/>
-                    <TextView
-                        android:id="@+id/txt_lineup_cf_away"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:text="@string/_0"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@id/txt_position_cf_away"
-                        app:layout_constraintTop_toBottomOf="@id/txt_position_cf_away"/>
+                        <TextView
+                            android:id="@+id/txt_match_versus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/versus"
+                            app:layout_constraintBottom_toBottomOf="@+id/img_match_home_team_badge"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/img_match_home_team_badge" />
 
-                    <!-- Away Subs -->
-                    <TextView
-                        android:id="@+id/txt_position_subs_away"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/subtitutes"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="8dp"
-                        app:layout_constraintStart_toStartOf="@id/txt_lineup_away"
-                        app:layout_constraintTop_toBottomOf="@id/txt_lineup_cf_away"/>
-                    <TextView
-                        android:id="@+id/txt_lineup_subs_away"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:text="@string/_0"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="@id/txt_position_subs_away"
-                        app:layout_constraintTop_toBottomOf="@id/txt_position_subs_away"/>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.cardview.widget.CardView>
+                        <ImageView
+                            android:id="@+id/img_match_away_team_badge"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:padding="8dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/team_badge"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/txt_match_away_score"
+                            app:layout_constraintTop_toBottomOf="@id/txt_match_detail_date"
+                            android:contentDescription="@string/away_team" />
 
-        </LinearLayout>
+                        <TextView
+                            android:id="@+id/txt_match_away"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:text="@string/away_team"
+                            android:gravity="center"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            app:layout_constraintTop_toBottomOf="@id/img_match_away_team_badge"
+                            app:layout_constraintStart_toEndOf="@id/txt_match_away_score"
+                            app:layout_constraintEnd_toEndOf="parent"/>
 
-    </androidx.core.widget.NestedScrollView>
+                        <TextView
+                            android:id="@+id/txt_match_away_score"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="@string/_0"
+                            android:textStyle="bold"
+                            android:textSize="24sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/txt_match_versus"
+                            app:layout_constraintStart_toEndOf="@+id/txt_match_versus"
+                            app:layout_constraintTop_toTopOf="@+id/txt_match_versus" />
+
+                        <TextView
+                            android:id="@+id/txt_home_goal_scorer"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/goal_scorer"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            app:layout_constraintEnd_toEndOf="@id/txt_match_home"
+                            app:layout_constraintStart_toStartOf="@id/txt_match_home"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txt_match_home" />
+
+                        <TextView
+                            android:id="@+id/txt_away_goal_scorer"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/goal_scorer"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            app:layout_constraintEnd_toEndOf="@+id/txt_match_away"
+                            app:layout_constraintStart_toStartOf="@+id/txt_match_away"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txt_match_away" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Stats -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    app:cardCornerRadius="10dp"
+                    android:padding="8dp">
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <!-- Stats Title -->
+                        <TextView
+                            android:id="@+id/txt_stats"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/stats"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/txt_stats_goal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/goal"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:layout_marginTop="@dimen/activity_vertical_margin"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txt_stats"/>
+                        <TextView
+                            android:id="@+id/txt_stats_shots"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/shots"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txt_stats_goal"/>
+                        <TextView
+                            android:id="@+id/txt_stats_yellow_card"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/yellow_card"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txt_stats_home_red_card"/>
+                        <TextView
+                            android:id="@+id/txt_stats_red_card"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/red_card"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txt_stats_shots"/>
+
+                        <!--Home Stats-->
+                        <TextView
+                            android:id="@+id/txt_stats_home_goal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/_0"
+                            android:layout_marginStart="@dimen/activity_horizontal_margin"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/txt_stats_goal"/>
+                        <TextView
+                            android:id="@+id/txt_stats_home_shots"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/_0"
+                            android:layout_marginStart="@dimen/activity_horizontal_margin"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/txt_stats_shots"/>
+                        <TextView
+                            android:id="@+id/txt_stats_home_red_card"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/_0"
+                            android:layout_marginStart="@dimen/activity_horizontal_margin"
+                            android:layout_marginEnd="8dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/txt_stats_red_card"
+                            app:layout_constraintTop_toTopOf="@id/txt_stats_red_card"/>
+                        <TextView
+                            android:id="@+id/txt_stats_home_yellow_card"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/_0"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:layout_marginStart="@dimen/activity_horizontal_margin"
+                            android:layout_marginEnd="8dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/txt_stats_yellow_card"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/txt_stats_yellow_card"/>
+
+                        <!--Away Stats-->
+                        <TextView
+                            android:id="@+id/txt_stats_away_goal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/_0"
+                            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/txt_stats_goal"/>
+                        <TextView
+                            android:id="@+id/txt_stats_away_shots"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/_0"
+                            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/txt_stats_shots"/>
+                        <TextView
+                            android:id="@+id/txt_stats_away_red_card"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/_0"
+                            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                            android:layout_marginStart="8dp"
+                            app:layout_constraintStart_toEndOf="@id/txt_stats_red_card"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/txt_stats_red_card"/>
+                        <TextView
+                            android:id="@+id/txt_stats_away_yellow_card"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/_0"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                            android:layout_marginStart="8dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/txt_stats_yellow_card"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/txt_stats_yellow_card"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Lineup -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:layout_marginBottom="@dimen/activity_vertical_margin"
+                    app:cardCornerRadius="10dp"
+                    android:padding="8dp">
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/txt_lineup"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/lineup"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <!-- Home Lineup -->
+                        <TextView
+                            android:id="@+id/txt_lineup_home"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/home_team"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginStart="@dimen/activity_horizontal_margin"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txt_lineup"/>
+
+                        <!-- Home GK -->
+                        <TextView
+                            android:id="@+id/txt_position_gk_home"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/goalkeepers"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginStart="8dp"
+                            app:layout_constraintStart_toStartOf="@id/txt_lineup_home"
+                            app:layout_constraintTop_toBottomOf="@id/txt_lineup_home"/>
+                        <TextView
+                            android:id="@+id/txt_lineup_gk_home"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:text="@string/_0"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/txt_position_gk_home"
+                            app:layout_constraintTop_toBottomOf="@id/txt_position_gk_home"/>
+
+                        <!-- Home DF -->
+                        <TextView
+                            android:id="@+id/txt_position_df_home"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/defenders"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginStart="8dp"
+                            app:layout_constraintStart_toStartOf="@id/txt_lineup_home"
+                            app:layout_constraintTop_toBottomOf="@id/txt_lineup_gk_home"/>
+                        <TextView
+                            android:id="@+id/txt_lineup_df_home"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:text="@string/_0"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/txt_position_df_home"
+                            app:layout_constraintTop_toBottomOf="@id/txt_position_df_home"/>
+
+                        <!-- Home MF -->
+                        <TextView
+                            android:id="@+id/txt_position_mf_home"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/midfielders"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginStart="8dp"
+                            app:layout_constraintStart_toStartOf="@id/txt_lineup_home"
+                            app:layout_constraintTop_toBottomOf="@id/txt_lineup_df_home"/>
+                        <TextView
+                            android:id="@+id/txt_lineup_mf_home"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:text="@string/_0"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/txt_position_mf_home"
+                            app:layout_constraintTop_toBottomOf="@id/txt_position_mf_home"/>
+
+                        <!-- Home CF -->
+                        <TextView
+                            android:id="@+id/txt_position_cf_home"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/forwards"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginStart="8dp"
+                            app:layout_constraintStart_toStartOf="@id/txt_lineup_home"
+                            app:layout_constraintTop_toBottomOf="@id/txt_lineup_mf_home"/>
+                        <TextView
+                            android:id="@+id/txt_lineup_cf_home"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:text="@string/_0"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/txt_position_cf_home"
+                            app:layout_constraintTop_toBottomOf="@id/txt_position_cf_home"/>
+
+                        <!-- Home Subs -->
+                        <TextView
+                            android:id="@+id/txt_position_subs_home"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/subtitutes"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginStart="8dp"
+                            app:layout_constraintStart_toStartOf="@id/txt_lineup_home"
+                            app:layout_constraintTop_toBottomOf="@id/txt_lineup_cf_home"/>
+                        <TextView
+                            android:id="@+id/txt_lineup_subs_home"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:text="@string/_0"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/txt_position_subs_home"
+                            app:layout_constraintTop_toBottomOf="@id/txt_position_subs_home"/>
+
+                        <View
+                            android:id="@+id/separator"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@android:color/darker_gray"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txt_lineup_subs_home"/>
+
+                        <!-- Away Lineup -->
+                        <TextView
+                            android:id="@+id/txt_lineup_away"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/home_team"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginStart="@dimen/activity_horizontal_margin"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/separator"/>
+
+                        <!-- Away GK -->
+                        <TextView
+                            android:id="@+id/txt_position_gk_away"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/goalkeepers"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginStart="8dp"
+                            app:layout_constraintStart_toStartOf="@id/txt_lineup_away"
+                            app:layout_constraintTop_toBottomOf="@id/txt_lineup_away"/>
+                        <TextView
+                            android:id="@+id/txt_lineup_gk_away"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:text="@string/_0"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/txt_position_gk_away"
+                            app:layout_constraintTop_toBottomOf="@id/txt_position_gk_away"/>
+
+                        <!-- Away DF -->
+                        <TextView
+                            android:id="@+id/txt_position_df_away"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/defenders"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginStart="8dp"
+                            app:layout_constraintStart_toStartOf="@id/txt_lineup_away"
+                            app:layout_constraintTop_toBottomOf="@id/txt_lineup_gk_away"/>
+                        <TextView
+                            android:id="@+id/txt_lineup_df_away"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:text="@string/_0"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/txt_position_df_away"
+                            app:layout_constraintTop_toBottomOf="@id/txt_position_df_away"/>
+
+                        <!-- Away MF -->
+                        <TextView
+                            android:id="@+id/txt_position_mf_away"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/midfielders"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginStart="8dp"
+                            app:layout_constraintStart_toStartOf="@id/txt_lineup_away"
+                            app:layout_constraintTop_toBottomOf="@id/txt_lineup_df_away"/>
+                        <TextView
+                            android:id="@+id/txt_lineup_mf_away"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:text="@string/_0"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/txt_position_mf_away"
+                            app:layout_constraintTop_toBottomOf="@id/txt_position_mf_away"/>
+
+                        <!-- Away CF -->
+                        <TextView
+                            android:id="@+id/txt_position_cf_away"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/forwards"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginStart="8dp"
+                            app:layout_constraintStart_toStartOf="@id/txt_lineup_away"
+                            app:layout_constraintTop_toBottomOf="@id/txt_lineup_mf_away"/>
+                        <TextView
+                            android:id="@+id/txt_lineup_cf_away"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:text="@string/_0"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/txt_position_cf_away"
+                            app:layout_constraintTop_toBottomOf="@id/txt_position_cf_away"/>
+
+                        <!-- Away Subs -->
+                        <TextView
+                            android:id="@+id/txt_position_subs_away"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/subtitutes"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginStart="8dp"
+                            app:layout_constraintStart_toStartOf="@id/txt_lineup_away"
+                            app:layout_constraintTop_toBottomOf="@id/txt_lineup_cf_away"/>
+                        <TextView
+                            android:id="@+id/txt_lineup_subs_away"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:text="@string/_0"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/txt_position_subs_away"
+                            app:layout_constraintTop_toBottomOf="@id/txt_position_subs_away"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

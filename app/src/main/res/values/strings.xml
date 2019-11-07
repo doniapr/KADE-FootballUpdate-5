@@ -78,12 +78,10 @@
         <item>https://www.thesportsdb.com/images/media/league/badge/c7evs21534799383.png</item>
     </array>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="image_banner">image banner</string>
     <string name="image_badge">image badge</string>
     <string name="search">Cari Pertandingan</string>
     <string name="search_hint">Cari Pertandingan</string>
-    <string name="search_result">Hasil Pencarian</string>
     <string name="versus">VS</string>
     <string name="home_team">Home Team</string>
     <string name="_0">-</string>
@@ -104,4 +102,6 @@
     <string name="midfielders">Midfielders</string>
     <string name="forwards">Forwards</string>
     <string name="subtitutes">Subtitutes</string>
+    <string name="favorite">Favorite</string>
+
 </resources>
