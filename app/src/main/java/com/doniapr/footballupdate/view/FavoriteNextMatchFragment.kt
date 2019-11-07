@@ -2,6 +2,7 @@ package com.doniapr.footballupdate.view
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -103,7 +104,11 @@ class FavoriteNextMatchFragment : Fragment() {
                 for (i in favorite.indices){
                     if (!favorite[i].date.isNullOrEmpty()){
                         val matchDate = favorite[i].date?.toDate()
-                        if (matchDate?.after(currentDate)!!){
+                        Log.e("matchDateOri: ", favorite[i].date)
+                        Log.e("matchDate: ", matchDate.toString())
+                        Log.e("matchDateCurrent: ", currentDate.toString())
+
+                        if (matchDate?.after(currentDate)!! || matchDate?.equals(currentDate)){
                             favorites.add(favorite[i])
                             adapter.notifyDataSetChanged()
                             txtFailed.invisible()
