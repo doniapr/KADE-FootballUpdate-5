@@ -66,10 +66,14 @@ class DetailLeagueActivity : AppCompatActivity(), MainView {
         txt_league_name.text = data?.get(0)?.leagueName
         txt_league_country.text = data?.get(0)?.leagueCountry
 
-        if (data?.get(0)?.leagueWebsite != null || data?.get(0)?.leagueWebsite != "") {
+        var urlWeb = data?.get(0)?.leagueWebsite
+        var urlFb = data?.get(0)?.leagueFacebook
+        var urlTwitter = data?.get(0)?.leagueTwitter
+        var urlYt = data?.get(0)?.leagueYoutube
+
+        if (!urlWeb.isNullOrEmpty()) {
             btn_league_web.setOnClickListener {
-                var urlWeb = data!![0].leagueWebsite
-                if (!urlWeb!!.startsWith("http://") || !urlWeb.startsWith("https://")) {
+                if (!urlWeb?.startsWith("http://")!! || !urlWeb?.startsWith("https://")!!) {
                     urlWeb = "http://$urlWeb"
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(urlWeb))
                     this@DetailLeagueActivity.startActivity(intent)
@@ -79,10 +83,9 @@ class DetailLeagueActivity : AppCompatActivity(), MainView {
             btn_league_web.invisible()
         }
 
-        if (data?.get(0)?.leagueFacebook != null || data?.get(0)?.leagueFacebook != "") {
+        if (!urlFb.isNullOrEmpty()) {
             btn_league_facebook.setOnClickListener {
-                var urlFb = data!![0].leagueFacebook
-                if (!urlFb!!.startsWith("http://") || !urlFb.startsWith("https://")) {
+                if (!urlFb?.startsWith("http://")!! || !urlFb?.startsWith("https://")!!) {
                     urlFb = "http://$urlFb"
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(urlFb))
                     this@DetailLeagueActivity.startActivity(intent)
@@ -92,10 +95,9 @@ class DetailLeagueActivity : AppCompatActivity(), MainView {
             btn_league_facebook.invisible()
         }
 
-        if (data?.get(0)?.leagueTwitter != null || data?.get(0)?.leagueTwitter != "") {
+        if (!urlTwitter.isNullOrEmpty()) {
             btn_league_twitter.setOnClickListener {
-                var urlTwitter = data!![0].leagueTwitter
-                if (!urlTwitter!!.startsWith("http://") || !urlTwitter.startsWith("https://")) {
+                if (!urlTwitter?.startsWith("http://")!! || !urlTwitter?.startsWith("https://")!!) {
                     urlTwitter = "http://$urlTwitter"
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(urlTwitter))
                     this@DetailLeagueActivity.startActivity(intent)
@@ -105,10 +107,9 @@ class DetailLeagueActivity : AppCompatActivity(), MainView {
             btn_league_twitter.invisible()
         }
 
-        if (data?.get(0)?.leagueYoutube != null || data?.get(0)?.leagueYoutube != "") {
+        if (!urlYt.isNullOrEmpty()) {
             btn_league_youtube.setOnClickListener {
-                var urlYt = data!![0].leagueYoutube
-                if (!urlYt!!.startsWith("http://") || !urlYt.startsWith("https://")) {
+                if (!urlYt?.startsWith("http://")!! || !urlYt?.startsWith("https://")!!) {
                     urlYt = "http://$urlYt"
                     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(urlYt))
                     this@DetailLeagueActivity.startActivity(intent)

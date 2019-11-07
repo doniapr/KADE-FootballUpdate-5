@@ -19,7 +19,7 @@ class MainApi : Application() {
         .build()
 
     private val retrofit = Retrofit.Builder()
-        .baseUrl("https://www.thesportsdb.com/")
+        .baseUrl(BuildConfig.BASE_URL)
         .client(client)
         .addConverterFactory(GsonConverterFactory.create())
         .build()

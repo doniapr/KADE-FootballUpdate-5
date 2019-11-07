@@ -14,6 +14,8 @@ import kotlinx.android.synthetic.main.activity_detail_match.*
 
 class DetailMatchActivity : AppCompatActivity(), MainView {
     private lateinit var presenter: MainPresenter
+    private lateinit var match: Match
+    private lateinit var team: Team
 
     companion object {
         const val EVENT_ID: String = "event_id"
@@ -54,6 +56,7 @@ class DetailMatchActivity : AppCompatActivity(), MainView {
 
     override fun showMatchDetail(data: Match) {
         supportActionBar?.title = data.eventName
+        match = data
 
         Picasso.get().load(data.matchBanner + "/preview").into(img_banner_match)
         // Set Home
@@ -140,7 +143,8 @@ class DetailMatchActivity : AppCompatActivity(), MainView {
     }
 
     override fun showTeam(data: Team, isHome: Boolean) {
-        if (data.teamBadge != null || data.teamBadge != "") {
+        team = data
+        if (!data.teamBadge.isNullOrEmpty()) {
             if (isHome) {
                 Picasso.get().load(data.teamBadge + "/preview").into(img_match_home_team_badge)
             } else {

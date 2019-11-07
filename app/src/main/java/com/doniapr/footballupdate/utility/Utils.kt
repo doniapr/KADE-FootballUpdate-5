@@ -18,7 +18,7 @@ fun String.toDateAndHour(
 ): Date {
     val parser = SimpleDateFormat(dateFormat, Locale.getDefault())
     parser.timeZone = timeZone
-    return parser.parse(this)
+    return parser.parse(this) as Date
 }
 
 fun String.toDate(
@@ -27,7 +27,7 @@ fun String.toDate(
 ): Date {
     val parser = SimpleDateFormat(dateFormat, Locale.getDefault())
     parser.timeZone = timeZone
-    return parser.parse(this)
+    return parser.parse(this) as Date
 }
 
 fun String.toHour(
@@ -36,7 +36,7 @@ fun String.toHour(
 ): Date {
     val parser = SimpleDateFormat(dateFormat, Locale.getDefault())
     parser.timeZone = timeZone
-    return parser.parse(this)
+    return parser.parse(this) as Date
 }
 
 fun Date.formatTo(dateFormat: String, timeZone: TimeZone = TimeZone.getDefault()): String {

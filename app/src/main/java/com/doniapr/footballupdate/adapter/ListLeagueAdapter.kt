@@ -73,6 +73,7 @@ class LeagueUI : AnkoComponent<ViewGroup> {
 
                         imageView {
                             id = R.id.img_league_badge
+                            setImageResource(R.drawable.team_badge)
                         }.lparams {
                             width = dip(50)
                             height = dip(50)

@@ -79,7 +79,6 @@
     </array>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="image_banner">image banner</string>
     <string name="image_badge">image badge</string>
     <string name="search">Cari Pertandingan</string>
@@ -94,7 +93,6 @@
     <string name="no_data">Tidak Ada Data Ditemukan</string>
     <string name="round">Round </string>
     <string name="date">Date</string>
-    <string name="time">Time</string>
     <string name="stats">Stats</string>
     <string name="goal">Goal</string>
     <string name="shots">Shots</string>
