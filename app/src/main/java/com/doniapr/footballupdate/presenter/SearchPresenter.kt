@@ -1,7 +1,6 @@
 package com.doniapr.footballupdate.presenter
 
 import com.doniapr.footballupdate.apiservice.MainApi
-import com.doniapr.footballupdate.model.Match
 import com.doniapr.footballupdate.model.SearchResponse
 import com.doniapr.footballupdate.view.SearchResultView
 import org.jetbrains.anko.doAsync
@@ -12,7 +11,6 @@ import retrofit2.Response
 
 class SearchPresenter(private val view: SearchResultView){
     fun doSearch(query: String?) {
-        val matches: MutableList<Match> = mutableListOf()
         view.showLoading()
         doAsync {
             MainApi().services.searchMatch(query).enqueue(object :
@@ -30,15 +28,14 @@ class SearchPresenter(private val view: SearchResultView){
                 ) {
                     if (response.code() == 200) {
                         if (response.body()?.matches != null) {
-                            for (i in response.body()!!.matches.indices){
-                                if (response.body()!!.matches[i].sportName == "Soccer"){
-                                    matches.add(response.body()!!.matches[i])
-                                }
+
+                            val filtered = response.body()!!.matches.filter {
+                                it.sportName == "Soccer"
                             }
-                            if (matches.isNotEmpty()){
+                            if (filtered.isNotEmpty()){
                                 uiThread {
                                     view.hideLoading()
-                                    view.showMatchList(matches)
+                                    view.showMatchList(filtered)
                                 }
                             }else{
                                 uiThread {
@@ -60,7 +57,6 @@ class SearchPresenter(private val view: SearchResultView){
     }
 
     fun doSearchInLeague(query: String?, leagueName: String?) {
-        val matches: MutableList<Match> = mutableListOf()
         view.showLoading()
         doAsync {
             MainApi().services.searchMatch(query).enqueue(object :
@@ -78,17 +74,16 @@ class SearchPresenter(private val view: SearchResultView){
                 ) {
                     if (response.code() == 200) {
                         if (response.body()?.matches != null) {
-                            for (i in response.body()!!.matches.indices){
-                                if (response.body()!!.matches[i].sportName == "Soccer"){
-                                    if (response.body()!!.matches[i].leagueName == leagueName){
-                                        matches.add(response.body()!!.matches[i])
-                                    }
-                                }
+                            val filtered = response.body()!!.matches.filter {
+                                it.sportName == "Soccer"
+                            }.filter {
+                                it.leagueName == leagueName
                             }
-                            if (matches.isNotEmpty()){
+
+                            if (filtered.isNotEmpty()){
                                 uiThread {
                                     view.hideLoading()
-                                    view.showMatchList(matches)
+                                    view.showMatchList(filtered)
                                 }
                             }else{
                                 uiThread {
