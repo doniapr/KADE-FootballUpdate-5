@@ -7,8 +7,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.doniapr.footballupdate.R
-import com.doniapr.footballupdate.view.LastMatchFragment
-import com.doniapr.footballupdate.view.NextMatchFragment
+import com.doniapr.footballupdate.view.ui.LastMatchFragment
+import com.doniapr.footballupdate.view.ui.NextMatchFragment
 
 class DetailLeaguePagerAdapter(
     private val context: Context,

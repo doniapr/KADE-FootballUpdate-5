@@ -1,4 +1,4 @@
-package com.doniapr.footballupdate.view
+package com.doniapr.footballupdate.view.ui
 
 import android.app.SearchManager
 import android.content.Context
@@ -6,23 +6,23 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import com.doniapr.footballupdate.R
 import com.doniapr.footballupdate.adapter.DetailLeaguePagerAdapter
 import com.doniapr.footballupdate.model.LeagueDetail
-import com.doniapr.footballupdate.model.Match
-import com.doniapr.footballupdate.model.Team
-import com.doniapr.footballupdate.presenter.MainPresenter
+import com.doniapr.footballupdate.presenter.DetailLeaguePresenter
 import com.doniapr.footballupdate.utility.invisible
 import com.doniapr.footballupdate.utility.visible
+import com.doniapr.footballupdate.view.DetailLeagueView
+import com.doniapr.footballupdate.view.ui.SearchResultActivity.Companion.QUERY
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail_league.*
 import org.jetbrains.anko.startActivity
 
-class DetailLeagueActivity : AppCompatActivity(), MainView {
-    private lateinit var presenter: MainPresenter
+class DetailLeagueActivity : AppCompatActivity(), DetailLeagueView {
+    private lateinit var presenter: DetailLeaguePresenter
+    private var leagueName: String? = null
 
     companion object {
         const val LEAGUE_ID = "league_id"
@@ -35,14 +35,14 @@ class DetailLeagueActivity : AppCompatActivity(), MainView {
 
         val intent = intent
         val leagueId = intent.getIntExtra(LEAGUE_ID, 0)
-        val leagueName = intent.getStringExtra(LEAGUE_NAME)
+        leagueName = intent.getStringExtra(LEAGUE_NAME)
         toolbar_detail_league.title = leagueName
         txt_league_name.text = leagueName
 
         setSupportActionBar(toolbar_detail_league)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        presenter = MainPresenter(this)
+        presenter = DetailLeaguePresenter(this)
         presenter.getLeagueDetail(leagueId.toString())
 
         val detailLeaguePagerAdapter =
@@ -65,6 +65,7 @@ class DetailLeagueActivity : AppCompatActivity(), MainView {
     override fun showLeagueDetail(data: List<LeagueDetail>?) {
         Picasso.get().load(data?.get(0)?.leagueBadge).into(img_league_badge)
         txt_league_name.text = data?.get(0)?.leagueName
+        leagueName = data?.get(0)?.leagueName.toString()
         txt_league_country.text = data?.get(0)?.leagueCountry
 
         var urlWeb = data?.get(0)?.leagueWebsite
@@ -121,8 +122,6 @@ class DetailLeagueActivity : AppCompatActivity(), MainView {
         }
     }
 
-    override fun showMatchList(data: List<Match>) {}
-
     override fun onFailed(message: String?) {
         cv_detail_league.visible()
         btn_league_web.invisible()
@@ -131,13 +130,9 @@ class DetailLeagueActivity : AppCompatActivity(), MainView {
         btn_league_youtube.invisible()
     }
 
-    override fun showMatchDetail(data: Match) {}
-
-    override fun showTeam(data: Team, isHome: Boolean) {}
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
-        inflater.inflate(R.menu.option_menu, menu)
+        inflater.inflate(R.menu.search_menu, menu)
 
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchView = menu?.findItem(R.id.search)?.actionView as SearchView
@@ -146,7 +141,9 @@ class DetailLeagueActivity : AppCompatActivity(), MainView {
         searchView.queryHint = resources.getString(R.string.search_hint)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                this@DetailLeagueActivity.startActivity<SearchResultActivity>("query" to query)
+                this@DetailLeagueActivity.startActivity<SearchResultActivity>(
+                    QUERY to query,
+                    LEAGUE_NAME to leagueName)
                 return true
             }
 
@@ -155,16 +152,6 @@ class DetailLeagueActivity : AppCompatActivity(), MainView {
             }
         })
         return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId){
-            R.id.favorite -> {
-                this@DetailLeagueActivity.startActivity<FavoriteActivity>()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
 }

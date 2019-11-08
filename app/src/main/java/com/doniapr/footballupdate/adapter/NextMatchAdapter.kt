@@ -12,8 +12,8 @@ import com.doniapr.footballupdate.utility.formatTo
 import com.doniapr.footballupdate.utility.toDate
 import com.doniapr.footballupdate.utility.toDateAndHour
 import com.doniapr.footballupdate.utility.toHour
-import com.doniapr.footballupdate.view.DetailMatchActivity
-import com.doniapr.footballupdate.view.DetailMatchActivity.Companion.EVENT_ID
+import com.doniapr.footballupdate.view.ui.DetailMatchActivity
+import com.doniapr.footballupdate.view.ui.DetailMatchActivity.Companion.EVENT_ID
 import org.jetbrains.anko.*
 import org.jetbrains.anko.cardview.v7.cardView
 import org.jetbrains.anko.constraint.layout.constraintLayout

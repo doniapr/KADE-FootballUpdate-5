@@ -1,4 +1,4 @@
-package com.doniapr.footballupdate.view
+package com.doniapr.footballupdate.view.ui
 
 
 import android.os.Bundle
@@ -14,25 +14,21 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.doniapr.footballupdate.R
 import com.doniapr.footballupdate.adapter.FavoriteNextMatchAdapter
-import com.doniapr.footballupdate.database.database
 import com.doniapr.footballupdate.favorite.Favorite
+import com.doniapr.footballupdate.presenter.FavoritePresenter
 import com.doniapr.footballupdate.utility.invisible
-import com.doniapr.footballupdate.utility.toDate
 import com.doniapr.footballupdate.utility.visible
+import com.doniapr.footballupdate.view.FavoriteView
 import org.jetbrains.anko.*
-import org.jetbrains.anko.db.classParser
-import org.jetbrains.anko.db.select
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.UI
 import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
-import java.text.SimpleDateFormat
-import java.util.*
 
 /**
  * A simple [Fragment] subclass.
  */
-class FavoriteNextMatchFragment : Fragment() {
+class FavoriteNextMatchFragment : Fragment(), FavoriteView {
 
     private lateinit var linearLayout: LinearLayout
     private lateinit var nextMatchList: RecyclerView
@@ -40,6 +36,7 @@ class FavoriteNextMatchFragment : Fragment() {
     private lateinit var swipeRefresh: SwipeRefreshLayout
     private var favorites: MutableList<Favorite> = mutableListOf()
     private lateinit var adapter: FavoriteNextMatchAdapter
+    private lateinit var presenter: FavoritePresenter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,46 +74,28 @@ class FavoriteNextMatchFragment : Fragment() {
         adapter = FavoriteNextMatchAdapter(favorites)
 
         nextMatchList.adapter = adapter
+        presenter = FavoritePresenter(this, context)
 
         swipeRefresh.onRefresh {
-            showFavorite()
+            presenter.getFavorite(false)
         }
     }
 
     override fun onResume() {
         super.onResume()
-        showFavorite()
+        presenter.getFavorite(false)
     }
 
-    private fun showFavorite(){
+    override fun onFailed() {
+        swipeRefresh.isRefreshing = false
+        txtFailed.visible()
+    }
+
+    override fun showFavorite(data: List<Favorite>) {
         favorites.clear()
-
-        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        val currentDate = sdf.format(Date()).toDate()
-
-        context?.database?.use {
-            swipeRefresh.isRefreshing = false
-            val result = select(Favorite.TABLE_FAVORITE)
-            val favorite = result.parseList(classParser<Favorite>())
-
-            if (favorite.isNotEmpty()){
-                for (i in favorite.indices){
-                    if (!favorite[i].date.isNullOrEmpty()){
-                        val matchDate = favorite[i].date?.toDate()
-
-                        if (matchDate?.after(currentDate)!! || matchDate.equals(currentDate)){
-                            favorites.add(favorite[i])
-                            adapter.notifyDataSetChanged()
-                            txtFailed.invisible()
-                        }
-                    }
-                }
-                if (favorites.isEmpty()){
-                    txtFailed.visible()
-                }
-            } else {
-                txtFailed.visible()
-            }
-        }
+        swipeRefresh.isRefreshing = false
+        favorites.addAll(data)
+        adapter.notifyDataSetChanged()
+        txtFailed.invisible()
     }
 }

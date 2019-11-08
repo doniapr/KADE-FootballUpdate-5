@@ -1,4 +1,4 @@
-package com.doniapr.footballupdate.view
+package com.doniapr.footballupdate.view.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

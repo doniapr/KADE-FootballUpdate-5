@@ -1,4 +1,4 @@
-package com.doniapr.footballupdate.view
+package com.doniapr.footballupdate.view.ui
 
 
 import android.os.Bundle
@@ -15,12 +15,11 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.doniapr.footballupdate.R
 import com.doniapr.footballupdate.adapter.MatchListAdapter
-import com.doniapr.footballupdate.model.LeagueDetail
 import com.doniapr.footballupdate.model.Match
-import com.doniapr.footballupdate.model.Team
-import com.doniapr.footballupdate.presenter.MainPresenter
+import com.doniapr.footballupdate.presenter.LastMatchPresenter
 import com.doniapr.footballupdate.utility.invisible
 import com.doniapr.footballupdate.utility.visible
+import com.doniapr.footballupdate.view.LastMatchView
 import com.google.android.material.snackbar.Snackbar
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
@@ -31,11 +30,12 @@ import org.jetbrains.anko.support.v4.swipeRefreshLayout
 /**
  * A simple [Fragment] subclass.
  */
-class LastMatchFragment(private val leagueId: Int) : Fragment(), MainView {
+class LastMatchFragment(private val leagueId: Int) : Fragment(),
+    LastMatchView {
 
     private lateinit var lastMatchList: RecyclerView
     private var matches: MutableList<Match> = mutableListOf()
-    private lateinit var presenter: MainPresenter
+    private lateinit var presenter: LastMatchPresenter
     private lateinit var adapter: MatchListAdapter
     private lateinit var progressBarLastMatch: ProgressBar
     private lateinit var txtFailed: TextView
@@ -83,7 +83,7 @@ class LastMatchFragment(private val leagueId: Int) : Fragment(), MainView {
         adapter = MatchListAdapter(matches)
         lastMatchList.adapter = adapter
 
-        presenter = MainPresenter(this)
+        presenter = LastMatchPresenter(this)
         presenter.getLastMatch(leagueId)
 
         swipeRefreshLayout.onRefresh {
@@ -99,8 +99,6 @@ class LastMatchFragment(private val leagueId: Int) : Fragment(), MainView {
         progressBarLastMatch.invisible()
     }
 
-    override fun showLeagueDetail(data: List<LeagueDetail>?) {}
-
     override fun showMatchList(data: List<Match>) {
         swipeRefreshLayout.isRefreshing = false
         matches.clear()
@@ -113,13 +111,8 @@ class LastMatchFragment(private val leagueId: Int) : Fragment(), MainView {
         txtFailed.visible()
         Snackbar.make(
             linearLayout,
-            "Mohon periksa koneksi internet anda",
+            message.toString(),
             Snackbar.LENGTH_SHORT
         ).show()
     }
-
-    override fun showMatchDetail(data: Match) {}
-
-    override fun showTeam(data: Team, isHome: Boolean) {}
-
 }

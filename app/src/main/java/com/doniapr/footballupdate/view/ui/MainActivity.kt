@@ -1,9 +1,8 @@
-package com.doniapr.footballupdate.view
+package com.doniapr.footballupdate.view.ui
 
 import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.LinearLayout
@@ -67,7 +66,6 @@ class MainActivity : AppCompatActivity() {
         val leagueBadge = resources.getStringArray(R.array.league_badge)
 
         for (i in leagueName.indices) {
-            Log.e("liga", leagueName[i])
             val league = League(leagueId[i], leagueName[i], leagueBadge[i])
 
             listLeague.add(league)

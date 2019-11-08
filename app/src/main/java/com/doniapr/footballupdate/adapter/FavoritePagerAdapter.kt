@@ -7,8 +7,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.doniapr.footballupdate.R
-import com.doniapr.footballupdate.view.FavoriteLastMatchFragment
-import com.doniapr.footballupdate.view.FavoriteNextMatchFragment
+import com.doniapr.footballupdate.view.ui.FavoriteLastMatchFragment
+import com.doniapr.footballupdate.view.ui.FavoriteNextMatchFragment
 
 class FavoritePagerAdapter(
     private val context: Context,

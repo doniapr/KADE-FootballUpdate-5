@@ -1,4 +1,4 @@
-package com.doniapr.footballupdate.apiService
+package com.doniapr.footballupdate.apiservice
 
 import android.app.Application
 import com.doniapr.footballupdate.BuildConfig

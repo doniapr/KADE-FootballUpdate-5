@@ -1,11 +1,10 @@
-package com.doniapr.footballupdate.view
+package com.doniapr.footballupdate.view.ui
 
 import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
 import android.view.Gravity
 import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.ProgressBar
@@ -18,22 +17,22 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.doniapr.footballupdate.R
 import com.doniapr.footballupdate.adapter.SearchResultAdapter
-import com.doniapr.footballupdate.model.LeagueDetail
 import com.doniapr.footballupdate.model.Match
-import com.doniapr.footballupdate.model.Team
-import com.doniapr.footballupdate.presenter.MainPresenter
+import com.doniapr.footballupdate.presenter.SearchPresenter
 import com.doniapr.footballupdate.utility.invisible
 import com.doniapr.footballupdate.utility.visible
+import com.doniapr.footballupdate.view.SearchResultView
+import com.doniapr.footballupdate.view.ui.DetailLeagueActivity.Companion.LEAGUE_NAME
 import com.google.android.material.snackbar.Snackbar
 import org.jetbrains.anko.*
 import org.jetbrains.anko.appcompat.v7.themedToolbar
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 
-class SearchResultActivity : AppCompatActivity(), MainView {
+class SearchResultActivity : AppCompatActivity(), SearchResultView {
 
     private lateinit var rvSearchResult: RecyclerView
     private lateinit var progressBar: ProgressBar
-    private lateinit var presenter: MainPresenter
+    private lateinit var presenter: SearchPresenter
     private lateinit var adapter: SearchResultAdapter
     private lateinit var toolbar: Toolbar
     private lateinit var txtFailed: TextView
@@ -41,6 +40,10 @@ class SearchResultActivity : AppCompatActivity(), MainView {
     private lateinit var linearLayout: LinearLayout
 
     private var matches: MutableList<Match> = mutableListOf()
+
+    companion object {
+        const val QUERY = "query"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,7 +90,8 @@ class SearchResultActivity : AppCompatActivity(), MainView {
         }
 
         val intent = intent
-        val query = intent.getStringExtra("query")
+        val query = intent.getStringExtra(QUERY)
+        val leagueName = intent.getStringExtra(LEAGUE_NAME)
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -95,8 +99,14 @@ class SearchResultActivity : AppCompatActivity(), MainView {
         adapter = SearchResultAdapter(matches)
         rvSearchResult.adapter = adapter
 
-        presenter = MainPresenter(this)
-        presenter.doSearch(query)
+        presenter = SearchPresenter(this)
+
+        if (leagueName == null){
+            presenter.doSearch(query)
+        }else{
+            presenter.doSearchInLeague(query, leagueName)
+        }
+
         val textQuery = "Hasil pencarian untuk '$query'"
         txtQuery.text = textQuery
 
@@ -115,11 +125,6 @@ class SearchResultActivity : AppCompatActivity(), MainView {
         txtFailed.visible()
 
         Snackbar.make(linearLayout, message.toString(), Snackbar.LENGTH_SHORT)
-
-    }
-
-    override fun showLeagueDetail(data: List<LeagueDetail>?) {
-
     }
 
     override fun showMatchList(data: List<Match>) {
@@ -128,16 +133,9 @@ class SearchResultActivity : AppCompatActivity(), MainView {
         adapter.notifyDataSetChanged()
     }
 
-    override fun showMatchDetail(data: Match) {
-    }
-
-    override fun showTeam(data: Team, isHome: Boolean) {
-
-    }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
-        inflater.inflate(R.menu.option_menu, menu)
+        inflater.inflate(R.menu.search_menu, menu)
 
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchView = menu?.findItem(R.id.search)?.actionView as SearchView
@@ -161,15 +159,5 @@ class SearchResultActivity : AppCompatActivity(), MainView {
             }
         })
         return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId){
-            R.id.favorite -> {
-                this@SearchResultActivity.startActivity<FavoriteActivity>()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 }

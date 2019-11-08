@@ -1,4 +1,4 @@
-package com.doniapr.footballupdate.view
+package com.doniapr.footballupdate.view.ui
 
 import android.database.sqlite.SQLiteConstraintException
 import android.os.Bundle
@@ -10,11 +10,11 @@ import androidx.core.content.ContextCompat
 import com.doniapr.footballupdate.R
 import com.doniapr.footballupdate.database.database
 import com.doniapr.footballupdate.favorite.Favorite
-import com.doniapr.footballupdate.model.LeagueDetail
 import com.doniapr.footballupdate.model.Match
 import com.doniapr.footballupdate.model.Team
-import com.doniapr.footballupdate.presenter.MainPresenter
+import com.doniapr.footballupdate.presenter.DetailMatchPresenter
 import com.doniapr.footballupdate.utility.*
+import com.doniapr.footballupdate.view.DetailMatchView
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail_match.*
 import org.jetbrains.anko.db.classParser
@@ -24,8 +24,8 @@ import org.jetbrains.anko.db.select
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.support.v4.onRefresh
 
-class DetailMatchActivity : AppCompatActivity(), MainView {
-    private lateinit var presenter: MainPresenter
+class DetailMatchActivity : AppCompatActivity(), DetailMatchView {
+    private lateinit var presenter: DetailMatchPresenter
     private lateinit var match: Match
 
     private var menuItem: Menu? = null
@@ -50,7 +50,7 @@ class DetailMatchActivity : AppCompatActivity(), MainView {
 
         favoriteState()
 
-        presenter = MainPresenter(this)
+        presenter = DetailMatchPresenter(this)
         presenter.getMatchDetail(eventId.toString())
 
         swipe_refresh_detail_match.onRefresh {
@@ -69,13 +69,6 @@ class DetailMatchActivity : AppCompatActivity(), MainView {
     override fun onFailed(message: String?) {
         swipe_refresh_detail_match.isRefreshing = false
         Toast.makeText(this@DetailMatchActivity, message, Toast.LENGTH_SHORT).show()
-    }
-
-    override fun showLeagueDetail(data: List<LeagueDetail>?) {
-    }
-
-    override fun showMatchList(data: List<Match>) {
-
     }
 
     override fun showMatchDetail(data: Match) {

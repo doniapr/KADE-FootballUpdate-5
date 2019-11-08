@@ -1,4 +1,4 @@
-package com.doniapr.footballupdate.apiService
+package com.doniapr.footballupdate.apiservice
 
 import com.doniapr.footballupdate.BuildConfig
 import com.doniapr.footballupdate.model.LeagueDetailResponse

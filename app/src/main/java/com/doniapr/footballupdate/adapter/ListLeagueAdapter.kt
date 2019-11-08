@@ -9,9 +9,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.doniapr.footballupdate.R
 import com.doniapr.footballupdate.model.League
-import com.doniapr.footballupdate.view.DetailLeagueActivity
-import com.doniapr.footballupdate.view.DetailLeagueActivity.Companion.LEAGUE_ID
-import com.doniapr.footballupdate.view.DetailLeagueActivity.Companion.LEAGUE_NAME
+import com.doniapr.footballupdate.view.ui.DetailLeagueActivity
+import com.doniapr.footballupdate.view.ui.DetailLeagueActivity.Companion.LEAGUE_ID
+import com.doniapr.footballupdate.view.ui.DetailLeagueActivity.Companion.LEAGUE_NAME
 import com.squareup.picasso.Picasso
 import org.jetbrains.anko.*
 import org.jetbrains.anko.cardview.v7.cardView
@@ -48,7 +48,7 @@ class LeagueViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val leagueBadge: ImageView = view.find(R.id.img_league_badge)
 
     fun bindItem(league: League) {
-        Picasso.get().load(league.leagueBagde).fit().into(leagueBadge)
+        Picasso.get().load(league.leagueBadge).fit().into(leagueBadge)
         leagueName.text = league.leagueName
     }
 }
