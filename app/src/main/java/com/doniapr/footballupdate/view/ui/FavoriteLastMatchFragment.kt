@@ -77,12 +77,14 @@ class FavoriteLastMatchFragment : Fragment(), FavoriteView {
         presenter = FavoritePresenter(this, context)
 
         swipeRefresh.onRefresh {
+            favorites.clear()
             presenter.getFavorite(true)
         }
     }
 
     override fun onResume() {
         super.onResume()
+        favorites.clear()
         presenter.getFavorite(true)
     }
 
