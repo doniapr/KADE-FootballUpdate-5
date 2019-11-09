@@ -54,7 +54,9 @@ class DetailMatchPresenter (private val view: DetailMatchView) {
             MainApi().services.getTeamInfo(teamId).enqueue(object :
                 Callback<TeamResponse> {
                 override fun onFailure(call: Call<TeamResponse>, t: Throwable) {
-
+                    uiThread {
+                        view.onFailed(t.message)
+                    }
                 }
 
                 override fun onResponse(
@@ -65,6 +67,8 @@ class DetailMatchPresenter (private val view: DetailMatchView) {
                         uiThread {
                             if (response.body()?.teams?.get(0) != null) {
                                 view.showTeam(response.body()!!.teams[0], isHome)
+                            } else {
+                                view.onFailed("Failed to load team badge")
                             }
                         }
                     }

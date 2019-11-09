@@ -81,40 +81,41 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView {
         txt_match_home.text = data.homeTeam
         txt_lineup_home.text = data.homeTeam
         // Match Result
-        val round = data.leagueName + " " + resources.getString(R.string.round) + " " + data.round
+        val round = data.leagueName + " " + getString(R.string.round) + " " + data.round
         txt_match_round.text = round
         setDate(data)
         if (data.homeScore != null) {
             txt_match_home_score.text = data.homeScore.toString()
             txt_stats_home_goal.text = data.homeScore.toString()
         }
-        if (data.homeGoalDetail != null || data.homeGoalDetail != "") {
+        if (!data.homeGoalDetail.isNullOrEmpty()) {
             txt_home_goal_scorer.text = data.homeGoalDetail
         }
+
         //Stats
         if (data.homeShot != null) {
             txt_stats_home_shots.text = data.homeShot
         }
-        if (data.homeRedCard != null || data.homeRedCard != "") {
+        if (!data.homeRedCard.isNullOrEmpty()) {
             txt_stats_home_red_card.text = data.homeRedCard
         }
-        if (data.homeYellowCard != null || data.homeYellowCard != "") {
+        if (!data.homeYellowCard.isNullOrEmpty()) {
             txt_stats_home_yellow_card.text = data.homeYellowCard
         }
         //Lineup
-        if (data.homeGK != null || data.homeGK != "") {
+        if (!data.homeGK.isNullOrEmpty()) {
             txt_lineup_gk_home.text = data.homeGK
         }
-        if (data.homeDF != null || data.homeDF != "") {
+        if (!data.homeDF.isNullOrEmpty()) {
             txt_lineup_df_home.text = data.homeDF
         }
-        if (data.homeMF != null || data.homeMF != "") {
+        if (!data.homeMF.isNullOrEmpty()) {
             txt_lineup_mf_home.text = data.homeMF
         }
-        if (data.homeCF != null || data.homeCF != "") {
+        if (!data.homeCF.isNullOrEmpty()) {
             txt_lineup_cf_home.text = data.homeCF
         }
-        if (data.homeSubtitute != null || data.homeSubtitute != "") {
+        if (!data.homeSubtitute.isNullOrEmpty()) {
             txt_lineup_subs_home.text = data.homeSubtitute
         }
 
@@ -126,33 +127,33 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView {
             txt_match_away_score.text = data.awayScore.toString()
             txt_stats_away_goal.text = data.awayScore.toString()
         }
-        if (data.awayGoalDetail != null || data.awayGoalDetail != "") {
+        if (!data.awayGoalDetail.isNullOrEmpty()) {
             txt_away_goal_scorer.text = data.awayGoalDetail
         }
         //Stats
         if (data.awayShot != null) {
             txt_stats_away_shots.text = data.awayShot
         }
-        if (data.awayRedCard != null || data.awayRedCard != "") {
+        if (!data.awayRedCard.isNullOrEmpty()) {
             txt_stats_away_red_card.text = data.awayRedCard
         }
-        if (data.awayYellowCard != null || data.awayYellowCard != "") {
+        if (!data.awayYellowCard.isNullOrEmpty()) {
             txt_stats_away_yellow_card.text = data.awayYellowCard
         }
         //Lineup
-        if (data.awayGK != null || data.awayGK != "") {
+        if (!data.awayGK.isNullOrEmpty()) {
             txt_lineup_gk_away.text = data.awayGK
         }
-        if (data.awayDF != null || data.awayDF != "") {
+        if (!data.awayDF.isNullOrEmpty()) {
             txt_lineup_df_away.text = data.awayDF
         }
-        if (data.awayMF != null || data.awayMF != "") {
+        if (!data.awayMF.isNullOrEmpty()) {
             txt_lineup_mf_away.text = data.awayMF
         }
-        if (data.awayCF != null || data.awayCF != "") {
+        if (!data.awayCF.isNullOrEmpty()) {
             txt_lineup_cf_away.text = data.awayCF
         }
-        if (data.awaySubtitute != null || data.awaySubtitute != "") {
+        if (!data.awaySubtitute.isNullOrEmpty()) {
             txt_lineup_subs_away.text = data.awaySubtitute
         }
 
@@ -203,10 +204,15 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.add_favorite -> {
-                if (isFavorite) removeFromFavorite() else addToFavorite()
+                if (this::match.isInitialized){
+                    if (isFavorite) removeFromFavorite() else addToFavorite()
 
-                isFavorite = !isFavorite
-                setFavorite()
+                    isFavorite = !isFavorite
+                    setFavorite()
+                } else {
+                    layout_detail_container.snackbar(getString(R.string.data_not_ready))
+                }
+
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -232,7 +238,7 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView {
                     Favorite.TIME to match.time
                 )
             }
-            layout_detail_container.snackbar("Berhasil menambahkan ke favorit").show()
+            layout_detail_container.snackbar(getString(R.string.favorite_added)).show()
         } catch (e: SQLiteConstraintException){
             layout_detail_container.snackbar(e.message.toString()).show()
         }
@@ -244,7 +250,7 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView {
                 delete(Favorite.TABLE_FAVORITE, "(${Favorite.EVENT_ID} = {id})",
                     "id" to eventId)
             }
-            layout_detail_container.snackbar("Berhasil menghapus dari favorit").show()
+            layout_detail_container.snackbar(getString(R.string.favorite_removed)).show()
         } catch (e: SQLiteConstraintException){
             layout_detail_container.snackbar(e.message.toString()).show()
         }

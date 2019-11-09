@@ -103,5 +103,8 @@
     <string name="forwards">Forwards</string>
     <string name="subtitutes">Subtitutes</string>
     <string name="favorite">Favorite</string>
+    <string name="data_not_ready">Data belum siap</string>
+    <string name="favorite_added">Berhasil menambahkan ke favorit</string>
+    <string name="favorite_removed">Berhasil menghapus dari favorit</string>
 
 </resources>

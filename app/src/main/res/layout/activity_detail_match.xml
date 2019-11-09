@@ -258,17 +258,6 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/txt_stats_goal"/>
                         <TextView
-                            android:id="@+id/txt_stats_yellow_card"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/yellow_card"
-                            android:textStyle="bold"
-                            android:textSize="16sp"
-                            android:layout_marginTop="8dp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/txt_stats_home_red_card"/>
-                        <TextView
                             android:id="@+id/txt_stats_red_card"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -279,6 +268,18 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/txt_stats_shots"/>
+
+                        <TextView
+                            android:id="@+id/txt_stats_yellow_card"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/yellow_card"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:layout_marginTop="8dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txt_stats_home_red_card"/>
 
                         <!--Home Stats-->
                         <TextView
@@ -344,6 +345,7 @@
                             android:text="@string/_0"
                             android:layout_marginEnd="@dimen/activity_horizontal_margin"
                             android:layout_marginStart="8dp"
+                            android:gravity="end"
                             app:layout_constraintStart_toEndOf="@id/txt_stats_red_card"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@id/txt_stats_red_card"/>
@@ -355,6 +357,7 @@
                             android:layout_marginBottom="@dimen/activity_vertical_margin"
                             android:layout_marginEnd="@dimen/activity_horizontal_margin"
                             android:layout_marginStart="8dp"
+                            android:gravity="end"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/txt_stats_yellow_card"
                             app:layout_constraintBottom_toBottomOf="parent"
