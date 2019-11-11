@@ -50,7 +50,7 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView {
 
         favoriteState()
 
-        presenter = DetailMatchPresenter(this)
+        presenter = DetailMatchPresenter(this, applicationContext)
         presenter.getMatchDetail(eventId.toString())
 
         swipe_refresh_detail_match.onRefresh {
@@ -115,8 +115,8 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView {
         if (!data.homeCF.isNullOrEmpty()) {
             txt_lineup_cf_home.text = data.homeCF
         }
-        if (!data.homeSubtitute.isNullOrEmpty()) {
-            txt_lineup_subs_home.text = data.homeSubtitute
+        if (!data.homeSubstitutes.isNullOrEmpty()) {
+            txt_lineup_subs_home.text = data.homeSubstitutes
         }
 
         // Set Away
@@ -153,8 +153,8 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView {
         if (!data.awayCF.isNullOrEmpty()) {
             txt_lineup_cf_away.text = data.awayCF
         }
-        if (!data.awaySubtitute.isNullOrEmpty()) {
-            txt_lineup_subs_away.text = data.awaySubtitute
+        if (!data.awaySubstitutes.isNullOrEmpty()) {
+            txt_lineup_subs_away.text = data.awaySubstitutes
         }
 
         presenter.getTeamInfo(data.idHomeTeam.toString(), true)
@@ -177,8 +177,9 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView {
         if (!match.dateEvent.isNullOrEmpty() && !match.time.isNullOrEmpty()) {
             val utcDate = match.dateEvent.toString() + " " + match.time.toString()
             val wibDate = utcDate.toDateAndHour()
-            val formatedDate = wibDate.formatTo("dd MMMM yyyy") + " " + wibDate.formatTo("HH:mm:ss")
-            txt_match_detail_date.text = formatedDate
+            val formattedDate =
+                wibDate.formatTo("dd MMMM yyyy") + " " + wibDate.formatTo("HH:mm:ss")
+            txt_match_detail_date.text = formattedDate
         } else if (!match.dateEvent.isNullOrEmpty() && match.time.isNullOrEmpty()) {
             val utcDate = match.dateEvent.toString()
             val wibDate = utcDate.toDate()
@@ -202,9 +203,9 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId){
+        return when (item.itemId) {
             R.id.add_favorite -> {
-                if (this::match.isInitialized){
+                if (this::match.isInitialized) {
                     if (isFavorite) removeFromFavorite() else addToFavorite()
 
                     isFavorite = !isFavorite
@@ -220,10 +221,11 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView {
         }
     }
 
-    private fun addToFavorite(){
+    private fun addToFavorite() {
         try {
             database.use {
-                insert(Favorite.TABLE_FAVORITE,
+                insert(
+                    Favorite.TABLE_FAVORITE,
                     Favorite.EVENT_ID to match.eventId,
                     Favorite.EVENT_NAME to match.eventName,
                     Favorite.HOME_TEAM_NAME to match.homeTeam,
@@ -239,35 +241,41 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView {
                 )
             }
             layout_detail_container.snackbar(getString(R.string.favorite_added)).show()
-        } catch (e: SQLiteConstraintException){
+        } catch (e: SQLiteConstraintException) {
             layout_detail_container.snackbar(e.message.toString()).show()
         }
     }
 
-    private fun removeFromFavorite(){
+    private fun removeFromFavorite() {
         try {
             database.use {
-                delete(Favorite.TABLE_FAVORITE, "(${Favorite.EVENT_ID} = {id})",
-                    "id" to eventId)
+                delete(
+                    Favorite.TABLE_FAVORITE, "(${Favorite.EVENT_ID} = {id})",
+                    "id" to eventId
+                )
             }
             layout_detail_container.snackbar(getString(R.string.favorite_removed)).show()
-        } catch (e: SQLiteConstraintException){
+        } catch (e: SQLiteConstraintException) {
             layout_detail_container.snackbar(e.message.toString()).show()
         }
     }
 
     private fun setFavorite() {
         if (isFavorite)
-            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_added_24dp)
+            menuItem?.getItem(0)?.icon =
+                ContextCompat.getDrawable(this, R.drawable.ic_favorite_added_24dp)
         else
-            menuItem?.getItem(0)?.icon = ContextCompat.getDrawable(this, R.drawable.ic_favorite_white_24dp)
+            menuItem?.getItem(0)?.icon =
+                ContextCompat.getDrawable(this, R.drawable.ic_favorite_white_24dp)
     }
 
-    private fun favoriteState(){
+    private fun favoriteState() {
         database.use {
             val result = select(Favorite.TABLE_FAVORITE)
-                .whereArgs("(${Favorite.EVENT_ID} = {id})",
-                    "id" to eventId)
+                .whereArgs(
+                    "(${Favorite.EVENT_ID} = {id})",
+                    "id" to eventId
+                )
             val favorite = result.parseList(classParser<Favorite>())
             if (favorite.isNotEmpty()) isFavorite = true
         }

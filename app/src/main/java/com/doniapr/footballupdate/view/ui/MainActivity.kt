@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.doniapr.footballupdate.R
 import com.doniapr.footballupdate.adapter.ListLeagueAdapter
 import com.doniapr.footballupdate.model.League
+import com.doniapr.footballupdate.view.ui.SearchResultActivity.Companion.QUERY
 import org.jetbrains.anko.*
 import org.jetbrains.anko.appcompat.v7.themedToolbar
 import org.jetbrains.anko.recyclerview.v7.recyclerView
@@ -53,21 +54,24 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         setData()
 
-        adapter = ListLeagueAdapter(listLeague)
+        adapter = ListLeagueAdapter(listLeague) {
+            this@MainActivity.startActivity<DetailLeagueActivity>(
+                DetailLeagueActivity.LEAGUE_ID to it.leagueId,
+                DetailLeagueActivity.LEAGUE_NAME to it.leagueName
+            )
+        }
         listItemLeague.adapter = adapter
 
 
     }
 
     private fun setData() {
-
         val leagueId = resources.getIntArray(R.array.league_id)
         val leagueName = resources.getStringArray(R.array.league_name)
         val leagueBadge = resources.getStringArray(R.array.league_badge)
 
         for (i in leagueName.indices) {
             val league = League(leagueId[i], leagueName[i], leagueBadge[i])
-
             listLeague.add(league)
         }
     }
@@ -83,7 +87,7 @@ class MainActivity : AppCompatActivity() {
         searchView.queryHint = resources.getString(R.string.search_hint)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                this@MainActivity.startActivity<SearchResultActivity>("query" to query)
+                this@MainActivity.startActivity<SearchResultActivity>(QUERY to query)
                 return true
             }
 
@@ -95,7 +99,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId){
+        return when (item.itemId) {
             R.id.favorite -> {
                 this@MainActivity.startActivity<FavoriteActivity>()
                 true

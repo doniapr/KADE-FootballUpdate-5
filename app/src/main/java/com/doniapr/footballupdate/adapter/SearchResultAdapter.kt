@@ -12,14 +12,14 @@ import com.doniapr.footballupdate.utility.formatTo
 import com.doniapr.footballupdate.utility.toDate
 import com.doniapr.footballupdate.utility.toDateAndHour
 import com.doniapr.footballupdate.utility.toHour
-import com.doniapr.footballupdate.view.ui.DetailMatchActivity
-import com.doniapr.footballupdate.view.ui.DetailMatchActivity.Companion.EVENT_ID
 import org.jetbrains.anko.*
 import org.jetbrains.anko.cardview.v7.cardView
 import org.jetbrains.anko.constraint.layout.constraintLayout
 
-class SearchResultAdapter(private val match: List<Match>) :
-    RecyclerView.Adapter<ResultViewHolder>() {
+class SearchResultAdapter(
+    private val match: List<Match>,
+    private val listener: (Match) -> Unit
+) : RecyclerView.Adapter<ResultViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultViewHolder {
         return ResultViewHolder(
@@ -35,13 +35,7 @@ class SearchResultAdapter(private val match: List<Match>) :
     override fun getItemCount(): Int = match.size
 
     override fun onBindViewHolder(holder: ResultViewHolder, position: Int) {
-        holder.bindItem(match[position])
-
-        holder.itemView.setOnClickListener {
-            holder.itemView.context.startActivity<DetailMatchActivity>(
-               EVENT_ID to match[position].eventId
-            )
-        }
+        holder.bindItem(match[position], listener)
     }
 
 }
@@ -55,15 +49,18 @@ class ResultViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val txtMatchDate: TextView = view.find(R.id.txt_match_date)
     private val txtMatchTime: TextView = view.find(R.id.txt_match_time)
 
-    fun bindItem(match: Match) {
-        val leagueName = match.leagueName + " Round " + match.round
+    fun bindItem(match: Match, listener: (Match) -> Unit) {
+
+        itemView.setOnClickListener { listener(match) }
+
+        val leagueName = match.leagueName + itemView.context.getString(R.string.round) + match.round
         txtName.text = leagueName
         txtHomeTeam.text = match.homeTeam
         txtAwayTeam.text = match.awayTeam
-        if (match.homeScore != null){
+        if (match.homeScore != null) {
             txtHomeScore.text = match.homeScore.toString()
         }
-        if (match.awayScore != null){
+        if (match.awayScore != null) {
             txtAwayScore.text = match.awayScore.toString()
         }
 

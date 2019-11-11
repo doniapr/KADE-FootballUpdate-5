@@ -12,14 +12,14 @@ import com.doniapr.footballupdate.utility.formatTo
 import com.doniapr.footballupdate.utility.toDate
 import com.doniapr.footballupdate.utility.toDateAndHour
 import com.doniapr.footballupdate.utility.toHour
-import com.doniapr.footballupdate.view.ui.DetailMatchActivity
-import com.doniapr.footballupdate.view.ui.DetailMatchActivity.Companion.EVENT_ID
 import org.jetbrains.anko.*
 import org.jetbrains.anko.cardview.v7.cardView
 import org.jetbrains.anko.constraint.layout.constraintLayout
 
-class NextMatchAdapter(private val match: List<Match>) :
-    RecyclerView.Adapter<NextMatchViewHolder>() {
+class NextMatchAdapter(
+    private val match: List<Match>,
+    private val listener: (Match) -> Unit
+) : RecyclerView.Adapter<NextMatchViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NextMatchViewHolder {
         return NextMatchViewHolder(
@@ -35,13 +35,7 @@ class NextMatchAdapter(private val match: List<Match>) :
     override fun getItemCount(): Int = match.size
 
     override fun onBindViewHolder(holder: NextMatchViewHolder, position: Int) {
-        holder.bindItem(match[position])
-
-        holder.itemView.setOnClickListener {
-            holder.itemView.context.startActivity<DetailMatchActivity>(
-                EVENT_ID to match[position].eventId
-            )
-        }
+        holder.bindItem(match[position], listener)
     }
 }
 
@@ -53,8 +47,11 @@ class NextMatchViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val txtMatchDate: TextView = view.find(R.id.txt_match_date)
     private val txtMatchTime: TextView = view.find(R.id.txt_match_time)
 
-    fun bindItem(match: Match) {
-        val round = "Round " + match.round
+    fun bindItem(match: Match, listener: (Match) -> Unit) {
+
+        itemView.setOnClickListener { listener(match) }
+
+        val round = itemView.context.getString(R.string.round) + match.round
         txtMatchWeek.text = round
         txtHomeTeam.text = match.homeTeam
         txtAwayTeam.text = match.awayTeam

@@ -71,7 +71,11 @@ class FavoriteNextMatchFragment : Fragment(), FavoriteView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = FavoriteNextMatchAdapter(favorites)
+        adapter = FavoriteNextMatchAdapter(favorites) {
+            context?.startActivity<DetailMatchActivity>(
+                DetailMatchActivity.EVENT_ID to it.eventId?.toInt()
+            )
+        }
 
         nextMatchList.adapter = adapter
         presenter = FavoritePresenter(this, context)

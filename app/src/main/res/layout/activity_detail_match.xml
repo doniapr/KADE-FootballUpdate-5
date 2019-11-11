@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -21,15 +20,16 @@
             app:contentScrim="@color/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:titleEnabled="false">
+
             <ImageView
                 android:id="@+id/img_banner_match"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/banner"
+                android:contentDescription="@string/image_banner"
                 android:fitsSystemWindows="true"
                 android:scaleType="fitXY"
-                app:layout_collapseMode="parallax"
-                android:contentDescription="@string/image_banner" />
+                app:layout_collapseMode="parallax" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar_detail_match"
@@ -37,7 +37,7 @@
                 android:layout_height="?attr/actionBarSize"
                 android:layout_gravity="top"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
@@ -64,7 +64,7 @@
                     android:id="@+id/progress_bar_detail_match"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center" />
 
                 <!-- Match result -->
                 <androidx.cardview.widget.CardView
@@ -72,41 +72,42 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                    app:cardCornerRadius="10dp"
-                    android:padding="8dp">
+                    android:padding="8dp"
+                    app:cardCornerRadius="10dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
                         <TextView
                             android:id="@+id/txt_match_round"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/round"
-                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"/>
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
                             android:id="@+id/txt_match_detail_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/date"
-                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/txt_match_round"/>
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txt_match_round" />
 
                         <ImageView
                             android:id="@+id/img_match_home_team_badge"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
+                            android:contentDescription="@string/home_team"
                             android:padding="8dp"
-                            android:src="@drawable/team_badge"
                             android:scaleType="fitXY"
-                            app:layout_constraintStart_toStartOf="parent"
+                            android:src="@drawable/team_badge"
                             app:layout_constraintEnd_toStartOf="@id/txt_match_home_score"
-                            app:layout_constraintTop_toBottomOf="@id/txt_match_detail_date"
-                            android:contentDescription="@string/home_team" />
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txt_match_detail_date" />
 
                         <TextView
                             android:id="@+id/txt_match_home"
@@ -114,13 +115,13 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="8dp"
-                            android:text="@string/home_team"
                             android:gravity="center"
-                            android:textStyle="bold"
+                            android:text="@string/home_team"
                             android:textSize="16sp"
-                            app:layout_constraintTop_toBottomOf="@id/img_match_home_team_badge"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toStartOf="@id/txt_match_home_score"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toStartOf="@id/txt_match_home_score"/>
+                            app:layout_constraintTop_toBottomOf="@id/img_match_home_team_badge" />
 
                         <TextView
                             android:id="@+id/txt_match_home_score"
@@ -128,8 +129,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
                             android:text="@string/_0"
-                            android:textStyle="bold"
                             android:textSize="24sp"
+                            android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="@+id/txt_match_versus"
                             app:layout_constraintEnd_toStartOf="@+id/txt_match_versus"
                             app:layout_constraintTop_toTopOf="@id/txt_match_versus" />
@@ -148,13 +149,13 @@
                             android:id="@+id/img_match_away_team_badge"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
+                            android:contentDescription="@string/away_team"
                             android:padding="8dp"
                             android:scaleType="fitXY"
                             android:src="@drawable/team_badge"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/txt_match_away_score"
-                            app:layout_constraintTop_toBottomOf="@id/txt_match_detail_date"
-                            android:contentDescription="@string/away_team" />
+                            app:layout_constraintTop_toBottomOf="@id/txt_match_detail_date" />
 
                         <TextView
                             android:id="@+id/txt_match_away"
@@ -162,13 +163,13 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="8dp"
-                            android:text="@string/away_team"
                             android:gravity="center"
-                            android:textStyle="bold"
+                            android:text="@string/away_team"
                             android:textSize="16sp"
-                            app:layout_constraintTop_toBottomOf="@id/img_match_away_team_badge"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/txt_match_away_score"
-                            app:layout_constraintEnd_toEndOf="parent"/>
+                            app:layout_constraintTop_toBottomOf="@id/img_match_away_team_badge" />
 
                         <TextView
                             android:id="@+id/txt_match_away_score"
@@ -176,8 +177,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:text="@string/_0"
-                            android:textStyle="bold"
                             android:textSize="24sp"
+                            android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="@+id/txt_match_versus"
                             app:layout_constraintStart_toEndOf="@+id/txt_match_versus"
                             app:layout_constraintTop_toTopOf="@+id/txt_match_versus" />
@@ -187,11 +188,11 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="@string/goal_scorer"
                             android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:text="@string/goal_scorer"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="@id/txt_match_home"
                             app:layout_constraintStart_toStartOf="@id/txt_match_home"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/txt_match_home" />
 
                         <TextView
@@ -199,11 +200,11 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="@string/goal_scorer"
                             android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:text="@string/goal_scorer"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="@+id/txt_match_away"
                             app:layout_constraintStart_toStartOf="@+id/txt_match_away"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/txt_match_away" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -214,10 +215,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
-                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
                     android:layout_marginTop="@dimen/activity_vertical_margin"
-                    app:cardCornerRadius="10dp"
-                    android:padding="8dp">
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:padding="8dp"
+                    app:cardCornerRadius="10dp">
+
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -227,141 +229,149 @@
                             android:id="@+id/txt_stats"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
                             android:text="@string/stats"
                             android:textSize="24sp"
                             android:textStyle="bold"
-                            android:layout_marginTop="8dp"
-                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"/>
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
                             android:id="@+id/txt_stats_goal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/goal"
-                            android:textStyle="bold"
-                            android:textSize="16sp"
                             android:layout_marginTop="@dimen/activity_vertical_margin"
-                            app:layout_constraintStart_toStartOf="parent"
+                            android:text="@string/goal"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/txt_stats"/>
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txt_stats" />
+
                         <TextView
                             android:id="@+id/txt_stats_shots"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/shots"
-                            android:textStyle="bold"
-                            android:textSize="16sp"
                             android:layout_marginTop="8dp"
-                            app:layout_constraintStart_toStartOf="parent"
+                            android:text="@string/shots"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/txt_stats_goal"/>
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txt_stats_goal" />
+
                         <TextView
                             android:id="@+id/txt_stats_red_card"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/red_card"
-                            android:textStyle="bold"
-                            android:textSize="16sp"
                             android:layout_marginTop="8dp"
-                            app:layout_constraintStart_toStartOf="parent"
+                            android:text="@string/red_card"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/txt_stats_shots"/>
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txt_stats_shots" />
 
                         <TextView
                             android:id="@+id/txt_stats_yellow_card"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/yellow_card"
-                            android:textStyle="bold"
-                            android:textSize="16sp"
                             android:layout_marginTop="8dp"
-                            app:layout_constraintStart_toStartOf="parent"
+                            android:text="@string/yellow_card"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/txt_stats_home_red_card"/>
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txt_stats_home_red_card" />
 
                         <!--Home Stats-->
                         <TextView
                             android:id="@+id/txt_stats_home_goal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/_0"
                             android:layout_marginStart="@dimen/activity_horizontal_margin"
+                            android:text="@string/_0"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@id/txt_stats_goal"/>
+                            app:layout_constraintTop_toTopOf="@id/txt_stats_goal" />
+
                         <TextView
                             android:id="@+id/txt_stats_home_shots"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/_0"
                             android:layout_marginStart="@dimen/activity_horizontal_margin"
+                            android:text="@string/_0"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@id/txt_stats_shots"/>
+                            app:layout_constraintTop_toTopOf="@id/txt_stats_shots" />
+
                         <TextView
                             android:id="@+id/txt_stats_home_red_card"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="@string/_0"
                             android:layout_marginStart="@dimen/activity_horizontal_margin"
                             android:layout_marginEnd="8dp"
-                            app:layout_constraintStart_toStartOf="parent"
+                            android:text="@string/_0"
                             app:layout_constraintEnd_toStartOf="@id/txt_stats_red_card"
-                            app:layout_constraintTop_toTopOf="@id/txt_stats_red_card"/>
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/txt_stats_red_card" />
+
                         <TextView
                             android:id="@+id/txt_stats_home_yellow_card"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="@string/_0"
-                            android:layout_marginBottom="@dimen/activity_vertical_margin"
                             android:layout_marginStart="@dimen/activity_horizontal_margin"
                             android:layout_marginEnd="8dp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toStartOf="@id/txt_stats_yellow_card"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:text="@string/_0"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintTop_toTopOf="@id/txt_stats_yellow_card"/>
+                            app:layout_constraintEnd_toStartOf="@id/txt_stats_yellow_card"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/txt_stats_yellow_card" />
 
                         <!--Away Stats-->
                         <TextView
                             android:id="@+id/txt_stats_away_goal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/_0"
                             android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                            android:text="@string/_0"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@id/txt_stats_goal"/>
+                            app:layout_constraintTop_toTopOf="@id/txt_stats_goal" />
+
                         <TextView
                             android:id="@+id/txt_stats_away_shots"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/_0"
                             android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                            android:text="@string/_0"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@id/txt_stats_shots"/>
+                            app:layout_constraintTop_toTopOf="@id/txt_stats_shots" />
+
                         <TextView
                             android:id="@+id/txt_stats_away_red_card"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="@string/_0"
-                            android:layout_marginEnd="@dimen/activity_horizontal_margin"
                             android:layout_marginStart="8dp"
+                            android:layout_marginEnd="@dimen/activity_horizontal_margin"
                             android:gravity="end"
-                            app:layout_constraintStart_toEndOf="@id/txt_stats_red_card"
+                            android:text="@string/_0"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@id/txt_stats_red_card"/>
+                            app:layout_constraintStart_toEndOf="@id/txt_stats_red_card"
+                            app:layout_constraintTop_toTopOf="@id/txt_stats_red_card" />
+
                         <TextView
                             android:id="@+id/txt_stats_away_yellow_card"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="@string/_0"
-                            android:layout_marginBottom="@dimen/activity_vertical_margin"
-                            android:layout_marginEnd="@dimen/activity_horizontal_margin"
                             android:layout_marginStart="8dp"
+                            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
                             android:gravity="end"
+                            android:text="@string/_0"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/txt_stats_yellow_card"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintTop_toTopOf="@id/txt_stats_yellow_card"/>
+                            app:layout_constraintTop_toTopOf="@id/txt_stats_yellow_card" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -370,11 +380,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
-                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
                     android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
                     android:layout_marginBottom="@dimen/activity_vertical_margin"
-                    app:cardCornerRadius="10dp"
-                    android:padding="8dp">
+                    android:padding="8dp"
+                    app:cardCornerRadius="10dp">
+
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -383,301 +394,311 @@
                             android:id="@+id/txt_lineup"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
                             android:text="@string/lineup"
                             android:textSize="24sp"
                             android:textStyle="bold"
-                            android:layout_marginTop="8dp"
-                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"/>
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <!-- Home Lineup -->
                         <TextView
                             android:id="@+id/txt_lineup_home"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/activity_horizontal_margin"
+                            android:layout_marginTop="8dp"
                             android:text="@string/home_team"
                             android:textSize="20sp"
                             android:textStyle="bold"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginStart="@dimen/activity_horizontal_margin"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/txt_lineup"/>
+                            app:layout_constraintTop_toBottomOf="@id/txt_lineup" />
 
                         <!-- Home GK -->
                         <TextView
                             android:id="@+id/txt_position_gk_home"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
                             android:text="@string/goalkeepers"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginStart="8dp"
                             app:layout_constraintStart_toStartOf="@id/txt_lineup_home"
-                            app:layout_constraintTop_toBottomOf="@id/txt_lineup_home"/>
+                            app:layout_constraintTop_toBottomOf="@id/txt_lineup_home" />
+
                         <TextView
                             android:id="@+id/txt_lineup_gk_home"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:text="@string/_0"
-                            android:layout_marginTop="8dp"
                             android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
+                            android:text="@string/_0"
+                            android:textSize="16sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@id/txt_position_gk_home"
-                            app:layout_constraintTop_toBottomOf="@id/txt_position_gk_home"/>
+                            app:layout_constraintTop_toBottomOf="@id/txt_position_gk_home" />
 
                         <!-- Home DF -->
                         <TextView
                             android:id="@+id/txt_position_df_home"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
                             android:text="@string/defenders"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginStart="8dp"
                             app:layout_constraintStart_toStartOf="@id/txt_lineup_home"
-                            app:layout_constraintTop_toBottomOf="@id/txt_lineup_gk_home"/>
+                            app:layout_constraintTop_toBottomOf="@id/txt_lineup_gk_home" />
+
                         <TextView
                             android:id="@+id/txt_lineup_df_home"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:text="@string/_0"
-                            android:layout_marginTop="8dp"
                             android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
+                            android:text="@string/_0"
+                            android:textSize="16sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@id/txt_position_df_home"
-                            app:layout_constraintTop_toBottomOf="@id/txt_position_df_home"/>
+                            app:layout_constraintTop_toBottomOf="@id/txt_position_df_home" />
 
                         <!-- Home MF -->
                         <TextView
                             android:id="@+id/txt_position_mf_home"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
                             android:text="@string/midfielders"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginStart="8dp"
                             app:layout_constraintStart_toStartOf="@id/txt_lineup_home"
-                            app:layout_constraintTop_toBottomOf="@id/txt_lineup_df_home"/>
+                            app:layout_constraintTop_toBottomOf="@id/txt_lineup_df_home" />
+
                         <TextView
                             android:id="@+id/txt_lineup_mf_home"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:text="@string/_0"
-                            android:layout_marginTop="8dp"
                             android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
+                            android:text="@string/_0"
+                            android:textSize="16sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@id/txt_position_mf_home"
-                            app:layout_constraintTop_toBottomOf="@id/txt_position_mf_home"/>
+                            app:layout_constraintTop_toBottomOf="@id/txt_position_mf_home" />
 
                         <!-- Home CF -->
                         <TextView
                             android:id="@+id/txt_position_cf_home"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
                             android:text="@string/forwards"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginStart="8dp"
                             app:layout_constraintStart_toStartOf="@id/txt_lineup_home"
-                            app:layout_constraintTop_toBottomOf="@id/txt_lineup_mf_home"/>
+                            app:layout_constraintTop_toBottomOf="@id/txt_lineup_mf_home" />
+
                         <TextView
                             android:id="@+id/txt_lineup_cf_home"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:text="@string/_0"
-                            android:layout_marginTop="8dp"
                             android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
+                            android:text="@string/_0"
+                            android:textSize="16sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@id/txt_position_cf_home"
-                            app:layout_constraintTop_toBottomOf="@id/txt_position_cf_home"/>
+                            app:layout_constraintTop_toBottomOf="@id/txt_position_cf_home" />
 
                         <!-- Home Subs -->
                         <TextView
                             android:id="@+id/txt_position_subs_home"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
                             android:text="@string/subtitutes"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginStart="8dp"
                             app:layout_constraintStart_toStartOf="@id/txt_lineup_home"
-                            app:layout_constraintTop_toBottomOf="@id/txt_lineup_cf_home"/>
+                            app:layout_constraintTop_toBottomOf="@id/txt_lineup_cf_home" />
+
                         <TextView
                             android:id="@+id/txt_lineup_subs_home"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:text="@string/_0"
-                            android:layout_marginTop="8dp"
                             android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
+                            android:text="@string/_0"
+                            android:textSize="16sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@id/txt_position_subs_home"
-                            app:layout_constraintTop_toBottomOf="@id/txt_position_subs_home"/>
+                            app:layout_constraintTop_toBottomOf="@id/txt_position_subs_home" />
 
                         <View
                             android:id="@+id/separator"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="@android:color/darker_gray"
                             android:layout_marginTop="8dp"
-                            app:layout_constraintStart_toStartOf="parent"
+                            android:background="@android:color/darker_gray"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/txt_lineup_subs_home"/>
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/txt_lineup_subs_home" />
 
                         <!-- Away Lineup -->
                         <TextView
                             android:id="@+id/txt_lineup_away"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/activity_horizontal_margin"
+                            android:layout_marginTop="8dp"
                             android:text="@string/home_team"
                             android:textSize="20sp"
                             android:textStyle="bold"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginStart="@dimen/activity_horizontal_margin"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/separator"/>
+                            app:layout_constraintTop_toBottomOf="@id/separator" />
 
                         <!-- Away GK -->
                         <TextView
                             android:id="@+id/txt_position_gk_away"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
                             android:text="@string/goalkeepers"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginStart="8dp"
                             app:layout_constraintStart_toStartOf="@id/txt_lineup_away"
-                            app:layout_constraintTop_toBottomOf="@id/txt_lineup_away"/>
+                            app:layout_constraintTop_toBottomOf="@id/txt_lineup_away" />
+
                         <TextView
                             android:id="@+id/txt_lineup_gk_away"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:text="@string/_0"
-                            android:layout_marginTop="8dp"
                             android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
+                            android:text="@string/_0"
+                            android:textSize="16sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@id/txt_position_gk_away"
-                            app:layout_constraintTop_toBottomOf="@id/txt_position_gk_away"/>
+                            app:layout_constraintTop_toBottomOf="@id/txt_position_gk_away" />
 
                         <!-- Away DF -->
                         <TextView
                             android:id="@+id/txt_position_df_away"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
                             android:text="@string/defenders"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginStart="8dp"
                             app:layout_constraintStart_toStartOf="@id/txt_lineup_away"
-                            app:layout_constraintTop_toBottomOf="@id/txt_lineup_gk_away"/>
+                            app:layout_constraintTop_toBottomOf="@id/txt_lineup_gk_away" />
+
                         <TextView
                             android:id="@+id/txt_lineup_df_away"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:text="@string/_0"
-                            android:layout_marginTop="8dp"
                             android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
+                            android:text="@string/_0"
+                            android:textSize="16sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@id/txt_position_df_away"
-                            app:layout_constraintTop_toBottomOf="@id/txt_position_df_away"/>
+                            app:layout_constraintTop_toBottomOf="@id/txt_position_df_away" />
 
                         <!-- Away MF -->
                         <TextView
                             android:id="@+id/txt_position_mf_away"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
                             android:text="@string/midfielders"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginStart="8dp"
                             app:layout_constraintStart_toStartOf="@id/txt_lineup_away"
-                            app:layout_constraintTop_toBottomOf="@id/txt_lineup_df_away"/>
+                            app:layout_constraintTop_toBottomOf="@id/txt_lineup_df_away" />
+
                         <TextView
                             android:id="@+id/txt_lineup_mf_away"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:text="@string/_0"
-                            android:layout_marginTop="8dp"
                             android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
+                            android:text="@string/_0"
+                            android:textSize="16sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@id/txt_position_mf_away"
-                            app:layout_constraintTop_toBottomOf="@id/txt_position_mf_away"/>
+                            app:layout_constraintTop_toBottomOf="@id/txt_position_mf_away" />
 
                         <!-- Away CF -->
                         <TextView
                             android:id="@+id/txt_position_cf_away"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
                             android:text="@string/forwards"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginStart="8dp"
                             app:layout_constraintStart_toStartOf="@id/txt_lineup_away"
-                            app:layout_constraintTop_toBottomOf="@id/txt_lineup_mf_away"/>
+                            app:layout_constraintTop_toBottomOf="@id/txt_lineup_mf_away" />
+
                         <TextView
                             android:id="@+id/txt_lineup_cf_away"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:text="@string/_0"
-                            android:layout_marginTop="8dp"
                             android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
+                            android:text="@string/_0"
+                            android:textSize="16sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@id/txt_position_cf_away"
-                            app:layout_constraintTop_toBottomOf="@id/txt_position_cf_away"/>
+                            app:layout_constraintTop_toBottomOf="@id/txt_position_cf_away" />
 
                         <!-- Away Subs -->
                         <TextView
                             android:id="@+id/txt_position_subs_away"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
                             android:text="@string/subtitutes"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginStart="8dp"
                             app:layout_constraintStart_toStartOf="@id/txt_lineup_away"
-                            app:layout_constraintTop_toBottomOf="@id/txt_lineup_cf_away"/>
+                            app:layout_constraintTop_toBottomOf="@id/txt_lineup_cf_away" />
+
                         <TextView
                             android:id="@+id/txt_lineup_subs_away"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:text="@string/_0"
-                            android:layout_marginTop="8dp"
                             android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
                             android:layout_marginBottom="@dimen/activity_vertical_margin"
-                            app:layout_constraintEnd_toEndOf="parent"
+                            android:text="@string/_0"
+                            android:textSize="16sp"
                             app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@id/txt_position_subs_away"
-                            app:layout_constraintTop_toBottomOf="@id/txt_position_subs_away"/>
+                            app:layout_constraintTop_toBottomOf="@id/txt_position_subs_away" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
 

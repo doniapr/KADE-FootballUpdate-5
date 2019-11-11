@@ -17,7 +17,7 @@ class DetailLeaguePagerAdapter(
 ) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     @StringRes
-    private val TAB_TITLES = intArrayOf(R.string.tab_text_1, R.string.tab_text_2)
+    private val tabTitles = intArrayOf(R.string.tab_text_1, R.string.tab_text_2)
 
     override fun getItem(position: Int): Fragment {
         var fragment: Fragment? = null
@@ -31,11 +31,9 @@ class DetailLeaguePagerAdapter(
 
     @Nullable
     override fun getPageTitle(position: Int): CharSequence? {
-        return context.resources.getString(TAB_TITLES[position])
+        return context.resources.getString(tabTitles[position])
     }
 
-    override fun getCount(): Int {
-        return 2
-    }
+    override fun getCount(): Int = 2
 
 }

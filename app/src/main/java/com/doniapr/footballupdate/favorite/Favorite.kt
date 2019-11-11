@@ -3,7 +3,7 @@ package com.doniapr.footballupdate.favorite
 data class Favorite(
     val id: Long?,
     val eventId: String?,
-    val eventName:String?,
+    val eventName: String?,
     val homeTeamName: String?,
     val awayTeamName: String?,
     val homeTeamScore: String?,
@@ -13,9 +13,10 @@ data class Favorite(
     val leagueName: String?,
     val round: String?,
     val date: String?,
-    val time: String?){
+    val time: String?
+) {
 
-    companion object{
+    companion object {
         const val TABLE_FAVORITE: String = "TABLE_FAVORITE"
         const val ID: String = "ID_"
         const val EVENT_ID: String = "EVENT_ID"

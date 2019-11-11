@@ -1,16 +1,19 @@
 package com.doniapr.footballupdate.presenter
 
+import android.content.Context
+import com.doniapr.footballupdate.R
 import com.doniapr.footballupdate.apiservice.MainApi
 import com.doniapr.footballupdate.model.MatchResponse
-import com.doniapr.footballupdate.presenter.DetailLeaguePresenter.Companion.noDataFound
 import com.doniapr.footballupdate.view.LastMatchView
 import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class LastMatchPresenter(private val view: LastMatchView){
+class LastMatchPresenter(
+    private val view: LastMatchView,
+    private val context: Context?
+) {
 
     fun getLastMatch(leagueId: Int?) {
         view.showLoading()
@@ -18,10 +21,8 @@ class LastMatchPresenter(private val view: LastMatchView){
             MainApi().services.getLastMatch(leagueId.toString()).enqueue(object :
                 Callback<MatchResponse> {
                 override fun onFailure(call: Call<MatchResponse>, t: Throwable) {
-                    uiThread {
-                        view.onFailed(t.message)
-                        view.hideLoading()
-                    }
+                    view.onFailed(context?.getString(R.string.no_internet))
+                    view.hideLoading()
                 }
 
                 override fun onResponse(
@@ -29,25 +30,21 @@ class LastMatchPresenter(private val view: LastMatchView){
                     response: Response<MatchResponse>
                 ) {
                     if (response.code() == 200) {
-                        uiThread {
-                            if (response.body()?.matches != null) {
+                        response.body()?.matches.let {
+                            if (!it.isNullOrEmpty()) {
                                 view.hideLoading()
-                                view.showMatchList(response.body()!!.matches)
+                                view.showMatchList(it)
                             } else {
                                 view.hideLoading()
-                                view.onFailed(noDataFound)
+                                view.onFailed(context?.getString(R.string.no_data))
                             }
                         }
                     } else {
-                        uiThread {
-                            view.onFailed(response.message())
-                            view.hideLoading()
-                        }
+                        view.onFailed(context?.getString(R.string.no_data))
+                        view.hideLoading()
                     }
                 }
-
             })
         }
-
     }
 }

@@ -13,13 +13,16 @@ import com.doniapr.footballupdate.utility.formatTo
 import com.doniapr.footballupdate.utility.toDate
 import com.doniapr.footballupdate.utility.toDateAndHour
 import com.doniapr.footballupdate.utility.toHour
-import com.doniapr.footballupdate.view.ui.DetailMatchActivity
 import com.squareup.picasso.Picasso
 import org.jetbrains.anko.*
 import org.jetbrains.anko.cardview.v7.cardView
 import org.jetbrains.anko.constraint.layout.constraintLayout
 
-class FavoriteLastMatchAdapter(private val favorites: List<Favorite>) : RecyclerView.Adapter<FavoriteViewHolder>() {
+class FavoriteLastMatchAdapter(
+    private val favorites: List<Favorite>,
+    private val listener: (Favorite) -> Unit
+) : RecyclerView.Adapter<FavoriteViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder {
         return FavoriteViewHolder(
             FavoriteLastUI().createView(
@@ -34,13 +37,7 @@ class FavoriteLastMatchAdapter(private val favorites: List<Favorite>) : Recycler
     override fun getItemCount(): Int = favorites.size
 
     override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
-        holder.bindItem(favorites[position])
-
-        holder.itemView.setOnClickListener {
-            holder.itemView.context.startActivity<DetailMatchActivity>(
-                DetailMatchActivity.EVENT_ID to favorites[position].eventId?.toInt()
-            )
-        }
+        holder.bindItem(favorites[position], listener)
     }
 }
 
@@ -55,7 +52,10 @@ class FavoriteViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val imgHomeBadge: ImageView = view.find(R.id.img_match_home_team_badge)
     private val imgAwayBadge: ImageView = view.find(R.id.img_match_away_team_badge)
 
-    fun bindItem(favorite: Favorite){
+    fun bindItem(favorite: Favorite, listener: (Favorite) -> Unit) {
+
+        itemView.setOnClickListener { listener(favorite) }
+
         val round = "${favorite.leagueName} Round ${favorite.round}"
         homeTeam.text = favorite.homeTeamName
         awayTeam.text = favorite.awayTeamName
@@ -63,10 +63,10 @@ class FavoriteViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         Picasso.get().load(favorite.awayTeamBadge).into(imgAwayBadge)
 
         txtRound.text = round
-        if (favorite.homeTeamScore != null){
+        if (favorite.homeTeamScore != null) {
             homeScore.text = favorite.homeTeamScore
         }
-        if (favorite.awayTeamScore != null){
+        if (favorite.awayTeamScore != null) {
             awayScore.text = favorite.awayTeamScore
         }
 
@@ -93,7 +93,7 @@ class FavoriteViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     }
 }
 
-class FavoriteLastUI: AnkoComponent<ViewGroup> {
+class FavoriteLastUI : AnkoComponent<ViewGroup> {
     override fun createView(ui: AnkoContext<ViewGroup>): View {
         return with(ui) {
             linearLayout {
@@ -123,9 +123,9 @@ class FavoriteLastUI: AnkoComponent<ViewGroup> {
                             padding = dip(8)
                             id = R.id.cv_match_info
 
-                            imageView{
+                            imageView {
                                 id = R.id.img_match_home_team_badge
-                            }.lparams{
+                            }.lparams {
                                 width = dip(50)
                                 height = dip(50)
                                 topToTop = R.id.cv_match_info
@@ -191,9 +191,9 @@ class FavoriteLastUI: AnkoComponent<ViewGroup> {
                                 startToEnd = R.id.txt_away_score
                                 endToStart = R.id.img_match_away_team_badge
                             }
-                            imageView{
+                            imageView {
                                 id = R.id.img_match_away_team_badge
-                            }.lparams{
+                            }.lparams {
                                 width = dip(50)
                                 height = dip(50)
                                 topToTop = R.id.cv_match_info

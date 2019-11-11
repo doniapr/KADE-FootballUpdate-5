@@ -23,9 +23,9 @@ import com.doniapr.footballupdate.utility.invisible
 import com.doniapr.footballupdate.utility.visible
 import com.doniapr.footballupdate.view.SearchResultView
 import com.doniapr.footballupdate.view.ui.DetailLeagueActivity.Companion.LEAGUE_NAME
-import com.google.android.material.snackbar.Snackbar
 import org.jetbrains.anko.*
 import org.jetbrains.anko.appcompat.v7.themedToolbar
+import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 
 class SearchResultActivity : AppCompatActivity(), SearchResultView {
@@ -96,18 +96,22 @@ class SearchResultActivity : AppCompatActivity(), SearchResultView {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        adapter = SearchResultAdapter(matches)
+        adapter = SearchResultAdapter(matches) {
+            applicationContext.startActivity<DetailMatchActivity>(
+                DetailMatchActivity.EVENT_ID to it.eventId
+            )
+        }
         rvSearchResult.adapter = adapter
 
-        presenter = SearchPresenter(this)
+        presenter = SearchPresenter(this, applicationContext)
 
-        if (leagueName == null){
+        if (leagueName == null) {
             presenter.doSearch(query)
-        }else{
+        } else {
             presenter.doSearchInLeague(query, leagueName)
         }
 
-        val textQuery = "Hasil pencarian untuk '$query'"
+        val textQuery = getString(R.string.search_result_for) + " '$query'"
         txtQuery.text = textQuery
 
     }
@@ -124,7 +128,7 @@ class SearchResultActivity : AppCompatActivity(), SearchResultView {
         txtFailed.text = message
         txtFailed.visible()
 
-        Snackbar.make(linearLayout, message.toString(), Snackbar.LENGTH_SHORT)
+        linearLayout.snackbar(message.toString()).show()
     }
 
     override fun showMatchList(data: List<Match>) {
@@ -143,17 +147,11 @@ class SearchResultActivity : AppCompatActivity(), SearchResultView {
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
         searchView.queryHint = resources.getString(R.string.search_hint)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            /*
-            Gunakan method ini ketika search selesai atau OK
-             */
             override fun onQueryTextSubmit(query: String): Boolean {
-                this@SearchResultActivity.startActivity<SearchResultActivity>("query" to query)
+                this@SearchResultActivity.startActivity<SearchResultActivity>(QUERY to query)
                 return true
             }
 
-            /*
-            Gunakan method ini untuk merespon tiap perubahan huruf pada searchView
-             */
             override fun onQueryTextChange(newText: String): Boolean {
                 return false
             }

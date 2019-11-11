@@ -106,5 +106,9 @@
     <string name="data_not_ready">Data belum siap</string>
     <string name="favorite_added">Berhasil menambahkan ke favorit</string>
     <string name="favorite_removed">Berhasil menghapus dari favorit</string>
+    <string name="no_internet">Mohon Periksa Koneksi Internet Anda</string>
+    <string name="failed_load_team_badge">Failed to load team badge</string>
+    <string name="soccer">Soccer</string>
+    <string name="search_result_for">Hasil pencarian untuk</string>
 
 </resources>

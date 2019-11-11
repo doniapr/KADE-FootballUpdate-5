@@ -67,7 +67,7 @@ data class Match(
     var homeCF: String? = null,
 
     @SerializedName("strHomeLineupSubstitutes")
-    var homeSubtitute: String? = null,
+    var homeSubstitutes: String? = null,
 
     @SerializedName("strAwayRedCards")
     var awayRedCard: String? = null,
@@ -91,7 +91,7 @@ data class Match(
     var awayCF: String? = null,
 
     @SerializedName("strAwayLineupSubstitutes")
-    var awaySubtitute: String? = null,
+    var awaySubstitutes: String? = null,
 
     @SerializedName("intHomeShots")
     var homeShot: String? = null,

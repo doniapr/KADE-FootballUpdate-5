@@ -10,9 +10,12 @@ import org.jetbrains.anko.db.select
 import java.text.SimpleDateFormat
 import java.util.*
 
-class FavoritePresenter(private val view: FavoriteView, private val context: Context?){
+class FavoritePresenter(
+    private val view: FavoriteView,
+    private val context: Context?
+) {
 
-    fun getFavorite(isLastMatch: Boolean){
+    fun getFavorite(isLastMatch: Boolean) {
         val favorites: MutableList<Favorite> = mutableListOf()
 
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
@@ -23,24 +26,24 @@ class FavoritePresenter(private val view: FavoriteView, private val context: Con
             val result = select(Favorite.TABLE_FAVORITE)
             val favorite = result.parseList(classParser<Favorite>())
 
-            if (favorite.isNotEmpty()){
-                for (i in favorite.indices){
-                    if (!favorite[i].date.isNullOrEmpty()){
+            if (favorite.isNotEmpty()) {
+                for (i in favorite.indices) {
+                    if (!favorite[i].date.isNullOrEmpty()) {
                         val matchDate = favorite[i].date?.toDate()
-                        if (isLastMatch){
-                            if (matchDate?.before(currentDate)!!){
+                        if (isLastMatch) {
+                            if (matchDate?.before(currentDate)!!) {
                                 favorites.add(favorite[i])
                             }
-                        }else{
-                            if (matchDate?.after(currentDate)!! || matchDate == currentDate){
+                        } else {
+                            if (matchDate?.after(currentDate)!! || matchDate == currentDate) {
                                 favorites.add(favorite[i])
                             }
                         }
                     }
                 }
-                if (favorites.isNotEmpty()){
+                if (favorites.isNotEmpty()) {
                     view.showFavorite(favorites)
-                }else{
+                } else {
                     view.onFailed()
                 }
             } else {

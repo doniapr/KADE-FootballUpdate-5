@@ -1,21 +1,19 @@
 package com.doniapr.footballupdate.presenter
 
+import android.content.Context
+import com.doniapr.footballupdate.R
 import com.doniapr.footballupdate.apiservice.MainApi
 import com.doniapr.footballupdate.model.LeagueDetailResponse
 import com.doniapr.footballupdate.view.DetailLeagueView
 import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class DetailLeaguePresenter(
-    private val view: DetailLeagueView
+    private val view: DetailLeagueView,
+    private val context: Context
 ) {
-    companion object{
-        const val noDataFound = "Data pertandingan tidak Ditemukan"
-        const val noInternetAccess = "Mohon periksa koneksi internet anda"
-    }
 
     fun getLeagueDetail(leagueId: String?) {
         view.showLoading()
@@ -27,15 +25,17 @@ class DetailLeaguePresenter(
                     response: Response<LeagueDetailResponse>
                 ) {
                     if (response.code() == 200) {
-                        uiThread {
-                            view.hideLoading()
-                            view.showLeagueDetail(response.body()?.league)
-                        }
+                        view.hideLoading()
+                        view.showLeagueDetail(response.body()?.league)
+                    } else {
+                        view.hideLoading()
+                        view.onFailed(context.getString(R.string.no_data))
                     }
                 }
 
                 override fun onFailure(call: Call<LeagueDetailResponse>, t: Throwable) {
                     view.hideLoading()
+                    view.onFailed(context.getString(R.string.no_internet))
                 }
             })
         }

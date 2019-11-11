@@ -5,14 +5,15 @@ import android.database.sqlite.SQLiteDatabase
 import com.doniapr.footballupdate.favorite.Favorite
 import org.jetbrains.anko.db.*
 
-class MyDatabaseOpenHelper(context: Context): ManagedSQLiteOpenHelper(context, "Favorite.db", null, 1){
+class MyDatabaseOpenHelper(context: Context) :
+    ManagedSQLiteOpenHelper(context, "Favorite.db", null, 1) {
 
-    companion object{
+    companion object {
         private var instance: MyDatabaseOpenHelper? = null
 
         @Synchronized
-        fun getInstance(context: Context): MyDatabaseOpenHelper{
-            if (instance == null){
+        fun getInstance(context: Context): MyDatabaseOpenHelper {
+            if (instance == null) {
                 instance = MyDatabaseOpenHelper(context.applicationContext)
             }
             return instance as MyDatabaseOpenHelper
@@ -20,7 +21,8 @@ class MyDatabaseOpenHelper(context: Context): ManagedSQLiteOpenHelper(context, "
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
-        db?.createTable(Favorite.TABLE_FAVORITE, true,
+        db?.createTable(
+            Favorite.TABLE_FAVORITE, true,
             Favorite.ID to INTEGER + PRIMARY_KEY + AUTOINCREMENT,
             Favorite.EVENT_ID to TEXT + UNIQUE,
             Favorite.EVENT_NAME to TEXT,
@@ -39,7 +41,7 @@ class MyDatabaseOpenHelper(context: Context): ManagedSQLiteOpenHelper(context, "
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        db?. dropTable(Favorite.TABLE_FAVORITE, true)
+        db?.dropTable(Favorite.TABLE_FAVORITE, true)
     }
 }
 

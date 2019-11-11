@@ -19,8 +19,8 @@ import com.doniapr.footballupdate.presenter.NextMatchPresenter
 import com.doniapr.footballupdate.utility.invisible
 import com.doniapr.footballupdate.utility.visible
 import com.doniapr.footballupdate.view.NextMatchView
-import com.google.android.material.snackbar.Snackbar
 import org.jetbrains.anko.*
+import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.UI
 import org.jetbrains.anko.support.v4.onRefresh
@@ -75,10 +75,14 @@ class NextMatchFragment(private val leagueId: Int) : Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = NextMatchAdapter(matches)
+        adapter = NextMatchAdapter(matches) {
+            context?.startActivity<DetailMatchActivity>(
+                DetailMatchActivity.EVENT_ID to it.eventId
+            )
+        }
         nextMatchList.adapter = adapter
 
-        presenter = NextMatchPresenter(this)
+        presenter = NextMatchPresenter(this, context)
         presenter.getNextMatch(leagueId)
 
         swipeRefreshLayout.onRefresh {
@@ -98,12 +102,7 @@ class NextMatchFragment(private val leagueId: Int) : Fragment(),
         swipeRefreshLayout.isRefreshing = false
         txtFailed.visible()
 
-        if (message == "timeout") {
-            Snackbar.make(txtFailed, "Mohon Periksa koneksi internet anda", Snackbar.LENGTH_SHORT)
-        } else {
-            Snackbar.make(txtFailed, message.toString(), Snackbar.LENGTH_SHORT)
-        }
-
+        swipeRefreshLayout.snackbar(message.toString()).show()
     }
 
     override fun showMatchList(data: List<Match>) {

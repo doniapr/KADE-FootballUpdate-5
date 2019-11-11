@@ -42,7 +42,7 @@ class DetailLeagueActivity : AppCompatActivity(), DetailLeagueView {
         setSupportActionBar(toolbar_detail_league)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        presenter = DetailLeaguePresenter(this)
+        presenter = DetailLeaguePresenter(this, applicationContext)
         presenter.getLeagueDetail(leagueId.toString())
 
         val detailLeaguePagerAdapter =
@@ -143,7 +143,8 @@ class DetailLeagueActivity : AppCompatActivity(), DetailLeagueView {
             override fun onQueryTextSubmit(query: String): Boolean {
                 this@DetailLeagueActivity.startActivity<SearchResultActivity>(
                     QUERY to query,
-                    LEAGUE_NAME to leagueName)
+                    LEAGUE_NAME to leagueName
+                )
                 return true
             }
 

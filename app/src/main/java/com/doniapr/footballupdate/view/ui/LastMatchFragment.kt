@@ -20,8 +20,8 @@ import com.doniapr.footballupdate.presenter.LastMatchPresenter
 import com.doniapr.footballupdate.utility.invisible
 import com.doniapr.footballupdate.utility.visible
 import com.doniapr.footballupdate.view.LastMatchView
-import com.google.android.material.snackbar.Snackbar
 import org.jetbrains.anko.*
+import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.UI
 import org.jetbrains.anko.support.v4.onRefresh
@@ -80,10 +80,14 @@ class LastMatchFragment(private val leagueId: Int) : Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = MatchListAdapter(matches)
+        adapter = MatchListAdapter(matches) {
+            context?.startActivity<DetailMatchActivity>(
+                DetailMatchActivity.EVENT_ID to it.eventId
+            )
+        }
         lastMatchList.adapter = adapter
 
-        presenter = LastMatchPresenter(this)
+        presenter = LastMatchPresenter(this, context)
         presenter.getLastMatch(leagueId)
 
         swipeRefreshLayout.onRefresh {
@@ -109,10 +113,6 @@ class LastMatchFragment(private val leagueId: Int) : Fragment(),
     override fun onFailed(message: String?) {
         swipeRefreshLayout.isRefreshing = false
         txtFailed.visible()
-        Snackbar.make(
-            linearLayout,
-            message.toString(),
-            Snackbar.LENGTH_SHORT
-        ).show()
+        swipeRefreshLayout.snackbar(message.toString()).show()
     }
 }
