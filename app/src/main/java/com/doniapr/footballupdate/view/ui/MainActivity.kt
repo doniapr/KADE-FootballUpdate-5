@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity() {
                 }.lparams(width = matchParent, height = dimenAttr(R.attr.actionBarSize))
 
                 listItemLeague = recyclerView {
+                    id = R.id.rv_list_league
                     layoutManager = LinearLayoutManager(context)
                 }.lparams {
                     width = matchParent

@@ -59,6 +59,7 @@ class SearchResultActivity : AppCompatActivity(), SearchResultView {
             }.lparams(width = matchParent, height = dimenAttr(R.attr.actionBarSize))
 
             txtQuery = textView {
+                id = R.id.txt_query
                 textSize = 16f
             }.lparams {
                 width = matchParent
@@ -67,10 +68,13 @@ class SearchResultActivity : AppCompatActivity(), SearchResultView {
                 gravity = Gravity.CENTER_HORIZONTAL
             }
 
-            progressBar = progressBar()
+            progressBar = progressBar {
+                id = R.id.progress_bar_search
+            }
 
             txtFailed = textView {
                 text = resources.getString(R.string.no_data)
+                id = R.id.txt_failed
                 textSize = 20f
                 visibility = View.GONE
             }.lparams {
@@ -81,6 +85,7 @@ class SearchResultActivity : AppCompatActivity(), SearchResultView {
             }
 
             rvSearchResult = recyclerView {
+                id = R.id.rv_search_result
                 layoutManager = LinearLayoutManager(context)
             }.lparams {
                 width = matchParent
@@ -97,13 +102,13 @@ class SearchResultActivity : AppCompatActivity(), SearchResultView {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         adapter = SearchResultAdapter(matches) {
-            applicationContext.startActivity<DetailMatchActivity>(
+            this@SearchResultActivity.startActivity<DetailMatchActivity>(
                 DetailMatchActivity.EVENT_ID to it.eventId
             )
         }
         rvSearchResult.adapter = adapter
 
-        presenter = SearchPresenter(this, applicationContext)
+        presenter = SearchPresenter(this)
 
         if (leagueName == null) {
             presenter.doSearch(query)
@@ -124,17 +129,28 @@ class SearchResultActivity : AppCompatActivity(), SearchResultView {
         progressBar.invisible()
     }
 
-    override fun onFailed(message: String?) {
-        txtFailed.text = message
-        txtFailed.visible()
+    override fun onFailed(type: Int) {
+        runOnUiThread {
+            val message: String = when (type) {
+                1 -> getString(R.string.no_data)
+                2 -> getString(R.string.no_internet)
+                else -> ""
+            }
+            hideLoading()
+            txtFailed.text = message
+            txtFailed.visible()
 
-        linearLayout.snackbar(message.toString()).show()
+            linearLayout.snackbar(message).show()
+        }
     }
 
     override fun showMatchList(data: List<Match>) {
-        matches.clear()
-        matches.addAll(data)
-        adapter.notifyDataSetChanged()
+        runOnUiThread {
+            hideLoading()
+            matches.clear()
+            matches.addAll(data)
+            adapter.notifyDataSetChanged()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

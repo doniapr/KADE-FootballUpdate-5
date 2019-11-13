@@ -25,6 +25,7 @@ import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.UI
 import org.jetbrains.anko.support.v4.onRefresh
+import org.jetbrains.anko.support.v4.runOnUiThread
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
 
 /**
@@ -87,7 +88,7 @@ class LastMatchFragment(private val leagueId: Int) : Fragment(),
         }
         lastMatchList.adapter = adapter
 
-        presenter = LastMatchPresenter(this, context)
+        presenter = LastMatchPresenter(this)
         presenter.getLastMatch(leagueId)
 
         swipeRefreshLayout.onRefresh {
@@ -104,15 +105,26 @@ class LastMatchFragment(private val leagueId: Int) : Fragment(),
     }
 
     override fun showMatchList(data: List<Match>) {
-        swipeRefreshLayout.isRefreshing = false
-        matches.clear()
-        matches.addAll(data)
-        adapter.notifyDataSetChanged()
+        runOnUiThread {
+            hideLoading()
+            swipeRefreshLayout.isRefreshing = false
+            matches.clear()
+            matches.addAll(data)
+            adapter.notifyDataSetChanged()
+        }
     }
 
-    override fun onFailed(message: String?) {
-        swipeRefreshLayout.isRefreshing = false
-        txtFailed.visible()
-        swipeRefreshLayout.snackbar(message.toString()).show()
+    override fun onFailed(type: Int) {
+        runOnUiThread {
+            val message: String = when (type) {
+                1 -> getString(R.string.no_data)
+                2 -> getString(R.string.no_internet)
+                else -> ""
+            }
+            hideLoading()
+            swipeRefreshLayout.isRefreshing = false
+            txtFailed.visible()
+            swipeRefreshLayout.snackbar(message).show()
+        }
     }
 }

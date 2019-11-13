@@ -6,7 +6,7 @@ import com.doniapr.footballupdate.model.Team
 interface DetailMatchView {
     fun showLoading()
     fun hideLoading()
-    fun onFailed(message: String?)
+    fun onFailed(type: Int)
     fun showMatchDetail(data: Match)
     fun showTeam(data: Team, isHome: Boolean)
 }

@@ -42,7 +42,7 @@ class DetailLeagueActivity : AppCompatActivity(), DetailLeagueView {
         setSupportActionBar(toolbar_detail_league)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        presenter = DetailLeaguePresenter(this, applicationContext)
+        presenter = DetailLeaguePresenter(this)
         presenter.getLeagueDetail(leagueId.toString())
 
         val detailLeaguePagerAdapter =
@@ -53,8 +53,10 @@ class DetailLeagueActivity : AppCompatActivity(), DetailLeagueView {
     }
 
     override fun showLoading() {
-        cv_detail_league.invisible()
-        progress_bar_detail_league.visible()
+        runOnUiThread {
+            cv_detail_league.invisible()
+            progress_bar_detail_league.visible()
+        }
     }
 
     override fun hideLoading() {
@@ -63,71 +65,77 @@ class DetailLeagueActivity : AppCompatActivity(), DetailLeagueView {
     }
 
     override fun showLeagueDetail(data: List<LeagueDetail>?) {
-        Picasso.get().load(data?.get(0)?.leagueBadge).into(img_league_badge)
-        txt_league_name.text = data?.get(0)?.leagueName
-        leagueName = data?.get(0)?.leagueName.toString()
-        txt_league_country.text = data?.get(0)?.leagueCountry
+        runOnUiThread {
+            Picasso.get().load(data?.get(0)?.leagueBadge).into(img_league_badge)
+            txt_league_name.text = data?.get(0)?.leagueName
+            leagueName = data?.get(0)?.leagueName.toString()
+            txt_league_country.text = data?.get(0)?.leagueCountry
 
-        var urlWeb = data?.get(0)?.leagueWebsite
-        var urlFb = data?.get(0)?.leagueFacebook
-        var urlTwitter = data?.get(0)?.leagueTwitter
-        var urlYt = data?.get(0)?.leagueYoutube
+            var urlWeb = data?.get(0)?.leagueWebsite
+            var urlFb = data?.get(0)?.leagueFacebook
+            var urlTwitter = data?.get(0)?.leagueTwitter
+            var urlYt = data?.get(0)?.leagueYoutube
 
-        if (!urlWeb.isNullOrEmpty()) {
-            btn_league_web.setOnClickListener {
-                if (!urlWeb?.startsWith("http://")!! || !urlWeb?.startsWith("https://")!!) {
-                    urlWeb = "http://$urlWeb"
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(urlWeb))
-                    this@DetailLeagueActivity.startActivity(intent)
+            if (!urlWeb.isNullOrEmpty()) {
+                btn_league_web.setOnClickListener {
+                    if (!urlWeb?.startsWith("http://")!! || !urlWeb?.startsWith("https://")!!) {
+                        urlWeb = "http://$urlWeb"
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(urlWeb))
+                        this@DetailLeagueActivity.startActivity(intent)
+                    }
                 }
+            } else {
+                btn_league_web.invisible()
             }
-        } else {
-            btn_league_web.invisible()
-        }
 
-        if (!urlFb.isNullOrEmpty()) {
-            btn_league_facebook.setOnClickListener {
-                if (!urlFb?.startsWith("http://")!! || !urlFb?.startsWith("https://")!!) {
-                    urlFb = "http://$urlFb"
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(urlFb))
-                    this@DetailLeagueActivity.startActivity(intent)
+            if (!urlFb.isNullOrEmpty()) {
+                btn_league_facebook.setOnClickListener {
+                    if (!urlFb?.startsWith("http://")!! || !urlFb?.startsWith("https://")!!) {
+                        urlFb = "http://$urlFb"
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(urlFb))
+                        this@DetailLeagueActivity.startActivity(intent)
+                    }
                 }
+            } else {
+                btn_league_facebook.invisible()
             }
-        } else {
-            btn_league_facebook.invisible()
-        }
 
-        if (!urlTwitter.isNullOrEmpty()) {
-            btn_league_twitter.setOnClickListener {
-                if (!urlTwitter?.startsWith("http://")!! || !urlTwitter?.startsWith("https://")!!) {
-                    urlTwitter = "http://$urlTwitter"
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(urlTwitter))
-                    this@DetailLeagueActivity.startActivity(intent)
+            if (!urlTwitter.isNullOrEmpty()) {
+                btn_league_twitter.setOnClickListener {
+                    if (!urlTwitter?.startsWith("http://")!! || !urlTwitter?.startsWith("https://")!!) {
+                        urlTwitter = "http://$urlTwitter"
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(urlTwitter))
+                        this@DetailLeagueActivity.startActivity(intent)
+                    }
                 }
+            } else {
+                btn_league_twitter.invisible()
             }
-        } else {
-            btn_league_twitter.invisible()
-        }
 
-        if (!urlYt.isNullOrEmpty()) {
-            btn_league_youtube.setOnClickListener {
-                if (!urlYt?.startsWith("http://")!! || !urlYt?.startsWith("https://")!!) {
-                    urlYt = "http://$urlYt"
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(urlYt))
-                    this@DetailLeagueActivity.startActivity(intent)
+            if (!urlYt.isNullOrEmpty()) {
+                btn_league_youtube.setOnClickListener {
+                    if (!urlYt?.startsWith("http://")!! || !urlYt?.startsWith("https://")!!) {
+                        urlYt = "http://$urlYt"
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(urlYt))
+                        this@DetailLeagueActivity.startActivity(intent)
+                    }
                 }
+            } else {
+                btn_league_youtube.invisible()
             }
-        } else {
-            btn_league_youtube.invisible()
+            hideLoading()
         }
     }
 
     override fun onFailed(message: String?) {
-        cv_detail_league.visible()
-        btn_league_web.invisible()
-        btn_league_facebook.invisible()
-        btn_league_twitter.invisible()
-        btn_league_youtube.invisible()
+        runOnUiThread {
+            cv_detail_league.visible()
+            btn_league_web.invisible()
+            btn_league_facebook.invisible()
+            btn_league_twitter.invisible()
+            btn_league_youtube.invisible()
+            hideLoading()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

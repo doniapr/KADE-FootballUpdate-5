@@ -50,7 +50,7 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView {
 
         favoriteState()
 
-        presenter = DetailMatchPresenter(this, applicationContext)
+        presenter = DetailMatchPresenter(this)
         presenter.getMatchDetail(eventId.toString())
 
         swipe_refresh_detail_match.onRefresh {
@@ -66,109 +66,124 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView {
         progress_bar_detail_match.invisible()
     }
 
-    override fun onFailed(message: String?) {
-        swipe_refresh_detail_match.isRefreshing = false
-        Toast.makeText(this@DetailMatchActivity, message, Toast.LENGTH_SHORT).show()
+    override fun onFailed(type: Int) {
+        runOnUiThread {
+            val message: String = when (type) {
+                1 -> getString(R.string.no_data)
+                2 -> getString(R.string.no_internet)
+                3 -> getString(R.string.failed_load_team_badge)
+                else -> ""
+            }
+
+            hideLoading()
+            swipe_refresh_detail_match.isRefreshing = false
+            Toast.makeText(this@DetailMatchActivity, message, Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun showMatchDetail(data: Match) {
-        swipe_refresh_detail_match.isRefreshing = false
-        supportActionBar?.title = data.eventName
-        match = data
+        runOnUiThread {
+            hideLoading()
+            swipe_refresh_detail_match.isRefreshing = false
+            supportActionBar?.title = data.eventName
+            match = data
 
-        Picasso.get().load(data.matchBanner + "/preview").into(img_banner_match)
-        // Set Home
-        txt_match_home.text = data.homeTeam
-        txt_lineup_home.text = data.homeTeam
-        // Match Result
-        val round = data.leagueName + " " + getString(R.string.round) + " " + data.round
-        txt_match_round.text = round
-        setDate(data)
-        if (data.homeScore != null) {
-            txt_match_home_score.text = data.homeScore.toString()
-            txt_stats_home_goal.text = data.homeScore.toString()
-        }
-        if (!data.homeGoalDetail.isNullOrEmpty()) {
-            txt_home_goal_scorer.text = data.homeGoalDetail
-        }
+            Picasso.get().load(data.matchBanner + "/preview").into(img_banner_match)
+            // Set Home
+            txt_match_home.text = data.homeTeam
+            txt_lineup_home.text = data.homeTeam
+            // Match Result
+            val round = data.leagueName + " " + getString(R.string.round) + " " + data.round
+            txt_match_round.text = round
+            setDate(data)
+            if (data.homeScore != null) {
+                txt_match_home_score.text = data.homeScore.toString()
+                txt_stats_home_goal.text = data.homeScore.toString()
+            }
+            if (!data.homeGoalDetail.isNullOrEmpty()) {
+                txt_home_goal_scorer.text = data.homeGoalDetail
+            }
 
-        //Stats
-        if (data.homeShot != null) {
-            txt_stats_home_shots.text = data.homeShot
-        }
-        if (!data.homeRedCard.isNullOrEmpty()) {
-            txt_stats_home_red_card.text = data.homeRedCard
-        }
-        if (!data.homeYellowCard.isNullOrEmpty()) {
-            txt_stats_home_yellow_card.text = data.homeYellowCard
-        }
-        //Lineup
-        if (!data.homeGK.isNullOrEmpty()) {
-            txt_lineup_gk_home.text = data.homeGK
-        }
-        if (!data.homeDF.isNullOrEmpty()) {
-            txt_lineup_df_home.text = data.homeDF
-        }
-        if (!data.homeMF.isNullOrEmpty()) {
-            txt_lineup_mf_home.text = data.homeMF
-        }
-        if (!data.homeCF.isNullOrEmpty()) {
-            txt_lineup_cf_home.text = data.homeCF
-        }
-        if (!data.homeSubstitutes.isNullOrEmpty()) {
-            txt_lineup_subs_home.text = data.homeSubstitutes
-        }
+            //Stats
+            if (data.homeShot != null) {
+                txt_stats_home_shots.text = data.homeShot
+            }
+            if (!data.homeRedCard.isNullOrEmpty()) {
+                txt_stats_home_red_card.text = data.homeRedCard
+            }
+            if (!data.homeYellowCard.isNullOrEmpty()) {
+                txt_stats_home_yellow_card.text = data.homeYellowCard
+            }
+            //Lineup
+            if (!data.homeGK.isNullOrEmpty()) {
+                txt_lineup_gk_home.text = data.homeGK
+            }
+            if (!data.homeDF.isNullOrEmpty()) {
+                txt_lineup_df_home.text = data.homeDF
+            }
+            if (!data.homeMF.isNullOrEmpty()) {
+                txt_lineup_mf_home.text = data.homeMF
+            }
+            if (!data.homeCF.isNullOrEmpty()) {
+                txt_lineup_cf_home.text = data.homeCF
+            }
+            if (!data.homeSubstitutes.isNullOrEmpty()) {
+                txt_lineup_subs_home.text = data.homeSubstitutes
+            }
 
-        // Set Away
-        txt_match_away.text = data.awayTeam
-        txt_lineup_away.text = data.awayTeam
-        // Match Result
-        if (data.awayScore != null) {
-            txt_match_away_score.text = data.awayScore.toString()
-            txt_stats_away_goal.text = data.awayScore.toString()
-        }
-        if (!data.awayGoalDetail.isNullOrEmpty()) {
-            txt_away_goal_scorer.text = data.awayGoalDetail
-        }
-        //Stats
-        if (data.awayShot != null) {
-            txt_stats_away_shots.text = data.awayShot
-        }
-        if (!data.awayRedCard.isNullOrEmpty()) {
-            txt_stats_away_red_card.text = data.awayRedCard
-        }
-        if (!data.awayYellowCard.isNullOrEmpty()) {
-            txt_stats_away_yellow_card.text = data.awayYellowCard
-        }
-        //Lineup
-        if (!data.awayGK.isNullOrEmpty()) {
-            txt_lineup_gk_away.text = data.awayGK
-        }
-        if (!data.awayDF.isNullOrEmpty()) {
-            txt_lineup_df_away.text = data.awayDF
-        }
-        if (!data.awayMF.isNullOrEmpty()) {
-            txt_lineup_mf_away.text = data.awayMF
-        }
-        if (!data.awayCF.isNullOrEmpty()) {
-            txt_lineup_cf_away.text = data.awayCF
-        }
-        if (!data.awaySubstitutes.isNullOrEmpty()) {
-            txt_lineup_subs_away.text = data.awaySubstitutes
-        }
+            // Set Away
+            txt_match_away.text = data.awayTeam
+            txt_lineup_away.text = data.awayTeam
+            // Match Result
+            if (data.awayScore != null) {
+                txt_match_away_score.text = data.awayScore.toString()
+                txt_stats_away_goal.text = data.awayScore.toString()
+            }
+            if (!data.awayGoalDetail.isNullOrEmpty()) {
+                txt_away_goal_scorer.text = data.awayGoalDetail
+            }
+            //Stats
+            if (data.awayShot != null) {
+                txt_stats_away_shots.text = data.awayShot
+            }
+            if (!data.awayRedCard.isNullOrEmpty()) {
+                txt_stats_away_red_card.text = data.awayRedCard
+            }
+            if (!data.awayYellowCard.isNullOrEmpty()) {
+                txt_stats_away_yellow_card.text = data.awayYellowCard
+            }
+            //Lineup
+            if (!data.awayGK.isNullOrEmpty()) {
+                txt_lineup_gk_away.text = data.awayGK
+            }
+            if (!data.awayDF.isNullOrEmpty()) {
+                txt_lineup_df_away.text = data.awayDF
+            }
+            if (!data.awayMF.isNullOrEmpty()) {
+                txt_lineup_mf_away.text = data.awayMF
+            }
+            if (!data.awayCF.isNullOrEmpty()) {
+                txt_lineup_cf_away.text = data.awayCF
+            }
+            if (!data.awaySubstitutes.isNullOrEmpty()) {
+                txt_lineup_subs_away.text = data.awaySubstitutes
+            }
 
-        presenter.getTeamInfo(data.idHomeTeam.toString(), true)
-        presenter.getTeamInfo(data.idAwayTeam.toString(), false)
+            presenter.getTeamInfo(data.idHomeTeam.toString(), true)
+            presenter.getTeamInfo(data.idAwayTeam.toString(), false)
+        }
     }
 
     override fun showTeam(data: Team, isHome: Boolean) {
-        if (!data.teamBadge.isNullOrEmpty()) {
-            if (isHome) {
-                homeTeamBadge = data.teamBadge + "/preview"
-                Picasso.get().load(data.teamBadge + "/preview").into(img_match_home_team_badge)
-            } else {
-                awayTeamBadge = data.teamBadge + "/preview"
-                Picasso.get().load(data.teamBadge + "/preview").into(img_match_away_team_badge)
+        runOnUiThread {
+            if (!data.teamBadge.isNullOrEmpty()) {
+                if (isHome) {
+                    homeTeamBadge = data.teamBadge + "/preview"
+                    Picasso.get().load(data.teamBadge + "/preview").into(img_match_home_team_badge)
+                } else {
+                    awayTeamBadge = data.teamBadge + "/preview"
+                    Picasso.get().load(data.teamBadge + "/preview").into(img_match_away_team_badge)
+                }
             }
         }
     }
@@ -245,6 +260,7 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView {
             layout_detail_container.snackbar(e.message.toString()).show()
         }
     }
+
 
     private fun removeFromFavorite() {
         try {
