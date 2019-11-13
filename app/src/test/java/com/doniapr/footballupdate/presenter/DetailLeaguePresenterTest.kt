@@ -36,7 +36,7 @@ class DetailLeaguePresenterTest {
             result = MainApi().services.getDetailLeague(leagueId)
             responses = result.body()?.league
 
-            presenter.getLeagueDetail(leagueId)
+            presenter.getLeagueDetail("4329")
 
             Mockito.verify(view).showLoading()
             Mockito.verify(view).showLeagueDetail(responses)

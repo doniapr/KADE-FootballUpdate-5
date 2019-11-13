@@ -84,8 +84,6 @@ class SearchTest {
         Thread.sleep(3500)
         // press first item on recycler view
         onView(withId(R.id.txt_failed)).check(matches(isDisplayed()))
-        // waiting for detail result
-        Thread.sleep(threadSleep)
         // press back button
         onView(withId(R.id.txt_failed)).perform(pressBack())
     }
@@ -108,8 +106,6 @@ class SearchTest {
         Thread.sleep(3500)
         // press first item on recycler view
         onView(withId(R.id.txt_failed)).check(matches(isDisplayed()))
-        // waiting for detail result
-        Thread.sleep(threadSleep)
         // press back button
         onView(withId(R.id.txt_failed)).perform(pressBack())
     }
