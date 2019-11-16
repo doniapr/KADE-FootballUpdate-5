@@ -2,10 +2,10 @@ package com.doniapr.footballupdate.presenter
 
 import android.content.Context
 import com.doniapr.footballupdate.database.database
-import com.doniapr.footballupdate.model.FavoriteMatch
-import com.doniapr.footballupdate.model.FavoriteTeam
+import com.doniapr.footballupdate.model.favorite.FavoriteMatch
+import com.doniapr.footballupdate.model.favorite.FavoriteTeam
 import com.doniapr.footballupdate.utility.toDate
-import com.doniapr.footballupdate.view.FavoriteView
+import com.doniapr.footballupdate.view.viewinterface.FavoriteView
 import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.select
 import java.text.SimpleDateFormat

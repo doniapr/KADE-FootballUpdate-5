@@ -4,18 +4,19 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.doniapr.footballupdate.R
-import com.doniapr.footballupdate.model.Player
+import com.doniapr.footballupdate.model.player.Player
 import com.doniapr.footballupdate.presenter.PlayerPresenter
 import com.doniapr.footballupdate.utility.formatTo
 import com.doniapr.footballupdate.utility.invisible
 import com.doniapr.footballupdate.utility.toDate
 import com.doniapr.footballupdate.utility.visible
-import com.doniapr.footballupdate.view.PlayerView
+import com.doniapr.footballupdate.view.viewinterface.PlayerView
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_player.*
 import org.jetbrains.anko.support.v4.onRefresh
 
-class PlayerActivity : AppCompatActivity(), PlayerView {
+class PlayerActivity : AppCompatActivity(),
+    PlayerView {
     private lateinit var presenter: PlayerPresenter
 
     companion object {

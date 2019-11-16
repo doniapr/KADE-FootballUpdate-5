@@ -2,8 +2,8 @@ package com.doniapr.footballupdate.database
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import com.doniapr.footballupdate.model.FavoriteMatch
-import com.doniapr.footballupdate.model.FavoriteTeam
+import com.doniapr.footballupdate.model.favorite.FavoriteMatch
+import com.doniapr.footballupdate.model.favorite.FavoriteTeam
 import org.jetbrains.anko.db.*
 
 class MyDatabaseOpenHelper(context: Context) :

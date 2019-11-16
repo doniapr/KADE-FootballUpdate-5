@@ -9,14 +9,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.doniapr.footballupdate.R
 import com.doniapr.footballupdate.database.database
-import com.doniapr.footballupdate.model.FavoriteMatch
-import com.doniapr.footballupdate.model.Match
-import com.doniapr.footballupdate.model.Team
+import com.doniapr.footballupdate.model.favorite.FavoriteMatch
+import com.doniapr.footballupdate.model.match.Match
+import com.doniapr.footballupdate.model.team.Team
 import com.doniapr.footballupdate.presenter.DetailMatchPresenter
 import com.doniapr.footballupdate.utility.*
-import com.doniapr.footballupdate.view.DetailMatchView
-import com.doniapr.footballupdate.view.ui.DetailTeamActivity.Companion.TEAM_DETAIL_ID
-import com.doniapr.footballupdate.view.ui.DetailTeamActivity.Companion.TEAM_DETAIL_NAME
+import com.doniapr.footballupdate.view.ui.detailteam.DetailTeamActivity
+import com.doniapr.footballupdate.view.ui.detailteam.DetailTeamActivity.Companion.TEAM_DETAIL_ID
+import com.doniapr.footballupdate.view.ui.detailteam.DetailTeamActivity.Companion.TEAM_DETAIL_NAME
+import com.doniapr.footballupdate.view.viewinterface.DetailMatchView
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail_match.*
 import org.jetbrains.anko.db.classParser
@@ -27,7 +28,8 @@ import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.support.v4.onRefresh
 
-class DetailMatchActivity : AppCompatActivity(), DetailMatchView {
+class DetailMatchActivity : AppCompatActivity(),
+    DetailMatchView {
     private lateinit var presenter: DetailMatchPresenter
     private lateinit var match: Match
 

@@ -16,21 +16,21 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".view.ui.PlayerActivity"
-            android:parentActivityName=".view.ui.DetailTeamActivity">
+            android:parentActivityName=".view.ui.detailteam.DetailTeamActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.doniapr.footballupdate.view.ui.DetailTeamActivity" />
+                android:value="com.doniapr.footballupdate.view.ui.detailteam.DetailTeamActivity" />
         </activity>
         <activity
-            android:name=".view.ui.DetailTeamActivity"
+            android:name=".view.ui.detailteam.DetailTeamActivity"
             android:launchMode="singleTop"
-            android:parentActivityName=".view.ui.DetailLeagueActivity">
+            android:parentActivityName=".view.ui.detailleague.DetailLeagueActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.doniapr.footballupdate.view.ui.DetailLeagueActivity" />
+                android:value="com.doniapr.footballupdate.view.ui.detailleague.DetailLeagueActivity" />
         </activity>
         <activity
-            android:name=".view.ui.FavoriteActivity"
+            android:name=".view.ui.favorite.FavoriteActivity"
             android:parentActivityName=".view.ui.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -38,20 +38,20 @@
         </activity>
         <activity
             android:name=".view.ui.DetailMatchActivity"
-            android:parentActivityName=".view.ui.DetailLeagueActivity">
+            android:parentActivityName=".view.ui.detailleague.DetailLeagueActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.doniapr.footballupdate.view.ui.DetailLeagueActivity" />
+                android:value="com.doniapr.footballupdate.view.ui.detailleague.DetailLeagueActivity" />
         </activity>
         <activity
-            android:name=".view.ui.SearchResultActivity"
+            android:name=".view.ui.search.SearchResultActivity"
             android:parentActivityName=".view.ui.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.doniapr.footballupdate.view.ui.MainActivity" />
         </activity>
         <activity
-            android:name=".view.ui.DetailLeagueActivity"
+            android:name=".view.ui.detailleague.DetailLeagueActivity"
             android:launchMode="singleTop"
             android:parentActivityName=".view.ui.MainActivity">
             <meta-data

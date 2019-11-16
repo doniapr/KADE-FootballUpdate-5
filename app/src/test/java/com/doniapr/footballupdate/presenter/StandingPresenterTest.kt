@@ -1,9 +1,9 @@
 package com.doniapr.footballupdate.presenter
 
 import com.doniapr.footballupdate.apiservice.MainApi
-import com.doniapr.footballupdate.model.Standings
-import com.doniapr.footballupdate.model.StandingsResponse
-import com.doniapr.footballupdate.view.StandingsView
+import com.doniapr.footballupdate.model.standing.Standings
+import com.doniapr.footballupdate.model.standing.StandingsResponse
+import com.doniapr.footballupdate.view.viewinterface.StandingsView
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.junit.Before

@@ -113,12 +113,10 @@
     <string name="favorite_removed">Berhasil menghapus dari favorit</string>
     <string name="no_internet">Mohon Periksa Koneksi Internet Anda</string>
     <string name="failed_load_team_badge">Failed to load team badge</string>
-    <string name="soccer">Soccer</string>
     <string name="search_result_for">Hasil pencarian untuk</string>
     <string name="last_match">Last Match</string>
     <string name="next_match">Next Match</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="team_name">Team</string>
     <string name="stadium_name">Stadium Name</string>
     <string name="league_name">League Name</string>
@@ -130,7 +128,6 @@
     <string name="stadium">Stadium</string>
     <string name="stadium_desc">Stadium Description</string>
     <string name="favorite">Favorite</string>
-    <string name="from">From:</string>
     <string name="position">Position:</string>
     <string name="personal_info">Personal Info</string>
     <string name="nationality">Nationality</string>

@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.ui.SearchResultActivity">
+    tools:context=".view.ui.search.SearchResultActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_search"

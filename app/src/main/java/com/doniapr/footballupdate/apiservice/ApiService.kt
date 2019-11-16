@@ -1,7 +1,14 @@
 package com.doniapr.footballupdate.apiservice
 
 import com.doniapr.footballupdate.BuildConfig
-import com.doniapr.footballupdate.model.*
+import com.doniapr.footballupdate.model.league.LeagueDetailResponse
+import com.doniapr.footballupdate.model.match.MatchResponse
+import com.doniapr.footballupdate.model.player.PlayerDetailResponse
+import com.doniapr.footballupdate.model.player.PlayerResponse
+import com.doniapr.footballupdate.model.search.SearchResponse
+import com.doniapr.footballupdate.model.standing.StandingsResponse
+import com.doniapr.footballupdate.model.team.TeamLastMatchResponse
+import com.doniapr.footballupdate.model.team.TeamResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

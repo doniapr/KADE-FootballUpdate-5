@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.doniapr.footballupdate.R
-import com.doniapr.footballupdate.model.Player
+import com.doniapr.footballupdate.model.player.Player
 import com.squareup.picasso.Picasso
 import org.jetbrains.anko.*
 import org.jetbrains.anko.constraint.layout.constraintLayout

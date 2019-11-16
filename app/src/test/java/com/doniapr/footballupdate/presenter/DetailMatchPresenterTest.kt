@@ -1,11 +1,11 @@
 package com.doniapr.footballupdate.presenter
 
 import com.doniapr.footballupdate.apiservice.MainApi
-import com.doniapr.footballupdate.model.Match
-import com.doniapr.footballupdate.model.MatchResponse
-import com.doniapr.footballupdate.model.Team
-import com.doniapr.footballupdate.model.TeamResponse
-import com.doniapr.footballupdate.view.DetailMatchView
+import com.doniapr.footballupdate.model.match.Match
+import com.doniapr.footballupdate.model.match.MatchResponse
+import com.doniapr.footballupdate.model.team.Team
+import com.doniapr.footballupdate.model.team.TeamResponse
+import com.doniapr.footballupdate.view.viewinterface.DetailMatchView
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.junit.Before

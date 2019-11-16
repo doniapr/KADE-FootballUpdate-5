@@ -13,9 +13,12 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.doniapr.footballupdate.R
-import com.doniapr.footballupdate.adapter.ListLeagueAdapter
-import com.doniapr.footballupdate.model.League
-import com.doniapr.footballupdate.view.ui.SearchResultActivity.Companion.QUERY
+import com.doniapr.footballupdate.adapter.leaguedetailadapter.ListLeagueAdapter
+import com.doniapr.footballupdate.model.league.League
+import com.doniapr.footballupdate.view.ui.detailleague.DetailLeagueActivity
+import com.doniapr.footballupdate.view.ui.favorite.FavoriteActivity
+import com.doniapr.footballupdate.view.ui.search.SearchResultActivity
+import com.doniapr.footballupdate.view.ui.search.SearchResultActivity.Companion.QUERY
 import org.jetbrains.anko.*
 import org.jetbrains.anko.appcompat.v7.themedToolbar
 import org.jetbrains.anko.recyclerview.v7.recyclerView
@@ -55,12 +58,13 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         setData()
 
-        adapter = ListLeagueAdapter(listLeague) {
-            this@MainActivity.startActivity<DetailLeagueActivity>(
-                DetailLeagueActivity.LEAGUE_ID to it.leagueId,
-                DetailLeagueActivity.LEAGUE_NAME to it.leagueName
-            )
-        }
+        adapter =
+            ListLeagueAdapter(listLeague) {
+                this@MainActivity.startActivity<DetailLeagueActivity>(
+                    DetailLeagueActivity.LEAGUE_ID to it.leagueId,
+                    DetailLeagueActivity.LEAGUE_NAME to it.leagueName
+                )
+            }
         listItemLeague.adapter = adapter
 
 
@@ -72,7 +76,11 @@ class MainActivity : AppCompatActivity() {
         val leagueBadge = resources.getStringArray(R.array.league_badge)
 
         for (i in leagueName.indices) {
-            val league = League(leagueId[i], leagueName[i], leagueBadge[i])
+            val league = League(
+                leagueId[i],
+                leagueName[i],
+                leagueBadge[i]
+            )
             listLeague.add(league)
         }
     }
