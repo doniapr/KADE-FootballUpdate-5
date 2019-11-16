@@ -1,35 +1,35 @@
 package com.doniapr.footballupdate.presenter
 
 import com.doniapr.footballupdate.apiservice.MainApi
-import com.doniapr.footballupdate.view.LastMatchView
+import com.doniapr.footballupdate.view.StandingsView
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class LastMatchPresenter(
-    private val view: LastMatchView
-) {
+class StandingPresenter(private val view: StandingsView) {
 
-    fun getLastMatch(leagueId: Int?) {
+    fun getStanding(leagueId: String) {
         view.showLoading()
 
         GlobalScope.launch {
-            val result = MainApi().services.getLastMatch(leagueId.toString())
+            val result = MainApi().services.getStanding(leagueId, "1920")
             if (result.isSuccessful) {
                 if (result.code() == 200) {
-                    result.body()?.matches.let {
+                    result.body()?.standing.let {
                         if (!it.isNullOrEmpty()) {
-                            view.showMatchList(it)
+                            if (it.isNotEmpty()) {
+                                view.showStandingList(it)
+                            } else {
+                                view.onFailed(1)
+                            }
                         } else {
                             view.onFailed(1)
                         }
                     }
                 } else {
-                    view.onFailed(1)
+                    view.onFailed(2)
                 }
-            } else {
-                view.onFailed(2)
             }
-
         }
     }
+
 }

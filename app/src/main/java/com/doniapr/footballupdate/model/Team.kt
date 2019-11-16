@@ -12,9 +12,24 @@ class Team(
     @SerializedName("strLeague")
     var teamLeague: String? = null,
 
+    @SerializedName("strSport")
+    var teamSport: String? = null,
+
     @SerializedName("strCountry")
     var teamCountry: String? = null,
 
     @SerializedName("strTeamBadge")
-    var teamBadge: String? = null
+    var teamBadge: String? = null,
+
+    @SerializedName("strStadium")
+    var teamStadium: String? = null,
+
+    @SerializedName("strStadiumThumb")
+    var teamStadiumThumb: String? = null,
+
+    @SerializedName("strStadiumDescription")
+    var teamStadiumDesc: String? = null,
+
+    @SerializedName("strDescriptionEN")
+    var teamDescription: String? = null
 )

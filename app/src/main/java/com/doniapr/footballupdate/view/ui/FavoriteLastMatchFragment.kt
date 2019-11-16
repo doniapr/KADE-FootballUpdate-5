@@ -14,7 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.doniapr.footballupdate.R
 import com.doniapr.footballupdate.adapter.FavoriteLastMatchAdapter
-import com.doniapr.footballupdate.favorite.Favorite
+import com.doniapr.footballupdate.model.FavoriteMatch
+import com.doniapr.footballupdate.model.FavoriteTeam
 import com.doniapr.footballupdate.presenter.FavoritePresenter
 import com.doniapr.footballupdate.utility.invisible
 import com.doniapr.footballupdate.utility.visible
@@ -34,7 +35,7 @@ class FavoriteLastMatchFragment : Fragment(), FavoriteView {
     private lateinit var lastMatchList: RecyclerView
     private lateinit var txtFailed: TextView
     private lateinit var swipeRefresh: SwipeRefreshLayout
-    private var favorites: MutableList<Favorite> = mutableListOf()
+    private var favoriteMatches: MutableList<FavoriteMatch> = mutableListOf()
     private lateinit var adapter: FavoriteLastMatchAdapter
     private lateinit var presenter: FavoritePresenter
 
@@ -71,7 +72,7 @@ class FavoriteLastMatchFragment : Fragment(), FavoriteView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = FavoriteLastMatchAdapter(favorites) {
+        adapter = FavoriteLastMatchAdapter(favoriteMatches) {
             context?.startActivity<DetailMatchActivity>(
                 DetailMatchActivity.EVENT_ID to it.eventId?.toInt()
             )
@@ -81,14 +82,14 @@ class FavoriteLastMatchFragment : Fragment(), FavoriteView {
         presenter = FavoritePresenter(this, context)
 
         swipeRefresh.onRefresh {
-            favorites.clear()
+            favoriteMatches.clear()
             presenter.getFavorite(true)
         }
     }
 
     override fun onResume() {
         super.onResume()
-        favorites.clear()
+        favoriteMatches.clear()
         presenter.getFavorite(true)
     }
 
@@ -97,12 +98,13 @@ class FavoriteLastMatchFragment : Fragment(), FavoriteView {
         txtFailed.visible()
     }
 
-    override fun showFavorite(data: List<Favorite>) {
-        favorites.clear()
+    override fun showFavorite(data: List<FavoriteMatch>) {
+        favoriteMatches.clear()
         swipeRefresh.isRefreshing = false
-        favorites.addAll(data)
+        favoriteMatches.addAll(data)
         adapter.notifyDataSetChanged()
         txtFailed.invisible()
     }
 
+    override fun showFavoriteTeam(data: List<FavoriteTeam>) {}
 }

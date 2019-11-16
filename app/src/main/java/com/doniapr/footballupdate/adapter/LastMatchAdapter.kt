@@ -1,5 +1,8 @@
 package com.doniapr.footballupdate.adapter
 
+import android.content.res.ColorStateList
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -91,17 +94,23 @@ class MatchUI : AnkoComponent<ViewGroup> {
     override fun createView(ui: AnkoContext<ViewGroup>): View {
         return with(ui) {
             linearLayout {
-                lparams(width = matchParent, height = wrapContent)
+                lparams(width = dip(300), height = wrapContent)
                 padding = dip(8)
 
                 cardView {
                     lparams(width = matchParent, height = wrapContent)
-                    padding = dip(16)
+                    background = GradientDrawable().apply {
+                        shape = GradientDrawable.RECTANGLE
+                        color = ColorStateList.valueOf(Color.parseColor("#eceff1"))
+                        cornerRadius = 20f
+                        setStroke(2, Color.BLACK)
+                    }
 
                     linearLayout {
                         lparams(width = matchParent, height = wrapContent)
                         orientation = LinearLayout.VERTICAL
                         gravity = Gravity.CENTER
+                        padding = dip(8)
 
                         textView {
                             id = R.id.txt_match_week

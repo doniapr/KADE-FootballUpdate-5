@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.doniapr.footballupdate.R
 import com.doniapr.footballupdate.view.ui.FavoriteLastMatchFragment
 import com.doniapr.footballupdate.view.ui.FavoriteNextMatchFragment
+import com.doniapr.footballupdate.view.ui.FavoriteTeamFragment
 
 class FavoritePagerAdapter(
     private val context: Context,
@@ -16,13 +17,15 @@ class FavoritePagerAdapter(
 ) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     @StringRes
-    private val tabTitles = intArrayOf(R.string.tab_text_1, R.string.tab_text_2)
+    private val tabTitles =
+        intArrayOf(R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3)
 
     override fun getItem(position: Int): Fragment {
         var fragment: Fragment? = null
         when (position) {
             0 -> fragment = FavoriteLastMatchFragment()
             1 -> fragment = FavoriteNextMatchFragment()
+            2 -> fragment = FavoriteTeamFragment()
         }
         return fragment as Fragment
     }
@@ -32,6 +35,6 @@ class FavoritePagerAdapter(
         return context.resources.getString(tabTitles[position])
     }
 
-    override fun getCount(): Int = 2
+    override fun getCount(): Int = tabTitles.size
 
 }

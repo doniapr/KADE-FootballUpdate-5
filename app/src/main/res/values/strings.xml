@@ -2,6 +2,11 @@
     <string name="app_name">Football Update</string>
     <string name="tab_text_1">Last Match</string>
     <string name="tab_text_2">Next Match</string>
+    <string name="tab_text_3">Teams</string>
+
+    <string name="tab_text_league_1">Match</string>
+    <string name="tab_text_league_2">Standings</string>
+    <string name="tab_text_league_3">Teams</string>
 
     <array name="league_name">
         <item>English Premier League</item>
@@ -81,7 +86,7 @@
     <string name="image_banner">image banner</string>
     <string name="image_badge">image badge</string>
     <string name="search">Cari Pertandingan</string>
-    <string name="search_hint">Cari Pertandingan</string>
+    <string name="search_hint">Cari Pertandingan/Tim</string>
     <string name="versus">VS</string>
     <string name="home_team">Home Team</string>
     <string name="_0">-</string>
@@ -102,7 +107,7 @@
     <string name="midfielders">Midfielders</string>
     <string name="forwards">Forwards</string>
     <string name="subtitutes">Subtitutes</string>
-    <string name="favorite">Favorite</string>
+    <string name="favoriteMatch">Favorite</string>
     <string name="data_not_ready">Data belum siap</string>
     <string name="favorite_added">Berhasil menambahkan ke favorit</string>
     <string name="favorite_removed">Berhasil menghapus dari favorit</string>
@@ -110,5 +115,38 @@
     <string name="failed_load_team_badge">Failed to load team badge</string>
     <string name="soccer">Soccer</string>
     <string name="search_result_for">Hasil pencarian untuk</string>
+    <string name="last_match">Last Match</string>
+    <string name="next_match">Next Match</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="team_name">Team</string>
+    <string name="stadium_name">Stadium Name</string>
+    <string name="league_name">League Name</string>
+    <string name="tab_team_info">Team Info</string>
+    <string name="tab_team_player">Player</string>
+    <string name="country">Country</string>
+    <string name="league">League</string>
+    <string name="description">Description</string>
+    <string name="stadium">Stadium</string>
+    <string name="stadium_desc">Stadium Description</string>
+    <string name="favorite">Favorite</string>
+    <string name="from">From:</string>
+    <string name="position">Position:</string>
+    <string name="personal_info">Personal Info</string>
+    <string name="nationality">Nationality</string>
+    <string name="date_of_birth">Date of Birth</string>
+    <string name="date_signed">Date Signed</string>
+    <string name="height">Height</string>
+    <string name="weight">Weight</string>
+    <string name="match">Match</string>
+    <string name="search_result">Hasil Pencarian</string>
+    <string name="pos">Pos</string>
+    <string name="team">Team</string>
+    <string name="play">P</string>
+    <string name="win">W</string>
+    <string name="draw">D</string>
+    <string name="loss">L</string>
+    <string name="goal_different">GD</string>
+    <string name="points">Pts</string>
 
 </resources>

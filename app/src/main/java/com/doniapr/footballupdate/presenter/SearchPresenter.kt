@@ -64,4 +64,63 @@ class SearchPresenter(
             }
         }
     }
+
+    fun doSearchTeam(query: String?) {
+        view.showLoading()
+
+        GlobalScope.launch {
+            val result = MainApi().services.searchTeam(query)
+            if (result.isSuccessful) {
+                if (result.code() == 200) {
+                    result.body()?.teams.let {
+                        if (!it.isNullOrEmpty()) {
+                            val filtered = it.filter { teams ->
+                                teams.teamSport == "Soccer"
+                            }
+                            if (filtered.isNotEmpty()) {
+                                view.showTeamList(filtered)
+                            } else {
+                                view.onFailed(1)
+                            }
+                        } else {
+                            view.onFailed(1)
+                        }
+                    }
+                } else {
+                    view.onFailed(2)
+                }
+            }
+        }
+    }
+
+    fun doSearchTeamInLeague(query: String?, leagueName: String?) {
+        view.showLoading()
+
+        GlobalScope.launch {
+            val result = MainApi().services.searchTeam(query)
+            if (result.isSuccessful) {
+                if (result.code() == 200) {
+                    result.body()?.teams.let {
+                        if (!it.isNullOrEmpty()) {
+                            val filtered = it.filter { teams ->
+                                teams.teamSport == "Soccer"
+                            }.filter { team ->
+                                team.teamLeague == leagueName
+                            }
+
+                            if (filtered.isNotEmpty()) {
+                                view.showTeamList(filtered)
+                            } else {
+                                view.onFailed(1)
+                            }
+                        } else {
+                            view.onFailed(1)
+                        }
+                    }
+                } else {
+                    view.onFailed(2)
+                }
+            }
+        }
+    }
 }

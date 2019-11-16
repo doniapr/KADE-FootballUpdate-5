@@ -24,6 +24,7 @@ class SearchTest {
 
     @Test
     fun testSearch() {
+
         // press search menu
         onView(withId(R.id.search)).perform(click())
         // typing query
@@ -41,7 +42,7 @@ class SearchTest {
         // press back button
         onView(withText("Stats")).check(matches(isDisplayed())).perform(pressBack())
         // press back button
-        onView(withId(R.id.txt_query)).check(matches(isDisplayed())).perform(pressBack())
+        onView(withId(R.id.search)).check(matches(isDisplayed())).perform(pressBack())
     }
 
     @Test
@@ -69,7 +70,7 @@ class SearchTest {
         // press back button
         onView(withText("Stats")).check(matches(isDisplayed())).perform(pressBack())
         // press back button
-        onView(withId(R.id.txt_query)).check(matches(isDisplayed())).perform(pressBack())
+        onView(withId(R.id.search)).check(matches(isDisplayed())).perform(pressBack())
     }
 
     @Test
@@ -108,5 +109,37 @@ class SearchTest {
         onView(withId(R.id.txt_failed)).check(matches(isDisplayed()))
         // press back button
         onView(withId(R.id.txt_failed)).perform(pressBack())
+    }
+
+    @Test
+    fun testSearchTeam() {
+        // press search menu
+        onView(withId(R.id.search)).perform(click())
+        // typing query
+        onView(isAssignableFrom(AutoCompleteTextView::class.java))
+            .perform(typeText("arsenal"))
+            .perform(pressImeActionButton())
+        // waiting for result
+        Thread.sleep(threadSleep)
+        // press first item on recycler view
+
+        onView(withText(R.string.team_name)).check(matches(isDisplayed())).perform(click())
+
+        onView(withId(R.id.rv_search_result_team)).check(matches(isDisplayed())).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click())
+        )
+        // waiting for detail result
+        Thread.sleep(threadSleep)
+        // press back button
+        onView(withText(R.string.tab_team_player)).check(matches(isDisplayed())).perform(click())
+
+        onView(withId(R.id.rv_list_player)).check(matches(isDisplayed())).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click())
+        )
+        Thread.sleep(threadSleep)
+        onView(withId(R.id.txt_player_name)).check(matches(isDisplayed())).perform(pressBack())
+        onView(withText(R.string.tab_team_player)).check(matches(isDisplayed())).perform(pressBack())
+        onView(withText(R.string.team_name)).check(matches(isDisplayed())).perform(pressBack())
+
     }
 }

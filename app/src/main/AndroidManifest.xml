@@ -15,6 +15,21 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
+            android:name=".view.ui.PlayerActivity"
+            android:parentActivityName=".view.ui.DetailTeamActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.doniapr.footballupdate.view.ui.DetailTeamActivity" />
+        </activity>
+        <activity
+            android:name=".view.ui.DetailTeamActivity"
+            android:launchMode="singleTop"
+            android:parentActivityName=".view.ui.DetailLeagueActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.doniapr.footballupdate.view.ui.DetailLeagueActivity" />
+        </activity>
+        <activity
             android:name=".view.ui.FavoriteActivity"
             android:parentActivityName=".view.ui.MainActivity">
             <meta-data

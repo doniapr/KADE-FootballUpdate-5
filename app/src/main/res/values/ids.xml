@@ -18,4 +18,43 @@
     <item name="rv_list_league" type="id" />
     <item name="txt_query" type="id" />
     <item name="txt_failed" type="id" />
+    <item name="layout_standing" type="id" />
+    <item name="img_team_badge_standing" type="id" />
+    <item name="txt_team_name_standing" type="id" />
+    <item name="layout_standing_stats" type="id" />
+    <item name="txt_standing_play" type="id" />
+    <item name="txt_standing_win" type="id" />
+    <item name="txt_standing_draw" type="id" />
+    <item name="txt_standing_loss" type="id" />
+    <item name="txt_standing_gd" type="id" />
+    <item name="txt_standing_point" type="id" />
+    <item name="txt_standing_title_name" type="id" />
+    <item name="layout_standing_title" type="id" />
+    <item name="txt_standing_title_play" type="id" />
+    <item name="txt_standing_title_win" type="id" />
+    <item name="txt_standing_title_draw" type="id" />
+    <item name="txt_standing_title_loss" type="id" />
+    <item name="txt_standing_title_gd" type="id" />
+    <item name="txt_standing_title_pts" type="id" />
+    <item name="txt_standing_title_gf" type="id" />
+    <item name="txt_standing_title_ga" type="id" />
+    <item name="txt_standing_pos" type="id" />
+    <item name="txt_standing_title_pos" type="id" />
+    <item name="img_team_badge" type="id" />
+    <item name="txt_team_name" type="id" />
+    <item name="txt_team_description" type="id" />
+    <item name="txt_team_country" type="id" />
+    <item name="txt_team_league" type="id" />
+    <item name="rv_list_player" type="id" />
+    <item name="img_team_player" type="id" />
+    <item name="txt_team_player_name" type="id" />
+    <item name="layout_list_player" type="id" />
+    <item name="txt_from" type="id" />
+    <item name="txt_player_from" type="id" />
+    <item name="txt_position" type="id" />
+    <item name="txt_player_position" type="id" />
+    <item name="cv_search_team" type="id" />
+    <item name="rv_search_result_team" type="id" />
+    <item name="txt_query_match" type="id" />
+    <item name="txt_failed_team" type="id" />
 </resources>

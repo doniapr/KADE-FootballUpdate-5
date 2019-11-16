@@ -1,6 +1,6 @@
-package com.doniapr.footballupdate.favorite
+package com.doniapr.footballupdate.model
 
-data class Favorite(
+data class FavoriteMatch(
     val id: Long?,
     val eventId: String?,
     val eventName: String?,

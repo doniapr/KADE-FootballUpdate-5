@@ -9,12 +9,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.doniapr.footballupdate.R
 import com.doniapr.footballupdate.database.database
-import com.doniapr.footballupdate.favorite.Favorite
+import com.doniapr.footballupdate.model.FavoriteMatch
 import com.doniapr.footballupdate.model.Match
 import com.doniapr.footballupdate.model.Team
 import com.doniapr.footballupdate.presenter.DetailMatchPresenter
 import com.doniapr.footballupdate.utility.*
 import com.doniapr.footballupdate.view.DetailMatchView
+import com.doniapr.footballupdate.view.ui.DetailTeamActivity.Companion.TEAM_DETAIL_ID
+import com.doniapr.footballupdate.view.ui.DetailTeamActivity.Companion.TEAM_DETAIL_NAME
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail_match.*
 import org.jetbrains.anko.db.classParser
@@ -22,6 +24,7 @@ import org.jetbrains.anko.db.delete
 import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.db.select
 import org.jetbrains.anko.design.snackbar
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.support.v4.onRefresh
 
 class DetailMatchActivity : AppCompatActivity(), DetailMatchView {
@@ -87,6 +90,19 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView {
             swipe_refresh_detail_match.isRefreshing = false
             supportActionBar?.title = data.eventName
             match = data
+
+            img_match_home_team_badge.setOnClickListener {
+                this@DetailMatchActivity.startActivity<DetailTeamActivity>(
+                    TEAM_DETAIL_ID to data.idHomeTeam,
+                    TEAM_DETAIL_NAME to data.homeTeam
+                )
+            }
+            img_match_away_team_badge.setOnClickListener {
+                this@DetailMatchActivity.startActivity<DetailTeamActivity>(
+                    TEAM_DETAIL_ID to data.idAwayTeam,
+                    TEAM_DETAIL_NAME to data.awayTeam
+                )
+            }
 
             Picasso.get().load(data.matchBanner + "/preview").into(img_banner_match)
             // Set Home
@@ -240,19 +256,19 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView {
         try {
             database.use {
                 insert(
-                    Favorite.TABLE_FAVORITE,
-                    Favorite.EVENT_ID to match.eventId,
-                    Favorite.EVENT_NAME to match.eventName,
-                    Favorite.HOME_TEAM_NAME to match.homeTeam,
-                    Favorite.AWAY_TEAM_NAME to match.awayTeam,
-                    Favorite.HOME_TEAM_SCORE to match.homeScore.toString(),
-                    Favorite.AWAY_TEAM_SCORE to match.awayScore.toString(),
-                    Favorite.HOME_TEAM_BADGE to homeTeamBadge,
-                    Favorite.AWAY_TEAM_BADGE to awayTeamBadge,
-                    Favorite.LEAGUE_NAME to match.leagueName,
-                    Favorite.ROUND to match.round.toString(),
-                    Favorite.DATE to match.dateEvent,
-                    Favorite.TIME to match.time
+                    FavoriteMatch.TABLE_FAVORITE,
+                    FavoriteMatch.EVENT_ID to match.eventId,
+                    FavoriteMatch.EVENT_NAME to match.eventName,
+                    FavoriteMatch.HOME_TEAM_NAME to match.homeTeam,
+                    FavoriteMatch.AWAY_TEAM_NAME to match.awayTeam,
+                    FavoriteMatch.HOME_TEAM_SCORE to match.homeScore.toString(),
+                    FavoriteMatch.AWAY_TEAM_SCORE to match.awayScore.toString(),
+                    FavoriteMatch.HOME_TEAM_BADGE to homeTeamBadge,
+                    FavoriteMatch.AWAY_TEAM_BADGE to awayTeamBadge,
+                    FavoriteMatch.LEAGUE_NAME to match.leagueName,
+                    FavoriteMatch.ROUND to match.round.toString(),
+                    FavoriteMatch.DATE to match.dateEvent,
+                    FavoriteMatch.TIME to match.time
                 )
             }
             layout_detail_container.snackbar(getString(R.string.favorite_added)).show()
@@ -266,7 +282,7 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView {
         try {
             database.use {
                 delete(
-                    Favorite.TABLE_FAVORITE, "(${Favorite.EVENT_ID} = {id})",
+                    FavoriteMatch.TABLE_FAVORITE, "(${FavoriteMatch.EVENT_ID} = {id})",
                     "id" to eventId
                 )
             }
@@ -287,12 +303,12 @@ class DetailMatchActivity : AppCompatActivity(), DetailMatchView {
 
     private fun favoriteState() {
         database.use {
-            val result = select(Favorite.TABLE_FAVORITE)
+            val result = select(FavoriteMatch.TABLE_FAVORITE)
                 .whereArgs(
-                    "(${Favorite.EVENT_ID} = {id})",
+                    "(${FavoriteMatch.EVENT_ID} = {id})",
                     "id" to eventId
                 )
-            val favorite = result.parseList(classParser<Favorite>())
+            val favorite = result.parseList(classParser<FavoriteMatch>())
             if (favorite.isNotEmpty()) isFavorite = true
         }
     }

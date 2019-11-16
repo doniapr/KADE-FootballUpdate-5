@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.ui.PlayerActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:fitsSystemWindows="true"
+            app:contentScrim="@color/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:titleEnabled="false">
+
+            <ImageView
+                android:id="@+id/img_banner_player"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/banner"
+                android:contentDescription="@string/image_banner"
+                android:fitsSystemWindows="true"
+                android:scaleType="fitXY"
+                app:layout_collapseMode="parallax" />
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_detail_player"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_gravity="top"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_detail_player"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:behavior_overlapTop="100dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:id="@+id/layout_player_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="@dimen/activity_vertical_margin">
+
+                <ProgressBar
+                    android:id="@+id/progress_bar_detail_player"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center" />
+
+                <!-- Player -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:padding="8dp"
+                    app:cardCornerRadius="10dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/padding">
+
+                        <ImageView
+                            android:id="@+id/img_detail_player"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:contentDescription="@string/tab_team_player"
+
+                            android:scaleType="fitXY"
+                            android:src="@drawable/player"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/txt_player_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/_0"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="@dimen/padding"
+                            android:layout_marginStart="@dimen/activity_horizontal_margin"
+                            app:layout_constraintStart_toEndOf="@id/img_detail_player"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/txt_player_name"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/tab_team_player"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="@dimen/padding"
+                            app:layout_constraintStart_toStartOf="@id/txt_player_number"
+                            app:layout_constraintTop_toBottomOf="@id/txt_player_number"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/txt_player_team"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/team_name"
+                            android:textSize="14sp"
+                            android:layout_marginTop="@dimen/padding"
+                            app:layout_constraintStart_toStartOf="@id/txt_player_number"
+                            app:layout_constraintTop_toBottomOf="@id/txt_player_name"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/txt_detail_player_position"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/position"
+                            android:textSize="14sp"
+                            android:layout_marginTop="@dimen/padding"
+                            android:layout_marginBottom="@dimen/padding"
+                            app:layout_constraintStart_toStartOf="@id/txt_player_number"
+                            app:layout_constraintTop_toBottomOf="@id/txt_player_team"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <!-- Player Description -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_player_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:padding="@dimen/padding"
+                    app:cardCornerRadius="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/txt_player_name_desc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/tab_team_player"
+                            android:layout_marginTop="@dimen/padding"
+                            android:layout_marginStart="@dimen/padding"
+                            android:textSize="18sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/txt_player_desc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/tab_team_player"
+                            android:layout_marginTop="@dimen/padding"
+                            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                            android:layout_marginStart="@dimen/activity_horizontal_margin"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin"
+                            android:textSize="14sp"/>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <!-- Player Detail -->
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_horizontal_margin"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:layout_marginBottom="@dimen/activity_vertical_margin"
+                    android:padding="@dimen/padding"
+                    app:cardCornerRadius="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/personal_info"
+                            android:layout_marginTop="@dimen/padding"
+                            android:layout_marginStart="@dimen/padding"
+                            android:textSize="18sp"
+                            android:textStyle="bold"/>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/activity_vertical_margin">
+
+                            <TextView
+                                android:id="@+id/txt_info_nationality"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/nationality"
+                                android:layout_marginTop="@dimen/padding"
+                                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"/>
+                            <TextView
+                                android:id="@+id/txt_info_birth"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/date_of_birth"
+                                android:layout_marginTop="@dimen/padding"
+                                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/txt_player_nationality"/>
+                            <TextView
+                                android:id="@+id/txt_info_signed"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/date_signed"
+                                android:layout_marginTop="@dimen/padding"
+                                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/txt_player_birth"/>
+                            <TextView
+                                android:id="@+id/txt_info_height"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/height"
+                                android:layout_marginTop="@dimen/padding"
+                                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/txt_player_signed"/>
+                            <TextView
+                                android:id="@+id/txt_info_weight"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/weight"
+                                android:layout_marginTop="@dimen/padding"
+                                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/txt_player_height"/>
+
+                            <TextView
+                                android:id="@+id/txt_player_nationality"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/_0"
+                                android:gravity="end"
+                                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                                app:layout_constraintStart_toEndOf="@id/txt_info_nationality"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="@id/txt_info_nationality"/>
+                            <TextView
+                                android:id="@+id/txt_player_birth"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/_0"
+                                android:gravity="end"
+                                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                                app:layout_constraintStart_toEndOf="@id/txt_info_birth"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="@id/txt_info_birth"/>
+                            <TextView
+                                android:id="@+id/txt_player_signed"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/_0"
+                                android:gravity="end"
+                                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                                app:layout_constraintStart_toEndOf="@id/txt_info_signed"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="@id/txt_info_signed"/>
+                            <TextView
+                                android:id="@+id/txt_player_height"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/_0"
+                                android:gravity="end"
+                                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                                app:layout_constraintStart_toEndOf="@id/txt_info_height"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="@id/txt_info_height"/>
+                            <TextView
+                                android:id="@+id/txt_player_weight"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:text="@string/_0"
+                                android:gravity="end"
+                                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                                app:layout_constraintStart_toEndOf="@id/txt_info_weight"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="@id/txt_info_weight"/>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

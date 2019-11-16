@@ -1,23 +1,23 @@
 package com.doniapr.footballupdate.presenter
 
 import com.doniapr.footballupdate.apiservice.MainApi
-import com.doniapr.footballupdate.view.NextMatchView
+import com.doniapr.footballupdate.view.TeamView
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class NextMatchPresenter(
-    private val view: NextMatchView
+class TeamPresenter(
+    private val view: TeamView
 ) {
-    fun getNextMatch(leagueId: Int?) {
+    fun getTeams(leagueId: Int?) {
         view.showLoading()
 
         GlobalScope.launch {
-            val result = MainApi().services.getNextMatch(leagueId.toString())
+            val result = MainApi().services.getTeam(leagueId.toString(), "1920")
             if (result.isSuccessful) {
                 if (result.code() == 200) {
-                    result.body()?.matches.let {
+                    result.body()?.teams.let {
                         if (!it.isNullOrEmpty()) {
-                            view.showMatchList(it)
+                            view.showTeamList(it)
                         } else {
                             view.onFailed(1)
                         }
@@ -28,6 +28,7 @@ class NextMatchPresenter(
             } else {
                 view.onFailed(2)
             }
+
         }
     }
 }

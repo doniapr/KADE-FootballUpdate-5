@@ -1,14 +1,24 @@
 <component name="ProjectDictionaryState">
   <dictionary name="doni">
     <words>
+      <w>dalam</w>
+      <w>eventslast</w>
+      <w>eventsnext</w>
       <w>eventsnextleague</w>
       <w>eventspastleague</w>
+      <w>goalsagainst</w>
+      <w>goalsdifference</w>
+      <w>goalsfor</w>
       <w>lookupevent</w>
       <w>lookupleague</w>
+      <w>lookupplayer</w>
+      <w>lookuptable</w>
       <w>lookupteam</w>
       <w>mmmm</w>
       <w>searchevents</w>
+      <w>searchteams</w>
       <w>subtitutes</w>
+      <w>teamid</w>
     </words>
   </dictionary>
 </component>

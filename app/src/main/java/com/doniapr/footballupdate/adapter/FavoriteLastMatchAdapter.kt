@@ -1,5 +1,8 @@
 package com.doniapr.footballupdate.adapter
 
+import android.content.res.ColorStateList
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +11,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.doniapr.footballupdate.R
-import com.doniapr.footballupdate.favorite.Favorite
+import com.doniapr.footballupdate.model.FavoriteMatch
 import com.doniapr.footballupdate.utility.formatTo
 import com.doniapr.footballupdate.utility.toDate
 import com.doniapr.footballupdate.utility.toDateAndHour
@@ -19,8 +22,8 @@ import org.jetbrains.anko.cardview.v7.cardView
 import org.jetbrains.anko.constraint.layout.constraintLayout
 
 class FavoriteLastMatchAdapter(
-    private val favorites: List<Favorite>,
-    private val listener: (Favorite) -> Unit
+    private val favoriteMatches: List<FavoriteMatch>,
+    private val listener: (FavoriteMatch) -> Unit
 ) : RecyclerView.Adapter<FavoriteViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder {
@@ -34,10 +37,10 @@ class FavoriteLastMatchAdapter(
         )
     }
 
-    override fun getItemCount(): Int = favorites.size
+    override fun getItemCount(): Int = favoriteMatches.size
 
     override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
-        holder.bindItem(favorites[position], listener)
+        holder.bindItem(favoriteMatches[position], listener)
     }
 }
 
@@ -52,36 +55,36 @@ class FavoriteViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val imgHomeBadge: ImageView = view.find(R.id.img_match_home_team_badge)
     private val imgAwayBadge: ImageView = view.find(R.id.img_match_away_team_badge)
 
-    fun bindItem(favorite: Favorite, listener: (Favorite) -> Unit) {
+    fun bindItem(favoriteMatch: FavoriteMatch, listener: (FavoriteMatch) -> Unit) {
 
-        itemView.setOnClickListener { listener(favorite) }
+        itemView.setOnClickListener { listener(favoriteMatch) }
 
-        val round = "${favorite.leagueName} Round ${favorite.round}"
-        homeTeam.text = favorite.homeTeamName
-        awayTeam.text = favorite.awayTeamName
-        Picasso.get().load(favorite.homeTeamBadge).into(imgHomeBadge)
-        Picasso.get().load(favorite.awayTeamBadge).into(imgAwayBadge)
+        val round = "${favoriteMatch.leagueName} Round ${favoriteMatch.round}"
+        homeTeam.text = favoriteMatch.homeTeamName
+        awayTeam.text = favoriteMatch.awayTeamName
+        Picasso.get().load(favoriteMatch.homeTeamBadge).into(imgHomeBadge)
+        Picasso.get().load(favoriteMatch.awayTeamBadge).into(imgAwayBadge)
 
         txtRound.text = round
-        if (favorite.homeTeamScore != null) {
-            homeScore.text = favorite.homeTeamScore
+        if (favoriteMatch.homeTeamScore != null) {
+            homeScore.text = favoriteMatch.homeTeamScore
         }
-        if (favorite.awayTeamScore != null) {
-            awayScore.text = favorite.awayTeamScore
+        if (favoriteMatch.awayTeamScore != null) {
+            awayScore.text = favoriteMatch.awayTeamScore
         }
 
-        if (!favorite.date.isNullOrEmpty() && !favorite.time.isNullOrEmpty()) {
-            val utcDate = favorite.date.toString() + " " + favorite.time.toString()
+        if (!favoriteMatch.date.isNullOrEmpty() && !favoriteMatch.time.isNullOrEmpty()) {
+            val utcDate = favoriteMatch.date.toString() + " " + favoriteMatch.time.toString()
             val wibDate = utcDate.toDateAndHour()
             txtMatchDate.text = wibDate.formatTo("dd MMMM yyyy")
             txtMatchTime.text = wibDate.formatTo("HH:mm:ss")
-        } else if (!favorite.date.isNullOrEmpty() && favorite.time.isNullOrEmpty()) {
-            val utcDate = favorite.date.toString()
+        } else if (!favoriteMatch.date.isNullOrEmpty() && favoriteMatch.time.isNullOrEmpty()) {
+            val utcDate = favoriteMatch.date.toString()
             val wibDate = utcDate.toDate()
             txtMatchDate.text = wibDate.formatTo("dd MMMM yyyy")
             txtMatchTime.text = "-"
-        } else if (favorite.date.isNullOrEmpty() && !favorite.time.isNullOrEmpty()) {
-            val utcDate = favorite.time.toString()
+        } else if (favoriteMatch.date.isNullOrEmpty() && !favoriteMatch.time.isNullOrEmpty()) {
+            val utcDate = favoriteMatch.time.toString()
             val wibDate = utcDate.toHour()
             txtMatchDate.text = "-"
             txtMatchTime.text = wibDate.formatTo("HH:mm:ss")
@@ -102,12 +105,18 @@ class FavoriteLastUI : AnkoComponent<ViewGroup> {
 
                 cardView {
                     lparams(width = matchParent, height = wrapContent)
-                    padding = dip(16)
+                    background = GradientDrawable().apply {
+                        shape = GradientDrawable.RECTANGLE
+                        color = ColorStateList.valueOf(Color.parseColor("#eceff1"))
+                        cornerRadius = 20f
+                        setStroke(2, Color.BLACK)
+                    }
 
                     linearLayout {
                         lparams(width = matchParent, height = wrapContent)
                         orientation = LinearLayout.VERTICAL
                         gravity = Gravity.CENTER
+                        padding = dip(8)
 
                         textView {
                             id = R.id.txt_match_week

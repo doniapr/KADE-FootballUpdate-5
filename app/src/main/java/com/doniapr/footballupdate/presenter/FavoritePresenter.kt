@@ -2,7 +2,8 @@ package com.doniapr.footballupdate.presenter
 
 import android.content.Context
 import com.doniapr.footballupdate.database.database
-import com.doniapr.footballupdate.favorite.Favorite
+import com.doniapr.footballupdate.model.FavoriteMatch
+import com.doniapr.footballupdate.model.FavoriteTeam
 import com.doniapr.footballupdate.utility.toDate
 import com.doniapr.footballupdate.view.FavoriteView
 import org.jetbrains.anko.db.classParser
@@ -16,15 +17,15 @@ class FavoritePresenter(
 ) {
 
     fun getFavorite(isLastMatch: Boolean) {
-        val favorites: MutableList<Favorite> = mutableListOf()
+        val favoriteMatches: MutableList<FavoriteMatch> = mutableListOf()
 
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val currentDate = sdf.format(Date()).toDate()
 
         context?.database?.use {
 
-            val result = select(Favorite.TABLE_FAVORITE)
-            val favorite = result.parseList(classParser<Favorite>())
+            val result = select(FavoriteMatch.TABLE_FAVORITE)
+            val favorite = result.parseList(classParser<FavoriteMatch>())
 
             if (favorite.isNotEmpty()) {
                 for (i in favorite.indices) {
@@ -32,19 +33,36 @@ class FavoritePresenter(
                         val matchDate = favorite[i].date?.toDate()
                         if (isLastMatch) {
                             if (matchDate?.before(currentDate)!!) {
-                                favorites.add(favorite[i])
+                                favoriteMatches.add(favorite[i])
                             }
                         } else {
                             if (matchDate?.after(currentDate)!! || matchDate == currentDate) {
-                                favorites.add(favorite[i])
+                                favoriteMatches.add(favorite[i])
                             }
                         }
                     }
                 }
-                if (favorites.isNotEmpty()) {
-                    view.showFavorite(favorites)
+                if (favoriteMatches.isNotEmpty()) {
+                    view.showFavorite(favoriteMatches)
                 } else {
                     view.onFailed()
+                }
+            } else {
+                view.onFailed()
+            }
+        }
+    }
+
+    fun getFavoriteTeam() {
+
+        context?.database?.use {
+
+            val result = select(FavoriteTeam.TABLE_FAVORITE_TEAM)
+            val favorite = result.parseList(classParser<FavoriteTeam>())
+
+            if (favorite.isNotEmpty()) {
+                favorite.let {
+                    view.showFavoriteTeam(it)
                 }
             } else {
                 view.onFailed()

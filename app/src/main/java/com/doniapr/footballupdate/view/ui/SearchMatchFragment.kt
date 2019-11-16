@@ -14,55 +14,62 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.doniapr.footballupdate.R
-import com.doniapr.footballupdate.adapter.MatchListAdapter
+import com.doniapr.footballupdate.adapter.SearchResultAdapter
 import com.doniapr.footballupdate.model.Match
-import com.doniapr.footballupdate.presenter.LastMatchPresenter
+import com.doniapr.footballupdate.model.Team
+import com.doniapr.footballupdate.presenter.SearchPresenter
 import com.doniapr.footballupdate.utility.invisible
 import com.doniapr.footballupdate.utility.visible
-import com.doniapr.footballupdate.view.LastMatchView
+import com.doniapr.footballupdate.view.SearchResultView
 import org.jetbrains.anko.*
 import org.jetbrains.anko.design.snackbar
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.UI
-import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.runOnUiThread
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
 
 /**
  * A simple [Fragment] subclass.
  */
-class LastMatchFragment(private val leagueId: Int) : Fragment(),
-    LastMatchView {
+class SearchMatchFragment(private val query: String?, private val leagueName: String?) : Fragment(),
+    SearchResultView {
 
-    private lateinit var lastMatchList: RecyclerView
-    private var matches: MutableList<Match> = mutableListOf()
-    private lateinit var presenter: LastMatchPresenter
-    private lateinit var adapter: MatchListAdapter
-    private lateinit var progressBarLastMatch: ProgressBar
-    private lateinit var txtFailed: TextView
-    private lateinit var linearLayout: LinearLayout
+    private lateinit var rvSearchResult: RecyclerView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    private lateinit var progressBar: ProgressBar
+    private lateinit var presenter: SearchPresenter
+    private lateinit var adapter: SearchResultAdapter
+    private lateinit var txtFailed: TextView
+    private lateinit var txtQuery: TextView
+
+    private var matches: MutableList<Match> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return UI {
             swipeRefreshLayout = swipeRefreshLayout {
-                linearLayout = verticalLayout {
+                linearLayout {
+                    lparams(width = matchParent, height = matchParent)
+                    orientation = LinearLayout.VERTICAL
                     gravity = Gravity.CENTER_HORIZONTAL
-                    padding = dip(8)
 
-                    lastMatchList = recyclerView {
-                        lparams(width = matchParent, height = wrapContent)
-                        layoutManager = LinearLayoutManager(context)
+                    txtQuery = textView {
+                        id = R.id.txt_query_match
+                        textSize = 16f
+                    }.lparams {
+                        width = matchParent
+                        height = wrapContent
+                        margin = dip(16)
+                        gravity = Gravity.CENTER_HORIZONTAL
                     }
 
-                    progressBarLastMatch =
+                    progressBar =
                         progressBar().lparams(width = wrapContent, height = wrapContent)
 
                     txtFailed = textView {
+                        id = R.id.txt_failed
                         text = resources.getString(R.string.no_data)
                         textSize = 20f
                         visibility = View.GONE
@@ -72,46 +79,49 @@ class LastMatchFragment(private val leagueId: Int) : Fragment(),
                         margin = dip(16)
                         gravity = Gravity.CENTER_HORIZONTAL
                     }
+                    rvSearchResult = recyclerView {
+                        id = R.id.rv_search_result
+                        layoutManager = LinearLayoutManager(context)
+                    }.lparams {
+                        width = matchParent
+                        height = wrapContent
+                    }
                 }
-            }
 
+            }
         }.view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        adapter = MatchListAdapter(matches) {
+        adapter = SearchResultAdapter(matches) {
             context?.startActivity<DetailMatchActivity>(
                 DetailMatchActivity.EVENT_ID to it.eventId
             )
         }
-        lastMatchList.adapter = adapter
+        presenter = SearchPresenter(this)
 
-        presenter = LastMatchPresenter(this)
-        presenter.getLastMatch(leagueId)
-
-        swipeRefreshLayout.onRefresh {
-            presenter.getLastMatch(leagueId)
+        val textQuery = if (leagueName == null) {
+            presenter.doSearch(query)
+            getString(R.string.search_result_for) + " '$query'"
+        } else {
+            presenter.doSearchInLeague(query, leagueName)
+            getString(R.string.search_result_for) + " '$query' dalam liga $leagueName"
         }
+
+
+        txtQuery.text = textQuery
+
+        rvSearchResult.adapter = adapter
+
     }
 
     override fun showLoading() {
-        progressBarLastMatch.visible()
+        progressBar.visible()
     }
 
     override fun hideLoading() {
-        progressBarLastMatch.invisible()
-    }
-
-    override fun showMatchList(data: List<Match>) {
-        runOnUiThread {
-            hideLoading()
-            swipeRefreshLayout.isRefreshing = false
-            matches.clear()
-            matches.addAll(data)
-            adapter.notifyDataSetChanged()
-        }
+        progressBar.invisible()
     }
 
     override fun onFailed(type: Int) {
@@ -122,9 +132,21 @@ class LastMatchFragment(private val leagueId: Int) : Fragment(),
                 else -> ""
             }
             hideLoading()
-            swipeRefreshLayout.isRefreshing = false
+            txtFailed.text = message
             txtFailed.visible()
+
             swipeRefreshLayout.snackbar(message).show()
         }
     }
+
+    override fun showMatchList(data: List<Match>) {
+        runOnUiThread {
+            hideLoading()
+            matches.clear()
+            matches.addAll(data)
+            adapter.notifyDataSetChanged()
+        }
+    }
+
+    override fun showTeamList(data: List<Team>) {}
 }
